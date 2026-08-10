@@ -1052,8 +1052,11 @@
     <h2>Engenharia</h2>
     <ul class="facts">
       <li><b>Os dois estilos, lado a lado.</b> O BFF chama os serviços por REST, porque a resposta ao
-      cliente é síncrona por natureza; a transação publica <code>TransectionEvent</code> num tópico
+      cliente é síncrona por natureza; a transação publica <code>TransactionEvent</code> num tópico
       Kafka próprio, porque quem reage a ela não precisa segurar essa resposta.</li>
+      <li><b>Credencial não mora no código.</b> Usuário e senha do SMTP vêm do ambiente
+      (<code>MAIL_USERNAME</code>, <code>MAIL_PASSWORD</code>) e o remetente é injetado por
+      configuração — repositório público não é lugar de segredo.</li>
       <li><b>Retry onde a falha é transitória.</b> Spring Retry aplicado por AOP no ponto de integração:
       a tentativa é repetida sem poluir a regra de negócio com try/catch.</li>
       <li><b>Cobertura medida, não decorativa.</b> JaCoCo em todos os serviços, com exclusão explícita
@@ -1103,14 +1106,14 @@
     </div>
 
     <div class="pkg">
-      <div class="pkg-root">com.transection <span class="meta">· o domínio</span></div>
+      <div class="pkg-root">com.transaction <span class="meta">· o domínio</span></div>
       <dl class="pkg-list">
-        <div><dt>kafka</dt><dd><code>Producer</code> publicando o evento da transação concluída</dd></div>
+        <div><dt>kafka</dt><dd><code>Producer</code> publicando o evento da transação concluída, com <code>@Retryable</code> e <code>@Recover</code></dd></div>
         <div><dt>config</dt><dd><code>TopicConfig</code> — o tópico declarado no código, não no console</dd></div>
         <div><dt>controller</dt><dd>transação, pessoa e credenciais de cartão</dd></div>
         <div><dt>service</dt><dd>regra da transação, com retry aplicado por AOP</dd></div>
         <div><dt>mapper</dt><dd><code>EventMapper</code> separando a entidade do evento publicado</dd></div>
-        <div><dt>model.enums</dt><dd><code>PaymentType</code>, <code>TransectionStatus</code></dd></div>
+        <div><dt>model.enums</dt><dd><code>PaymentType</code>, <code>TransactionStatus</code></dd></div>
       </dl>
     </div>
 
@@ -1119,7 +1122,7 @@
       <dl class="pkg-list">
         <div><dt>service</dt><dd>persiste o evento e monta o PDF: cabeçalho, tabela, total e contagem</dd></div>
         <div><dt>entity · repository</dt><dd>fatura em MongoDB, consultada por CPF e data</dd></div>
-        <div><dt>model</dt><dd><code>TransectionEvent</code> — o contrato compartilhado com a transação</dd></div>
+        <div><dt>model</dt><dd><code>TransactionEvent</code> — o contrato compartilhado com a transação</dd></div>
       </dl>
     </div>
 
