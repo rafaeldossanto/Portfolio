@@ -493,6 +493,7 @@
           <p>Fora do expediente, construo software de verdade para aprender de verdade.</p>
           <ul>
             <li><a href="#/trisha">Trisha</a> — 5 microserviços + BFF em Java 21 e app Flutter;</li>
+            <li><a href="#/tlt">TLT</a> — tradutor de fala em tempo real para desktop, com os modelos rodando na própria máquina;</li>
             <li><a href="#/newstech">NewsTech</a> — portal de notícias com curadoria por modelos de linguagem;</li>
             <li>API de e-commerce — REST completa, containerizada com Docker e publicada no Render;</li>
             <li>Certificações Alura de Python e formação autodidata em Java.</li>
@@ -543,6 +544,7 @@
           <p>Outside working hours I build real software, because that is how you actually learn.</p>
           <ul>
             <li><a href="#/trisha">Trisha</a> — 5 microservices + BFF in Java 21 and a Flutter app;</li>
+            <li><a href="#/tlt">TLT</a> — a real-time speech translator for desktop, with the models running on the machine itself;</li>
             <li><a href="#/newstech">NewsTech</a> — a news portal curated by language models;</li>
             <li>E-commerce API — full REST stack, containerised with Docker and deployed on Render;</li>
             <li>Alura Python certifications and self-taught Java.</li>
@@ -597,6 +599,42 @@
             <circle cx="30" cy="112" r="4.5" fill="currentColor" opacity="0.75"/>
             <circle cx="138" cy="58" r="4" fill="none" stroke="currentColor" stroke-width="2" opacity="0.6"/>
             <circle cx="236" cy="38" r="6" fill="currentColor" opacity="0.9"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="card" href="#/tlt">
+        <div class="card-head">
+          <div>
+            <h3>TLT</h3>
+            <span class="when" lang="pt" data-i18n>2026 — AGORA</span><span class="when" lang="en" data-i18n hidden>2026 — NOW</span>
+          </div>
+          <span class="card-go">→</span>
+        </div>
+        <p lang="pt" data-i18n>Tradutor de fala em tempo real para desktop: legenda o áudio de qualquer chamada sem que nada saia do computador.</p>
+        <p lang="en" data-i18n hidden>A real-time speech translator for desktop: it subtitles the audio of any call without anything leaving the computer.</p>
+        <div class="chips">
+          <span class="chip">C# / .NET 10</span><span class="chip">WPF</span>
+          <span class="chip">Whisper</span><span class="chip">ONNX</span>
+        </div>
+        <div class="card-preview">
+          <svg viewBox="0 0 320 132" role="img" aria-label="Legenda sobreposta a uma janela de chamada">
+            <rect width="320" height="132" fill="currentColor" opacity="0.03"/>
+            <!-- janela da chamada ao fundo -->
+            <rect x="24" y="14" width="272" height="104" rx="6" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.22"/>
+            <circle cx="118" cy="52" r="15" fill="currentColor" opacity="0.13"/>
+            <path d="M103 76a15 15 0 0 1 30 0z" fill="currentColor" opacity="0.13"/>
+            <circle cx="196" cy="52" r="15" fill="currentColor" opacity="0.08"/>
+            <path d="M181 76a15 15 0 0 1 30 0z" fill="currentColor" opacity="0.08"/>
+            <!-- overlay da legenda: original apagado, traducao em destaque -->
+            <rect x="44" y="84" width="232" height="26" rx="5" fill="currentColor" opacity="0.14"/>
+            <rect x="56" y="90" width="96" height="3.5" rx="1.75" fill="currentColor" opacity="0.3"/>
+            <rect x="56" y="99" width="160" height="5" rx="2.5" fill="currentColor" opacity="0.62"/>
+            <!-- onda de audio entrando -->
+            <g stroke="currentColor" stroke-width="1.6" opacity="0.35" stroke-linecap="round">
+              <line x1="34" y1="46" x2="34" y2="58"/><line x1="39" y1="42" x2="39" y2="62"/>
+              <line x1="44" y1="48" x2="44" y2="56"/>
+            </g>
           </svg>
         </div>
       </a>
@@ -751,6 +789,7 @@
         <span class="chip">Thymeleaf</span><span class="chip">Python</span>
         <span class="chip">Django</span><span class="chip">FastAPI</span>
         <span class="chip">NestJS</span><span class="chip">Flutter · Dart</span>
+        <span class="chip">C# · .NET 10</span><span class="chip">WPF</span>
       </div>
     </div>
     <div class="stack-group">
@@ -1125,6 +1164,118 @@
 <!-- ================================================================= -->
 <!-- PROJETO · NEWSTECH                                                -->
 <!-- ================================================================= -->
+<div class="page" id="view-tlt" hidden>
+  <a class="back" href="#/projetos" lang="pt" data-i18n>← projetos</a>
+  <a class="back" href="#/projetos" lang="en" data-i18n hidden>← projects</a>
+
+  <p class="kicker" lang="pt" data-i18n>Projeto · 2026 — agora</p>
+  <p class="kicker" lang="en" data-i18n hidden>Project · 2026 — now</p>
+  <h1 class="proj-title">TLT</h1>
+  <p class="lead" lang="pt" data-i18n>
+    Aplicativo de desktop que escuta o áudio que o computador está reproduzindo, transcreve e traduz
+    enquanto a pessoa ainda fala, mostrando a legenda por cima de qualquer janela. Funciona em qualquer
+    chamada — e com a rede desligada, porque os modelos rodam na própria máquina.
+  </p>
+  <p class="lead" lang="en" data-i18n hidden>
+    A desktop application that listens to the audio the computer is playing, transcribes and translates
+    it while the person is still speaking, showing subtitles over any window. It works on any call — and
+    with the network switched off, because the models run on the machine itself.
+  </p>
+
+  <div class="btns" lang="pt" data-i18n>
+    <a class="btn solid" href="https://github.com/rafaeldossanto/TLT" target="_blank" rel="noopener">Ver no GitHub ↗</a>
+  </div>
+  <div class="btns" lang="en" data-i18n hidden>
+    <a class="btn solid" href="https://github.com/rafaeldossanto/TLT" target="_blank" rel="noopener">View on GitHub ↗</a>
+  </div>
+
+  <div class="section">
+    <h2 lang="pt" data-i18n>O pipeline</h2><h2 lang="en" data-i18n hidden>The pipeline</h2>
+    <div class="grid-2">
+      <div class="box">
+        <div class="box-name">capture <span class="meta">WASAPI</span></div>
+        <p lang="pt" data-i18n>Captura o que sai para o fone, não o microfone. Buffers fixos de 10 ms — esse é o orçamento de tempo de cada etapa seguinte.</p>
+        <p lang="en" data-i18n hidden>Captures what goes out to the headphones, not the microphone. Fixed 10 ms buffers — that is the time budget for every stage after it.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">resample <span class="meta">16 kHz mono</span></div>
+        <p lang="pt" data-i18n>Reamostragem com filtro, não decimação: cortar sem filtrar dobraria as frequências altas para dentro da banda e o reconhecedor receberia ruído como se fosse fala.</p>
+        <p lang="en" data-i18n hidden>Resampling with a filter, not decimation: dropping samples without filtering would fold high frequencies back into the band, and the recogniser would take noise for speech.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">vad <span class="meta">Silero</span></div>
+        <p lang="pt" data-i18n>Separa fala de música, ruído e notificação. Cada falso positivo é uma transcrição inútil — que custa GPU no modo local e dinheiro no modo nuvem.</p>
+        <p lang="en" data-i18n hidden>Tells speech apart from music, noise and notifications. Every false positive is a wasted transcription — costing GPU locally and money in the cloud.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">window <span class="meta">LocalAgreement-2</span></div>
+        <p lang="pt" data-i18n>Reprocessa o trecho em curso a cada 1,5 s e confirma o prefixo em que duas passagens concordam. O que ainda pode mudar aparece em cinza.</p>
+        <p lang="en" data-i18n hidden>Reprocesses the ongoing chunk every 1.5 s and confirms the prefix where two passes agree. What can still change is shown in grey.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">speech <span class="meta">Whisper · Vulkan</span></div>
+        <p lang="pt" data-i18n>Reconhecimento na GPU do usuário, com aquecimento na inicialização para a compilação de shaders não cair sobre a primeira frase da reunião.</p>
+        <p lang="en" data-i18n hidden>Recognition on the user's GPU, warmed up at startup so that shader compilation doesn't land on the first sentence of the meeting.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">translate <span class="meta">Opus-MT · ONNX</span></div>
+        <p lang="pt" data-i18n>Tradutor especializado rodando na CPU, fora do laço de transcrição: traduzir ali dentro travaria a captura por um segundo e o áudio acumulado viraria perda de fala.</p>
+        <p lang="en" data-i18n hidden>A specialised translator running on the CPU, outside the transcription loop: translating inside it would stall capture for a second and the queued audio would become lost speech.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" lang="pt" data-i18n>
+    <h2>Decisões</h2>
+    <ul class="facts">
+      <li><b>Vulkan em vez de CUDA, por motivo de produto.</b> O pacote CUDA não traz as bibliotecas de
+      runtime da NVIDIA: sem o Toolkit instalado ele falha em silêncio e cai para CPU dez vezes mais
+      lento. Vulkan roda com o driver comum, serve placas de qualquer fabricante com um binário só e
+      ocupa 116 MB contra 312 MB.</li>
+      <li><b>RTF é a métrica errada.</b> O mesmo modelo na mesma máquina mede de 1,2x a 13,7x só mudando
+      o tamanho do buffer, porque o custo é quase todo fixo — o Whisper processa em janelas de 30 s
+      preenchidas com silêncio. O que decide a viabilidade é o custo absoluto por passada contra o
+      intervalo de reprocessamento.</li>
+      <li><b>O gargalo era CPU, não GPU.</b> Com o tradutor usando os quatro núcleos, o custo do
+      reconhecedor mais que dobrou e passou de 187% do intervalo. Limitar a tradução a dois núcleos
+      devolveu a folga — e, contra a intuição, deixou a própria tradução mais rápida: espalhar trabalho
+      pequeno por muitos núcleos custa mais em coordenação do que rende.</li>
+      <li><b>Senha do histórico é criptografia, não tela de bloqueio.</b> Pedir senha só para abrir a
+      janela deixaria o arquivo legível no bloco de notas. O conteúdo é cifrado com AES-256-GCM e chave
+      derivada por PBKDF2 — e a consequência está escrita na tela: senha esquecida é histórico perdido,
+      porque qualquer recuperação seria também uma porta de entrada.</li>
+      <li><b>Medir em ritmo real, não em lote.</b> A versão inicial da janela deslizante passava nos
+      testes e travava as confirmações em falas longas. O defeito só apareceu alimentando áudio no ritmo
+      de uma conversa e olhando <i>quando</i> cada trecho era confirmado, não <i>o que</i> ele continha.</li>
+    </ul>
+  </div>
+
+  <div class="section" lang="en" data-i18n hidden>
+    <h2>Decisions</h2>
+    <ul class="facts">
+      <li><b>Vulkan instead of CUDA, for a product reason.</b> The CUDA package doesn't ship NVIDIA's
+      runtime libraries: without the Toolkit installed it fails silently and falls back to a CPU path ten
+      times slower. Vulkan runs on the ordinary driver, serves cards from any vendor with a single binary
+      and takes 116 MB against 312 MB.</li>
+      <li><b>RTF is the wrong metric.</b> The same model on the same machine measures anywhere from 1.2x
+      to 13.7x purely by changing the buffer size, because the cost is almost entirely fixed — Whisper
+      processes in 30-second windows padded with silence. What decides viability is the absolute cost per
+      pass against the reprocessing interval.</li>
+      <li><b>The bottleneck was CPU, not GPU.</b> With the translator using all four cores, the
+      recogniser's cost more than doubled and went past 187% of the interval. Capping translation at two
+      cores gave the headroom back — and, against intuition, made translation itself faster: spreading
+      small work across many cores costs more in coordination than it returns.</li>
+      <li><b>The history password is encryption, not a lock screen.</b> Asking for a password merely to
+      open the window would leave the file readable in a text editor. The content is encrypted with
+      AES-256-GCM and a PBKDF2-derived key — and the consequence is stated on screen: a forgotten
+      password means a lost history, because any recovery path would also be a way in.</li>
+      <li><b>Measure at real pace, not in batch.</b> The first version of the sliding window passed its
+      tests and still stalled confirmations during long speech. The defect only showed up feeding audio at
+      conversation pace and watching <i>when</i> each chunk was confirmed, not <i>what</i> it contained.</li>
+    </ul>
+  </div>
+</div>
+
 <div class="page" id="view-newstech" hidden>
   <a class="back" href="#/projetos" lang="pt" data-i18n>← projetos</a>
   <a class="back" href="#/projetos" lang="en" data-i18n hidden>← projects</a>
@@ -1619,6 +1770,7 @@
     var PROJETOS = {
       trisha: 'view-trisha',
       trilha: 'view-trisha',
+      tlt: 'view-tlt',
       newstech: 'view-newstech',
       faturamento: 'view-faturamento'
     };
