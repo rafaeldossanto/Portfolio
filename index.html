@@ -193,7 +193,10 @@
     gap: 12px;
   }
   .card {
-    display: block;
+    /* coluna flex: a prévia desce até o fundo, e cards da mesma fileira terminam alinhados
+       mesmo quando o texto ou os chips de um deles ocupam mais linhas */
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
     border: 1px solid var(--line);
     background: var(--surface);
@@ -217,9 +220,9 @@
     transition: transform 0.18s ease, color 0.18s ease;
   }
   .card > p { font-size: 0.9rem; color: var(--ink-2); margin-top: 12px; }
-  .card .chips { margin-top: 14px; }
+  .card .chips { margin-top: 14px; margin-bottom: 16px; }
   .card-preview {
-    margin: 16px -18px 0;
+    margin: auto -18px 0;
     border-top: 1px solid var(--line);
     background: var(--surface-2);
     line-height: 0;
@@ -492,6 +495,8 @@
           <p>Fora do expediente, construo software de verdade para aprender de verdade.</p>
           <ul>
             <li><a href="#/trisha">Trisha</a> — 5 microserviços + BFF em Java 21 e app Flutter;</li>
+            <li><a href="#/wallet">Wallet</a> — carteira financeira pelo Open Finance: core em Java 25, BFF e um app Flutter que roda no celular, no navegador e no Windows;</li>
+            <li><a href="#/storage">Storage</a> — controle de estoque para mercado, como serviço: API em .NET 10 com MongoDB e front-end em React;</li>
             <li><a href="#/tlt">TLT</a> — tradutor de fala em tempo real para desktop, com os modelos rodando na própria máquina;</li>
             <li><a href="#/newstech">NewsTech</a> — portal de notícias com curadoria por modelos de linguagem;</li>
             <li>API de e-commerce — REST completa, containerizada com Docker e publicada no Render;</li>
@@ -542,6 +547,8 @@
           <p>Outside working hours I build real software, because that is how you actually learn.</p>
           <ul>
             <li><a href="#/trisha">Trisha</a> — 5 microservices + BFF in Java 21 and a Flutter app;</li>
+            <li><a href="#/wallet">Wallet</a> — a finance wallet over Open Finance: a Java 25 core, a BFF and a Flutter app that runs on phones, in the browser and on Windows;</li>
+            <li><a href="#/storage">Storage</a> — inventory control for grocery stores, as a service: a .NET 10 API on MongoDB and a React front end;</li>
             <li><a href="#/tlt">TLT</a> — a real-time speech translator for desktop, with the models running on the machine itself;</li>
             <li><a href="#/newstech">NewsTech</a> — a news portal curated by language models;</li>
             <li>E-commerce API — full REST stack, containerised with Docker and deployed on Render;</li>
@@ -597,6 +604,95 @@
             <circle cx="30" cy="112" r="4.5" fill="currentColor" opacity="0.75"/>
             <circle cx="138" cy="58" r="4" fill="none" stroke="currentColor" stroke-width="2" opacity="0.6"/>
             <circle cx="236" cy="38" r="6" fill="currentColor" opacity="0.9"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="card" href="#/wallet">
+        <div class="card-head">
+          <div>
+            <h3>Wallet</h3>
+            <span class="when" lang="pt" data-i18n>2026 — AGORA</span><span class="when" lang="en" data-i18n hidden>2026 — NOW</span>
+          </div>
+          <span class="card-go">→</span>
+        </div>
+        <p lang="pt" data-i18n>Carteira que junta contas, cartões e investimentos de vários bancos pelo Open Finance — no celular, no navegador e no Windows.</p>
+        <p lang="en" data-i18n hidden>A wallet that brings accounts, cards and investments from several banks together over Open Finance — on phones, in the browser and on Windows.</p>
+        <div class="chips">
+          <span class="chip">Java 25</span><span class="chip">Spring Modulith</span>
+          <span class="chip">Flutter</span><span class="chip">Open Finance</span>
+        </div>
+        <div class="card-preview">
+          <svg viewBox="0 0 320 132" role="img" aria-label="Painel com saldo, evolução e rosca de gastos">
+            <rect width="320" height="132" fill="currentColor" opacity="0.03"/>
+            <!-- cartão de saldo com a evolução -->
+            <rect x="22" y="16" width="156" height="100" rx="12" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.22"/>
+            <rect x="36" y="30" width="44" height="4" rx="2" fill="currentColor" opacity="0.3"/>
+            <rect x="36" y="42" width="92" height="9" rx="4.5" fill="currentColor" opacity="0.62"/>
+            <polyline points="36,98 54,90 70,93 88,80 106,84 124,70 142,74 164,60" fill="none" stroke="currentColor"
+                      stroke-width="1.8" opacity="0.55" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- rosca de gastos por categoria -->
+            <g transform="rotate(-90 240 58)" fill="none" stroke="currentColor" stroke-width="9">
+              <circle cx="240" cy="58" r="30" opacity="0.07"/>
+              <circle cx="240" cy="58" r="30" opacity="0.62" stroke-dasharray="76 112.5"/>
+              <circle cx="240" cy="58" r="30" opacity="0.34" stroke-dasharray="50 138.5" stroke-dashoffset="-80"/>
+              <circle cx="240" cy="58" r="30" opacity="0.18" stroke-dasharray="52 136.5" stroke-dashoffset="-134"/>
+            </g>
+            <!-- bancos conectados -->
+            <g fill="currentColor">
+              <circle cx="216" cy="110" r="7" opacity="0.42"/><circle cx="240" cy="110" r="7" opacity="0.28"/><circle cx="264" cy="110" r="7" opacity="0.16"/>
+            </g>
+          </svg>
+        </div>
+      </a>
+
+      <a class="card" href="#/storage">
+        <div class="card-head">
+          <div>
+            <h3>Storage</h3>
+            <span class="when" lang="pt" data-i18n>2026 — AGORA</span><span class="when" lang="en" data-i18n hidden>2026 — NOW</span>
+          </div>
+          <span class="card-go">→</span>
+        </div>
+        <p lang="pt" data-i18n>Controle de estoque para mercado de bairro, como serviço: bipa o código de barras e o produto aparece, com foto e tudo.</p>
+        <p lang="en" data-i18n hidden>Inventory control for neighbourhood grocery stores, as a service: scan the barcode and the product shows up, photo included.</p>
+        <div class="chips">
+          <span class="chip">C# / .NET 10</span><span class="chip">MongoDB</span>
+          <span class="chip">React</span><span class="chip">Tailwind</span>
+        </div>
+        <div class="card-preview">
+          <svg viewBox="0 0 320 132" role="img" aria-label="Código de barras sendo lido e grade de produtos">
+            <rect width="320" height="132" fill="currentColor" opacity="0.03"/>
+            <!-- código de barras com a linha do leitor -->
+            <g fill="currentColor" opacity="0.5">
+              <rect x="26" y="26" width="2" height="60"/><rect x="30" y="26" width="1" height="60"/><rect x="33" y="26" width="3" height="60"/>
+              <rect x="38" y="26" width="1" height="60"/><rect x="41" y="26" width="2" height="60"/><rect x="45" y="26" width="1" height="60"/>
+              <rect x="48" y="26" width="3" height="60"/><rect x="53" y="26" width="1" height="60"/><rect x="56" y="26" width="2" height="60"/>
+              <rect x="60" y="26" width="1" height="60"/><rect x="63" y="26" width="3" height="60"/><rect x="68" y="26" width="1" height="60"/>
+              <rect x="71" y="26" width="2" height="60"/>
+            </g>
+            <line x1="20" y1="56" x2="80" y2="56" stroke="currentColor" stroke-width="1.6" opacity="0.85"/>
+            <!-- grade de produtos: o recém-bipado em destaque -->
+            <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.22">
+              <rect x="166" y="14" width="60" height="42" rx="7"/><rect x="236" y="14" width="60" height="42" rx="7"/>
+              <rect x="96" y="62" width="60" height="42" rx="7"/><rect x="166" y="62" width="60" height="42" rx="7"/>
+              <rect x="236" y="62" width="60" height="42" rx="7"/>
+            </g>
+            <rect x="96" y="14" width="60" height="42" rx="7" fill="none" stroke="currentColor" stroke-width="1.6" opacity="0.7"/>
+            <g fill="currentColor">
+              <circle cx="110" cy="35" r="8" opacity="0.4"/><circle cx="180" cy="35" r="8" opacity="0.16"/><circle cx="250" cy="35" r="8" opacity="0.16"/>
+              <circle cx="110" cy="83" r="8" opacity="0.16"/><circle cx="180" cy="83" r="8" opacity="0.16"/><circle cx="250" cy="83" r="8" opacity="0.16"/>
+              <rect x="123" y="28" width="26" height="3.5" rx="1.75" opacity="0.45"/><rect x="123" y="37" width="16" height="5" rx="2.5" opacity="0.6"/>
+              <rect x="193" y="28" width="24" height="3.5" rx="1.75" opacity="0.2"/><rect x="193" y="37" width="14" height="5" rx="2.5" opacity="0.26"/>
+              <rect x="263" y="28" width="22" height="3.5" rx="1.75" opacity="0.2"/><rect x="263" y="37" width="16" height="5" rx="2.5" opacity="0.26"/>
+              <rect x="123" y="76" width="24" height="3.5" rx="1.75" opacity="0.2"/><rect x="123" y="85" width="14" height="5" rx="2.5" opacity="0.26"/>
+              <rect x="193" y="76" width="26" height="3.5" rx="1.75" opacity="0.2"/><rect x="193" y="85" width="16" height="5" rx="2.5" opacity="0.26"/>
+              <rect x="263" y="76" width="20" height="3.5" rx="1.75" opacity="0.2"/><rect x="263" y="85" width="14" height="5" rx="2.5" opacity="0.26"/>
+            </g>
+            <!-- toast com "desfazer" no lugar de diálogo de confirmação -->
+            <rect x="96" y="111" width="200" height="15" rx="7.5" fill="currentColor" opacity="0.14"/>
+            <rect x="106" y="117" width="70" height="3.5" rx="1.75" fill="currentColor" opacity="0.45"/>
+            <rect x="250" y="114" width="38" height="9" rx="4.5" fill="none" stroke="currentColor" stroke-width="1" opacity="0.55"/>
           </svg>
         </div>
       </a>
@@ -782,12 +878,20 @@
     <div class="stack-group">
       <h3 lang="pt" data-i18n>linguagens &amp; frameworks</h3><h3 lang="en" data-i18n hidden>languages &amp; frameworks</h3>
       <div class="chips">
-        <span class="chip">Java 21</span><span class="chip">Spring Boot</span>
-        <span class="chip">Spring Security</span><span class="chip">JPA / Hibernate</span>
-        <span class="chip">Thymeleaf</span><span class="chip">Python</span>
-        <span class="chip">Django</span><span class="chip">FastAPI</span>
-        <span class="chip">NestJS</span><span class="chip">Flutter · Dart</span>
-        <span class="chip">C# · .NET 10</span><span class="chip">WPF</span>
+        <span class="chip">Java 21 · 25</span><span class="chip">Spring Boot</span>
+        <span class="chip">Spring Security</span><span class="chip">Spring Modulith</span>
+        <span class="chip">JPA / Hibernate</span><span class="chip">Thymeleaf</span>
+        <span class="chip">C# · .NET 10</span><span class="chip">ASP.NET Core</span>
+        <span class="chip">Python</span><span class="chip">Django</span>
+        <span class="chip">FastAPI</span><span class="chip">NestJS</span>
+      </div>
+    </div>
+    <div class="stack-group">
+      <h3 lang="pt" data-i18n>front-end &amp; apps</h3><h3 lang="en" data-i18n hidden>front end &amp; apps</h3>
+      <div class="chips">
+        <span class="chip">React 19 · JavaScript</span><span class="chip">Tailwind CSS 4</span>
+        <span class="chip">shadcn/ui · Radix</span><span class="chip">Vite · Vitest</span>
+        <span class="chip">Flutter · Dart</span><span class="chip">WPF</span>
       </div>
     </div>
     <div class="stack-group">
@@ -812,6 +916,8 @@
         <span class="chip" lang="pt" data-i18n>Microserviços + BFF</span><span class="chip" lang="en" data-i18n hidden>Microservices + BFF</span><span class="chip">Clean Architecture</span>
         <span class="chip" lang="pt" data-i18n>Arquitetura hexagonal</span><span class="chip" lang="en" data-i18n hidden>Hexagonal architecture</span><span class="chip">DDD</span>
         <span class="chip">Event-Driven Architecture</span><span class="chip">Camunda · BPMN</span>
+        <span class="chip">Multi-tenant SaaS</span><span class="chip">Open Finance · Pluggy</span>
+        <span class="chip">OpenAPI</span>
         <span class="chip">Design Patterns</span>
         <span class="chip">SOLID</span><span class="chip">REST APIs</span>
         <span class="chip">GraphQL</span><span class="chip">API Gateway</span>
@@ -832,7 +938,9 @@
       <div class="chips">
         <span class="chip">OAuth2</span><span class="chip">JWT · JWKS</span>
         <span class="chip" lang="pt" data-i18n>Prevenção de SQL injection</span><span class="chip" lang="en" data-i18n hidden>SQL injection prevention</span><span class="chip">TDD</span>
-        <span class="chip">JUnit · Mockito</span><span class="chip">Testcontainers</span>
+        <span class="chip">JUnit · Mockito</span><span class="chip">xUnit</span><span class="chip">Testcontainers</span>
+        <span class="chip">AES-256-GCM</span><span class="chip" lang="pt" data-i18n>Rotação de refresh token</span><span class="chip" lang="en" data-i18n hidden>Refresh token rotation</span>
+        <span class="chip">Rate limiting</span>
         <span class="chip">Clean Code</span><span class="chip" lang="pt" data-i18n>Desenvolvimento dirigido por IA</span><span class="chip" lang="en" data-i18n hidden>AI-driven development</span>
       </div>
     </div>
@@ -1160,7 +1268,533 @@
 
 
 <!-- ================================================================= -->
-<!-- PROJETO · NEWSTECH                                                -->
+<!-- PROJETO · WALLET                                                  -->
+<!-- ================================================================= -->
+<div class="page" id="view-wallet" hidden>
+  <a class="back" href="#/projetos" lang="pt" data-i18n>← projetos</a>
+  <a class="back" href="#/projetos" lang="en" data-i18n hidden>← projects</a>
+
+  <p class="kicker" lang="pt" data-i18n>Projeto · 2026 — agora</p>
+  <p class="kicker" lang="en" data-i18n hidden>Project · 2026 — now</p>
+  <h1 class="proj-title">Wallet</h1>
+  <p class="lead" lang="pt" data-i18n>
+    Carteira financeira que junta contas, cartões e investimentos de vários bancos num lugar só, pelo
+    Open Finance. Um core em Java 25, um BFF na frente dele e um único código Flutter que roda no
+    celular, no navegador e como aplicativo instalável de Windows.
+  </p>
+  <p class="lead" lang="en" data-i18n hidden>
+    A personal finance wallet that brings accounts, cards and investments from several banks into one
+    place, over Open Finance. A Java 25 core, a BFF in front of it and a single Flutter codebase that runs
+    on phones, in the browser and as an installable Windows app.
+  </p>
+
+  <div class="btns" lang="pt" data-i18n>
+    <a class="btn solid" href="https://github.com/rafaeldossanto/Wallet" target="_blank" rel="noopener">Ver no GitHub ↗</a>
+  </div>
+  <div class="btns" lang="en" data-i18n hidden>
+    <a class="btn solid" href="https://github.com/rafaeldossanto/Wallet" target="_blank" rel="noopener">View on GitHub ↗</a>
+  </div>
+
+  <div class="section" lang="pt" data-i18n>
+    <h2>O ponto de partida</h2>
+    <div class="note">
+      <p><b>A regulação veio antes do código.</b> Só instituição autorizada pelo Banco Central participa
+      do Open Finance: um aplicativo comum não pode ler os bancos direto. A leitura passa por um provedor
+      autorizado, a Pluggy, isolado atrás de uma porta própria (<code>FinancialDataProvider</code>) — se a
+      regra para parcerias mudar, troca-se o adaptador, não o sistema.</p>
+    </div>
+  </div>
+  <div class="section" lang="en" data-i18n hidden>
+    <h2>Where it starts</h2>
+    <div class="note">
+      <p><b>Regulation came before code.</b> Only institutions authorised by Brazil's Central Bank take
+      part in Open Finance: an ordinary app cannot read the banks directly. Reading goes through an
+      authorised provider, Pluggy, isolated behind a port of its own (<code>FinancialDataProvider</code>) —
+      if the rules for partnerships change, the adapter changes, not the system.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 lang="pt" data-i18n>Arquitetura</h2><h2 lang="en" data-i18n hidden>Architecture</h2>
+    <div class="grid-2">
+      <div class="box">
+        <div class="box-name">app <span class="meta">Flutter</span></div>
+        <p lang="pt" data-i18n>Um código só para celular, navegador e Windows: calendário de gastos, rosca por categoria, evolução dos investimentos e o logo real de cada banco.</p>
+        <p lang="en" data-i18n hidden>One codebase for phones, browser and Windows: a spending calendar, a donut by category, investment growth over time and each bank's real logo.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">bff <span class="meta">:8080</span></div>
+        <p lang="pt" data-i18n>A única porta pública. Sessão por plataforma, telas montadas com várias consultas ao core em paralelo, cache, circuit breaker e limite de requisições.</p>
+        <p lang="en" data-i18n hidden>The only public door. Sessions per platform, screens assembled from several core calls in parallel, caching, a circuit breaker and request limits.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">core <span class="meta">:8081</span></div>
+        <p lang="pt" data-i18n>Spring Modulith com oito módulos — identidade, conexões, contas, investimentos, sincronização, provedor, análises e o compartilhado. Só o BFF chama.</p>
+        <p lang="en" data-i18n hidden>Spring Modulith with eight modules — identity, connections, banking, investments, sync, provider, insights and shared. Only the BFF calls it.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">provider <span class="meta">Pluggy</span></div>
+        <p lang="pt" data-i18n>A porta e o adaptador da Pluggy. Nos testes, uma Pluggy de demonstração sobe junto, com bancos sintéticos — dá para ver tudo rodando sem conta nenhuma.</p>
+        <p lang="en" data-i18n hidden>The port and the Pluggy adapter. In tests, a demo Pluggy starts alongside with synthetic banks — you can see everything running without any account.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">sync <span class="meta" lang="pt" data-i18n>a cada 6 h</span><span class="meta" lang="en" data-i18n hidden>every 6 h</span></div>
+        <p lang="pt" data-i18n>Busca periódica com janela de reconciliação, e o registro de cada rodada no banco: o que entrou, o que mudou e o que sumiu.</p>
+        <p lang="en" data-i18n hidden>Periodic fetching with a reconciliation window, and a record of every run in the database: what came in, what changed and what disappeared.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">desktop <span class="meta">Windows</span></div>
+        <p lang="pt" data-i18n>Instalador gerado no CI, ícone na bandeja, abrir com o Windows, atualização automática e Windows Hello para destravar.</p>
+        <p lang="en" data-i18n hidden>An installer built in CI, a tray icon, start with Windows, automatic updates and Windows Hello to unlock.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" lang="pt" data-i18n>
+    <h2>Decisões</h2>
+    <ul class="facts">
+      <li><b>A transação muda de identidade.</b> O provedor troca o ID de uma transação quando ela muda
+      muito. A sincronização relê uma janela de dias e marca como apagada a que sumiu dela — em vez de
+      duplicar o lançamento ou perdê-lo de vista.</li>
+      <li><b>Dado sensível cifrado no banco.</b> A descrição de cada transação é gravada com AES-256-GCM:
+      um vazamento do banco de dados não conta onde a pessoa gasta dinheiro.</li>
+      <li><b>Um BFF que conhece as telas.</b> A home pede cinco coisas ao core em paralelo; a parte que
+      falha volta marcada como indisponível e o resto aparece. Só uma home completa vai para o cache —
+      senão o cache congelaria a tela no meio da primeira sincronização.</li>
+      <li><b>O BFF não guarda segredo.</b> O core assina os tokens (RS256) e publica a chave pública; o
+      BFF a busca de lá. O identificador da chave é o thumbprint dela: com um identificador fixo e a chave
+      em cache, o BFF recusava por 5 minutos os tokens de um core recém-reiniciado.</li>
+      <li><b>Sessão sob medida para cada plataforma.</b> No navegador, a renovação vive num cookie
+      HttpOnly com proteção contra CSRF e a sessão cai por inatividade. No celular, o token fica no
+      armazenamento seguro e o app pede biometria antes de mostrar saldo. No Windows, quem destrava é o
+      Windows Hello.</li>
+      <li><b>Instalável e atualizado sozinho.</b> O CI gera o instalador do Windows a cada versão; o app
+      lê o manifesto da release, confere o SHA-256 do arquivo e se atualiza sem a pessoa abrir o GitHub.</li>
+    </ul>
+  </div>
+  <div class="section" lang="en" data-i18n hidden>
+    <h2>Decisions</h2>
+    <ul class="facts">
+      <li><b>A transaction changes identity.</b> The provider swaps a transaction's ID when it changes
+      enough. Sync rereads a window of days and marks as deleted whatever vanished from it — instead of
+      duplicating the entry or losing track of it.</li>
+      <li><b>Sensitive data encrypted at rest.</b> Every transaction description is stored with
+      AES-256-GCM: a database leak doesn't tell anyone where the person spends their money.</li>
+      <li><b>A BFF that knows the screens.</b> The home screen asks the core for five things in parallel;
+      a part that fails comes back flagged as unavailable and the rest still shows. Only a complete home
+      goes into the cache — otherwise the cache would freeze the screen halfway through the first sync.</li>
+      <li><b>The BFF holds no secret.</b> The core signs the tokens (RS256) and publishes the public key;
+      the BFF fetches it from there. The key id is the key's thumbprint: with a fixed id and the key
+      cached, the BFF used to reject tokens from a freshly restarted core for 5 minutes.</li>
+      <li><b>Sessions tailored to each platform.</b> In the browser, renewal lives in an HttpOnly cookie
+      with CSRF protection and the session ends on inactivity. On phones, the token sits in secure storage
+      and the app asks for biometrics before showing any balance. On Windows, Windows Hello unlocks it.</li>
+      <li><b>Installable, and updates itself.</b> CI builds the Windows installer for every version; the
+      app reads the release manifest, checks the file's SHA-256 and updates itself without the person ever
+      opening GitHub.</li>
+    </ul>
+  </div>
+
+  <div class="section" lang="pt" data-i18n>
+    <h2>Números</h2>
+    <div class="stats">
+      <div class="stat"><span class="n">248</span><span class="l">testes</span></div>
+      <div class="stat"><span class="n">8</span><span class="l">módulos no core</span></div>
+      <div class="stat"><span class="n">3</span><span class="l">plataformas</span></div>
+      <div class="stat"><span class="n">3</span><span class="l">versões publicadas</span></div>
+    </div>
+  </div>
+  <div class="section" lang="en" data-i18n hidden>
+    <h2>Numbers</h2>
+    <div class="stats">
+      <div class="stat"><span class="n">248</span><span class="l">tests</span></div>
+      <div class="stat"><span class="n">8</span><span class="l">core modules</span></div>
+      <div class="stat"><span class="n">3</span><span class="l">platforms</span></div>
+      <div class="stat"><span class="n">3</span><span class="l">published releases</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 lang="pt" data-i18n>Repositório</h2><h2 lang="en" data-i18n hidden>Repository</h2>
+    <div class="repos">
+      <a class="repo" href="https://github.com/rafaeldossanto/Wallet" target="_blank" rel="noopener"><code>Wallet</code> <span class="what" lang="pt" data-i18n>monorepo: core, BFF, app e documentação</span><span class="what" lang="en" data-i18n hidden>monorepo: core, BFF, app and docs</span><span class="ext">↗</span></a>
+    </div>
+  </div>
+
+  <div class="section" lang="pt" data-i18n>
+    <h2>Dentro do código</h2>
+    <p class="muted" style="font-size: 0.88rem; margin-bottom: 18px;">
+      Dois serviços e um app, no mesmo repositório. No core, cada módulo do Spring Modulith só conversa
+      com os outros pela fachada pública deles — e um teste quebra se alguém atravessar a fronteira.
+    </p>
+
+    <div class="pkg">
+      <div class="pkg-root">com.wallet.core <span class="meta">· Spring Modulith</span></div>
+      <dl class="pkg-list">
+        <div><dt>identity</dt><dd>contas de usuário, login, JWT RS256 e renovação rotativa</dd></div>
+        <div><dt>connection</dt><dd>os bancos que cada pessoa vinculou</dd></div>
+        <div><dt>banking</dt><dd>contas, transações, saldos diários e faturas de cartão</dd></div>
+        <div><dt>investment</dt><dd>posições e a foto diária do patrimônio investido</dd></div>
+        <div><dt>sync</dt><dd>agendamento, execução e o registro de cada rodada</dd></div>
+        <div><dt>provider</dt><dd>a porta <code>FinancialDataProvider</code> e o adaptador <code>pluggy</code></dd></div>
+        <div><dt>insight</dt><dd>visão geral, gastos por categoria e por dia, patrimônio</dd></div>
+        <div><dt>shared</dt><dd><code>crypto</code>, <code>money</code>, <code>time</code>, <code>security</code> — o que todos usam</dd></div>
+      </dl>
+    </div>
+
+    <div class="pkg">
+      <div class="pkg-root">com.wallet.bff <span class="meta">· fachada</span></div>
+      <dl class="pkg-list">
+        <div><dt>client</dt><dd>chamadas ao core levando o token e o trace da requisição</dd></div>
+        <div><dt>service</dt><dd>composição por tela — <code>HomeService</code> com <code>CompletableFuture</code> — e cache</dd></div>
+        <div><dt>auth</dt><dd>sessão por plataforma: cookie no navegador, corpo da resposta no celular</dd></div>
+        <div><dt>ratelimit</dt><dd>limite de requisições, inclusive de login por IP</dd></div>
+        <div><dt>trace</dt><dd>um id por requisição, do app ao core</dd></div>
+      </dl>
+    </div>
+
+    <div class="pkg">
+      <div class="pkg-root">app/lib <span class="meta">· Flutter</span></div>
+      <dl class="pkg-list">
+        <div><dt>features</dt><dd>uma pasta por tela — visão geral, extrato, cartões, investimentos, calendário, conexões — cada uma com <code>data</code> e <code>presentation</code></dd></div>
+        <div><dt>core/session</dt><dd>renovação numa fila só; cookie no navegador, armazenamento seguro no celular</dd></div>
+        <div><dt>core/security</dt><dd>bloqueio por biometria e tempo de inatividade</dd></div>
+        <div><dt>core/desktop</dt><dd>atualizador, bandeja e janela do aplicativo de Windows</dd></div>
+        <div><dt>core/router</dt><dd>go_router com abas que preservam o estado de cada tela</dd></div>
+      </dl>
+    </div>
+  </div>
+  <div class="section" lang="en" data-i18n hidden>
+    <h2>Inside the code</h2>
+    <p class="muted" style="font-size: 0.88rem; margin-bottom: 18px;">
+      Two services and an app, in one repository. In the core, each Spring Modulith module only talks to
+      the others through their public facade — and a test breaks if anyone crosses that boundary.
+    </p>
+
+    <div class="pkg">
+      <div class="pkg-root">com.wallet.core <span class="meta">· Spring Modulith</span></div>
+      <dl class="pkg-list">
+        <div><dt>identity</dt><dd>user accounts, login, RS256 JWT and rotating renewal</dd></div>
+        <div><dt>connection</dt><dd>the banks each person has linked</dd></div>
+        <div><dt>banking</dt><dd>accounts, transactions, daily balances and card bills</dd></div>
+        <div><dt>investment</dt><dd>positions and the daily snapshot of invested wealth</dd></div>
+        <div><dt>sync</dt><dd>scheduling, execution and a record of every run</dd></div>
+        <div><dt>provider</dt><dd>the <code>FinancialDataProvider</code> port and the <code>pluggy</code> adapter</dd></div>
+        <div><dt>insight</dt><dd>overview, spending by category and by day, net worth</dd></div>
+        <div><dt>shared</dt><dd><code>crypto</code>, <code>money</code>, <code>time</code>, <code>security</code> — what everyone uses</dd></div>
+      </dl>
+    </div>
+
+    <div class="pkg">
+      <div class="pkg-root">com.wallet.bff <span class="meta">· facade</span></div>
+      <dl class="pkg-list">
+        <div><dt>client</dt><dd>calls to the core carrying the request's token and trace</dd></div>
+        <div><dt>service</dt><dd>composition per screen — <code>HomeService</code> with <code>CompletableFuture</code> — and caching</dd></div>
+        <div><dt>auth</dt><dd>sessions per platform: a cookie in the browser, the response body on phones</dd></div>
+        <div><dt>ratelimit</dt><dd>request limits, including login attempts per IP</dd></div>
+        <div><dt>trace</dt><dd>one id per request, from the app to the core</dd></div>
+      </dl>
+    </div>
+
+    <div class="pkg">
+      <div class="pkg-root">app/lib <span class="meta">· Flutter</span></div>
+      <dl class="pkg-list">
+        <div><dt>features</dt><dd>one folder per screen — overview, statement, cards, investments, calendar, connections — each with <code>data</code> and <code>presentation</code></dd></div>
+        <div><dt>core/session</dt><dd>renewal in a single queue; a cookie in the browser, secure storage on phones</dd></div>
+        <div><dt>core/security</dt><dd>biometric lock and inactivity timeout</dd></div>
+        <div><dt>core/desktop</dt><dd>updater, tray and window of the Windows app</dd></div>
+        <div><dt>core/router</dt><dd>go_router with tabs that keep each screen's state</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <footer>
+    <p class="colophon" lang="pt" data-i18n>Wallet tem nome provisório e está em desenvolvimento: roda de ponta a ponta com uma
+    Pluggy de demonstração, e a conexão com contas reais é o próximo passo. <a href="#/projetos">← voltar aos projetos</a></p>
+    <p class="colophon" lang="en" data-i18n hidden>Wallet has a working title and is under development: it runs end to end against
+    a demo Pluggy, and connecting real accounts is the next step. <a href="#/projetos">← back to projects</a></p>
+  </footer>
+</div>
+
+
+<!-- ================================================================= -->
+<!-- PROJETO · STORAGE                                                 -->
+<!-- ================================================================= -->
+<div class="page" id="view-storage" hidden>
+  <a class="back" href="#/projetos" lang="pt" data-i18n>← projetos</a>
+  <a class="back" href="#/projetos" lang="en" data-i18n hidden>← projects</a>
+
+  <p class="kicker" lang="pt" data-i18n>Projeto · 2026 — agora</p>
+  <p class="kicker" lang="en" data-i18n hidden>Project · 2026 — now</p>
+  <h1 class="proj-title">Storage</h1>
+  <p class="lead" lang="pt" data-i18n>
+    Controle de estoque para mercado de bairro, pensado para ser vendido como serviço: o lojista abre no
+    navegador, sem instalar nada, e cadastra o produto bipando o código de barras. Entrada de nota,
+    validade, descontos, contagem com vários celulares ao mesmo tempo e uma área de vendas trancada por PIN.
+  </p>
+  <p class="lead" lang="en" data-i18n hidden>
+    Inventory control for neighbourhood grocery stores, designed to be sold as a service: the owner opens
+    it in the browser, installs nothing, and registers a product by scanning its barcode. Goods receipts,
+    expiry dates, discounts, stock counts from several phones at once and a sales area locked behind a PIN.
+  </p>
+
+  <div class="btns" lang="pt" data-i18n>
+    <a class="btn solid" href="https://github.com/rafaeldossanto/Storage" target="_blank" rel="noopener">Back-end no GitHub ↗</a>
+    <a class="btn" href="https://github.com/rafaeldossanto/StorageFront" target="_blank" rel="noopener">Front-end no GitHub ↗</a>
+  </div>
+  <div class="btns" lang="en" data-i18n hidden>
+    <a class="btn solid" href="https://github.com/rafaeldossanto/Storage" target="_blank" rel="noopener">Back end on GitHub ↗</a>
+    <a class="btn" href="https://github.com/rafaeldossanto/StorageFront" target="_blank" rel="noopener">Front end on GitHub ↗</a>
+  </div>
+
+  <div class="section" lang="pt" data-i18n>
+    <h2>O diferencial</h2>
+    <div class="note">
+      <p><b>Estoque é um livro-razão, não um número.</b> Cada entrada, venda, perda e ajuste é um
+      movimento que só se acrescenta — nunca se edita nem se apaga. Saldo e custo médio não ficam gravados
+      no produto: saem dos lotes. Duas entradas simultâneas não têm um total para sobrescrever, e o
+      relatório de perdas existe porque o lote vencido vira perda registrada em vez de sumir.</p>
+    </div>
+  </div>
+  <div class="section" lang="en" data-i18n hidden>
+    <h2>What makes it different</h2>
+    <div class="note">
+      <p><b>Stock is a ledger, not a number.</b> Every receipt, sale, loss and adjustment is a movement
+      that is only ever appended — never edited, never deleted. Balance and average cost aren't stored on
+      the product: they come from the batches. Two simultaneous receipts have no total to overwrite, and
+      the losses report exists because an expired batch becomes a recorded loss instead of disappearing.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 lang="pt" data-i18n>Arquitetura</h2><h2 lang="en" data-i18n hidden>Architecture</h2>
+    <div class="grid-2">
+      <div class="box">
+        <div class="box-name">Storage.Domain <span class="meta" lang="pt" data-i18n>regras</span><span class="meta" lang="en" data-i18n hidden>rules</span></div>
+        <p lang="pt" data-i18n>Entidades e regras puras, sem dependência nenhuma: lotes, saída pelo que vence primeiro, motor de desconto, dinheiro em centavos.</p>
+        <p lang="en" data-i18n hidden>Entities and pure rules with no dependencies at all: batches, first-expiring-first-out, the discount engine, money in cents.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">Storage.Application <span class="meta" lang="pt" data-i18n>casos de uso</span><span class="meta" lang="en" data-i18n hidden>use cases</span></div>
+        <p lang="pt" data-i18n>Entrada, venda, contagem, validade, preço e relatórios, falando só com interfaces que a infraestrutura implementa.</p>
+        <p lang="en" data-i18n hidden>Receiving, selling, counting, expiry, pricing and reports, talking only to interfaces the infrastructure implements.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">Storage.Infrastructure <span class="meta">MongoDB</span></div>
+        <p lang="pt" data-i18n>Replica set, porque cada mudança de estoque grava lote, movimento e documento de origem numa transação só. Índices, paginação e busca sem acento.</p>
+        <p lang="en" data-i18n hidden>A replica set, because every stock change writes batch, movement and source document in a single transaction. Indexes, paging and accent-blind search.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">Storage.Api <span class="meta">ASP.NET Core</span></div>
+        <p lang="pt" data-i18n>Minimal APIs com 64 rotas, JWT de 15 minutos, a loja resolvida pelo token em cada requisição e dois jobs em segundo plano: validade e fotos.</p>
+        <p lang="en" data-i18n hidden>Minimal APIs with 64 routes, a 15-minute JWT, the store resolved from the token on every request and two background jobs: expiry and photos.</p>
+      </div>
+      <div class="box">
+        <div class="box-name">StorageFront <span class="meta">React 19</span></div>
+        <p lang="pt" data-i18n>JavaScript com shadcn/ui e Tailwind 4: bipagem pelo leitor USB, aviso com "Desfazer" no lugar de diálogo de confirmação, gráfico de vendas.</p>
+        <p lang="en" data-i18n hidden>JavaScript with shadcn/ui and Tailwind 4: scanning with a USB reader, a toast with "Undo" instead of a confirmation dialog, a sales chart.</p>
+      </div>
+      <div class="box">
+        <div class="box-name"><span lang="pt" data-i18n>fotos</span><span lang="en" data-i18n hidden>photos</span> <span class="meta">Open Food Facts · ONNX</span></div>
+        <p lang="pt" data-i18n>Cadastrou a lata, a foto vem sozinha: buscada pelo código de barras, com o fundo recortado e posta num quadrado branco.</p>
+        <p lang="en" data-i18n hidden>Register the can and the photo shows up on its own: looked up by barcode, background cut out and placed on a white square.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" lang="pt" data-i18n>
+    <h2>Decisões</h2>
+    <ul class="facts">
+      <li><b>Uma loja nunca enxerga a outra.</b> Todo documento carrega a loja, e os repositórios a leem
+      do token — nunca de um parâmetro que o cliente possa trocar. Requisição sem loja falha. O isolamento
+      é provado por teste contra um MongoDB de verdade, não contra um mock.</li>
+      <li><b>Concorrência resolvida no banco, não na sorte.</b> Um lote só muda por compare-and-set, com a
+      quantidade e a situação esperadas. Dois caixas tirando do mesmo lote não vendem a mesma unidade:
+      quem perde a disputa recebe 409 e a venda é refeita sozinha.</li>
+      <li><b>Desfazer em vez de confirmar.</b> Produto, entrada e venda feitos por engano podem ser
+      desfeitos por 10 minutos, enquanto nenhuma unidade saiu. Um "tem certeza?" a cada bipe travaria a
+      fila do caixa.</li>
+      <li><b>Sessão que não se bifurca.</b> O token de renovação é trocado por compare-and-set, e um token
+      já usado que reaparece encerra todas as sessões — alguém guardou uma cópia. Por isso o front renova
+      numa fila só, inclusive entre abas (Web Locks), e tolera o aparelho que perdeu a resposta no meio.</li>
+      <li><b>Leitor USB não é teclado.</b> Menos de 20 ms entre teclas ninguém digita: o front separa a
+      rajada do leitor da digitação de gente, e devolve o campo ao valor anterior quando o bipe cai num
+      campo com foco.</li>
+      <li><b>O contrato é vigiado por teste.</b> Os testes de HTTP fixam a lista de rotas abertas e a de
+      rotas só do dono: uma rota nova que precise ser exceção quebra o teste até alguém acrescentá-la —
+      de propósito.</li>
+    </ul>
+  </div>
+  <div class="section" lang="en" data-i18n hidden>
+    <h2>Decisions</h2>
+    <ul class="facts">
+      <li><b>One store never sees another.</b> Every document carries its store, and repositories read it
+      from the token — never from a parameter the client could change. A request without a store fails.
+      The isolation is proven by tests against a real MongoDB, not a mock.</li>
+      <li><b>Concurrency settled in the database, not by luck.</b> A batch only changes through
+      compare-and-set, with the expected quantity and state. Two tills taking from the same batch cannot
+      sell the same unit: the loser gets a 409 and the sale retries on its own.</li>
+      <li><b>Undo instead of confirm.</b> A product, receipt or sale entered by mistake can be undone for
+      10 minutes, as long as no unit has left. An "are you sure?" on every scan would stall the checkout queue.</li>
+      <li><b>Sessions that don't fork.</b> The refresh token is swapped through compare-and-set, and a used
+      token that shows up again ends every session — someone kept a copy. That's why the front end renews in
+      a single queue, across tabs too (Web Locks), and tolerates a device that lost the response midway.</li>
+      <li><b>A USB reader is not a keyboard.</b> Nobody types with less than 20 ms between keys: the front
+      end tells the reader's burst apart from a person typing, and restores a focused field to its previous
+      value when a scan lands in it.</li>
+      <li><b>The contract is guarded by tests.</b> HTTP tests pin the list of open routes and of
+      owner-only routes: a new route that needs to be an exception breaks the test until someone adds it —
+      on purpose.</li>
+    </ul>
+  </div>
+
+  <div class="section" lang="pt" data-i18n>
+    <h2>Números</h2>
+    <div class="stats">
+      <div class="stat"><span class="n">466</span><span class="l">testes no back-end</span></div>
+      <div class="stat"><span class="n">103</span><span class="l">testes no front-end</span></div>
+      <div class="stat"><span class="n">64</span><span class="l">rotas na API</span></div>
+      <div class="stat"><span class="n">4</span><span class="l">camadas</span></div>
+    </div>
+  </div>
+  <div class="section" lang="en" data-i18n hidden>
+    <h2>Numbers</h2>
+    <div class="stats">
+      <div class="stat"><span class="n">466</span><span class="l">back-end tests</span></div>
+      <div class="stat"><span class="n">103</span><span class="l">front-end tests</span></div>
+      <div class="stat"><span class="n">64</span><span class="l">API routes</span></div>
+      <div class="stat"><span class="n">4</span><span class="l">layers</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 lang="pt" data-i18n>Repositórios</h2><h2 lang="en" data-i18n hidden>Repositories</h2>
+    <div class="repos">
+      <a class="repo" href="https://github.com/rafaeldossanto/Storage" target="_blank" rel="noopener"><code>Storage</code> <span class="what" lang="pt" data-i18n>back-end em .NET 10</span><span class="what" lang="en" data-i18n hidden>.NET 10 back end</span><span class="ext">↗</span></a>
+      <a class="repo" href="https://github.com/rafaeldossanto/StorageFront" target="_blank" rel="noopener"><code>StorageFront</code> <span class="what" lang="pt" data-i18n>front-end em React</span><span class="what" lang="en" data-i18n hidden>React front end</span><span class="ext">↗</span></a>
+    </div>
+  </div>
+
+  <div class="section" lang="pt" data-i18n>
+    <h2>Dentro do código</h2>
+    <p class="muted" style="font-size: 0.88rem; margin-bottom: 18px;">
+      Quatro projetos em camadas, e o domínio não sabe onde os dados moram. Foi isso que permitiu trocar
+      SQLite por MongoDB no meio do caminho tocando no domínio só para acrescentar a noção de loja.
+    </p>
+
+    <div class="pkg">
+      <div class="pkg-root">Storage.Domain <span class="meta">· regras</span></div>
+      <dl class="pkg-list">
+        <div><dt>Stock</dt><dd><code>Batch</code>, <code>StockMovement</code>, <code>GoodsReceipt</code>, <code>StockCount</code> — o livro-razão e os documentos que o movimentam</dd></div>
+        <div><dt>Pricing</dt><dd><code>DiscountEngine</code>: regra por produto ou por ramo da árvore, com prioridade e teto de cascata</dd></div>
+        <div><dt>ValueObjects</dt><dd><code>Money</code> em centavos e <code>Gtin</code> normalizado em 14 dígitos</dd></div>
+        <div><dt>Sales</dt><dd><code>Sale</code> guarda o custo dos lotes de onde a mercadoria saiu</dd></div>
+      </dl>
+    </div>
+
+    <div class="pkg">
+      <div class="pkg-root">Storage.Application <span class="meta">· casos de uso</span></div>
+      <dl class="pkg-list">
+        <div><dt>Stock</dt><dd>entrada linha a linha, contagem em vários celulares, lote vencido que vira perda</dd></div>
+        <div><dt>Sales</dt><dd>baixa pelo que vence primeiro, ao preço das regras de desconto; PIN com cinco erros trava por 15 min</dd></div>
+        <div><dt>Abstractions</dt><dd>as interfaces que a infraestrutura implementa</dd></div>
+      </dl>
+    </div>
+
+    <div class="pkg">
+      <div class="pkg-root">Storage.Infrastructure <span class="meta">· MongoDB e fotos</span></div>
+      <dl class="pkg-list">
+        <div><dt>Persistence</dt><dd>mapeamento BSON fora das entidades, índices, paginação e <code>AccentInsensitive</code>: "acucar" acha "Açúcar"</dd></div>
+        <div><dt>Photos</dt><dd>busca no Open Food Facts e recorte de fundo — com o modelo ISNet via ONNX, ou pelas bordas da foto</dd></div>
+      </dl>
+    </div>
+
+    <div class="pkg">
+      <div class="pkg-root">Storage.Api <span class="meta">· HTTP</span></div>
+      <dl class="pkg-list">
+        <div><dt>Endpoints</dt><dd>um arquivo por área, em minimal APIs</dd></div>
+        <div><dt>Auth</dt><dd>token de acesso, cookie de renovação e o passe de 15 min da área de vendas</dd></div>
+        <div><dt>Jobs</dt><dd>varredura de validade a cada 6 h, no fuso de cada loja, e busca de fotos</dd></div>
+        <div><dt>Tenancy</dt><dd>a loja vem do token, nunca da requisição</dd></div>
+      </dl>
+    </div>
+
+    <div class="pkg">
+      <div class="pkg-root">StorageFront/src <span class="meta">· React</span></div>
+      <dl class="pkg-list">
+        <div><dt>api</dt><dd><code>http.js</code> → <code>session.js</code> → <code>client.js</code>: token só em memória, renovação numa fila só</dd></div>
+        <div><dt>features</dt><dd>produtos, entrada, vender, vendas — uma pasta por tela</dd></div>
+        <div><dt>lib</dt><dd><code>scanner.js</code> separa leitor de gente; <code>money.js</code> formata centavos</dd></div>
+        <div><dt>components/ui</dt><dd>componentes shadcn/ui sobre Radix</dd></div>
+      </dl>
+    </div>
+  </div>
+  <div class="section" lang="en" data-i18n hidden>
+    <h2>Inside the code</h2>
+    <p class="muted" style="font-size: 0.88rem; margin-bottom: 18px;">
+      Four layered projects, and the domain doesn't know where the data lives. That is what made it
+      possible to swap SQLite for MongoDB midway, touching the domain only to add the notion of a store.
+    </p>
+
+    <div class="pkg">
+      <div class="pkg-root">Storage.Domain <span class="meta">· rules</span></div>
+      <dl class="pkg-list">
+        <div><dt>Stock</dt><dd><code>Batch</code>, <code>StockMovement</code>, <code>GoodsReceipt</code>, <code>StockCount</code> — the ledger and the documents that move it</dd></div>
+        <div><dt>Pricing</dt><dd><code>DiscountEngine</code>: rules per product or per branch of the tree, with priority and a cascade ceiling</dd></div>
+        <div><dt>ValueObjects</dt><dd><code>Money</code> in cents and <code>Gtin</code> normalised to 14 digits</dd></div>
+        <div><dt>Sales</dt><dd><code>Sale</code> keeps the cost of the batches the goods came from</dd></div>
+      </dl>
+    </div>
+
+    <div class="pkg">
+      <div class="pkg-root">Storage.Application <span class="meta">· use cases</span></div>
+      <dl class="pkg-list">
+        <div><dt>Stock</dt><dd>line-by-line receiving, counting from several phones, expired batches turned into losses</dd></div>
+        <div><dt>Sales</dt><dd>stock taken from what expires first, at the discount rules' price; five wrong PINs lock it for 15 min</dd></div>
+        <div><dt>Abstractions</dt><dd>the interfaces the infrastructure implements</dd></div>
+      </dl>
+    </div>
+
+    <div class="pkg">
+      <div class="pkg-root">Storage.Infrastructure <span class="meta">· MongoDB and photos</span></div>
+      <dl class="pkg-list">
+        <div><dt>Persistence</dt><dd>BSON mapping kept out of the entities, indexes, paging and <code>AccentInsensitive</code>: "acucar" finds "Açúcar"</dd></div>
+        <div><dt>Photos</dt><dd>lookup on Open Food Facts and background removal — with the ISNet model through ONNX, or from the photo's edges</dd></div>
+      </dl>
+    </div>
+
+    <div class="pkg">
+      <div class="pkg-root">Storage.Api <span class="meta">· HTTP</span></div>
+      <dl class="pkg-list">
+        <div><dt>Endpoints</dt><dd>one file per area, as minimal APIs</dd></div>
+        <div><dt>Auth</dt><dd>access token, renewal cookie and the 15-minute pass to the sales area</dd></div>
+        <div><dt>Jobs</dt><dd>expiry sweep every 6 h, in each store's time zone, and photo lookup</dd></div>
+        <div><dt>Tenancy</dt><dd>the store comes from the token, never from the request</dd></div>
+      </dl>
+    </div>
+
+    <div class="pkg">
+      <div class="pkg-root">StorageFront/src <span class="meta">· React</span></div>
+      <dl class="pkg-list">
+        <div><dt>api</dt><dd><code>http.js</code> → <code>session.js</code> → <code>client.js</code>: token in memory only, renewal in a single queue</dd></div>
+        <div><dt>features</dt><dd>products, receiving, sell, sales — one folder per screen</dd></div>
+        <div><dt>lib</dt><dd><code>scanner.js</code> tells a reader from a person; <code>money.js</code> formats cents</dd></div>
+        <div><dt>components/ui</dt><dd>shadcn/ui components on top of Radix</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <footer>
+    <p class="colophon" lang="pt" data-i18n>Storage está em desenvolvimento: o back-end do MVP está pronto e, das telas, já rodam
+    Produtos, Entrada, Vender e Vendas. <a href="#/projetos">← voltar aos projetos</a></p>
+    <p class="colophon" lang="en" data-i18n hidden>Storage is under development: the MVP back end is done and, of the screens,
+    Products, Receiving, Sell and Sales already run. <a href="#/projetos">← back to projects</a></p>
+  </footer>
+</div>
+
+
+<!-- ================================================================= -->
+<!-- PROJETO · TLT                                                     -->
 <!-- ================================================================= -->
 <div class="page" id="view-tlt" hidden>
   <a class="back" href="#/projetos" lang="pt" data-i18n>← projetos</a>
@@ -1274,6 +1908,9 @@
   </div>
 </div>
 
+<!-- ================================================================= -->
+<!-- PROJETO · NEWSTECH                                                -->
+<!-- ================================================================= -->
 <div class="page" id="view-newstech" hidden>
   <a class="back" href="#/projetos" lang="pt" data-i18n>← projetos</a>
   <a class="back" href="#/projetos" lang="en" data-i18n hidden>← projects</a>
@@ -1768,6 +2405,8 @@
     var PROJETOS = {
       trisha: 'view-trisha',
       trilha: 'view-trisha',
+      wallet: 'view-wallet',
+      storage: 'view-storage',
       tlt: 'view-tlt',
       newstech: 'view-newstech',
       faturamento: 'view-faturamento'
