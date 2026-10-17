@@ -984,12 +984,12 @@
   </p>
 
   <div class="btns" lang="pt" data-i18n>
-    <a class="btn solid" href="https://github.com/rafaeldossanto?tab=repositories" target="_blank" rel="noopener">Ver no GitHub ↗</a>
-    <a class="btn" href="https://github.com/rafaeldossanto/TrishaDocs" target="_blank" rel="noopener">Documentação ↗</a>
+    <a class="btn solid" href="https://github.com/rafaeldossanto/Trisha" target="_blank" rel="noopener">Ver no GitHub ↗</a>
+    <a class="btn" href="https://github.com/rafaeldossanto/Trisha/blob/main/Docs/Trilha.md" target="_blank" rel="noopener">Documentação ↗</a>
   </div>
   <div class="btns" lang="en" data-i18n hidden>
-    <a class="btn solid" href="https://github.com/rafaeldossanto?tab=repositories" target="_blank" rel="noopener">View on GitHub ↗</a>
-    <a class="btn" href="https://github.com/rafaeldossanto/TrishaDocs" target="_blank" rel="noopener">Documentation ↗</a>
+    <a class="btn solid" href="https://github.com/rafaeldossanto/Trisha" target="_blank" rel="noopener">View on GitHub ↗</a>
+    <a class="btn" href="https://github.com/rafaeldossanto/Trisha/blob/main/Docs/Trilha.md" target="_blank" rel="noopener">Documentation ↗</a>
   </div>
 
   <div class="section" lang="pt" data-i18n>
@@ -1058,8 +1058,9 @@
       hoje o serviço de localização resolve os caminhos visíveis antes de devolver uma coordenada.</li>
       <li><b>Concorrência provada, não presumida.</b> Corridas de contador resolvidas com lock pessimista
       na linha-pai e validadas com testes de 50 escritas simultâneas em Testcontainers.</li>
-      <li><b>CI/CD em todos os repositórios.</b> GitHub Actions com build e testes, Docker multi-stage com
-      usuário non-root, imagens no ghcr.io e migrations versionadas com Flyway.</li>
+      <li><b>CI/CD por projeto, num monorepo.</b> Um workflow do GitHub Actions por pasta: o commit que
+      mexe num serviço testa e publica só ele. Docker multi-stage com usuário non-root, imagens no ghcr.io
+      e migrations versionadas com Flyway.</li>
     </ul>
   </div>
   <div class="section" lang="en" data-i18n hidden>
@@ -1075,8 +1076,9 @@
       the location service resolves which paths are visible before returning a single coordinate.</li>
       <li><b>Concurrency proven, not assumed.</b> Counter races solved with a pessimistic lock on the
       parent row and validated by tests with 50 simultaneous writes in Testcontainers.</li>
-      <li><b>CI/CD in every repository.</b> GitHub Actions running build and tests, multi-stage Docker
-      with a non-root user, images on ghcr.io and versioned migrations with Flyway.</li>
+      <li><b>CI/CD per project, in a monorepo.</b> One GitHub Actions workflow per folder: a commit that
+      touches one service builds and ships only that service. Multi-stage Docker with a non-root user,
+      images on ghcr.io and versioned migrations with Flyway.</li>
     </ul>
   </div>
 
@@ -1084,7 +1086,7 @@
     <h2>Números</h2>
     <div class="stats">
       <div class="stat"><span class="n">5+1</span><span class="l">serviços + BFF</span></div>
-      <div class="stat"><span class="n">9</span><span class="l">repositórios</span></div>
+      <div class="stat"><span class="n">9</span><span class="l">projetos num monorepo</span></div>
       <div class="stat"><span class="n">320+</span><span class="l">testes</span></div>
       <div class="stat"><span class="n">4</span><span class="l">rodadas de hardening</span></div>
     </div>
@@ -1093,7 +1095,7 @@
     <h2>Numbers</h2>
     <div class="stats">
       <div class="stat"><span class="n">5+1</span><span class="l">services + BFF</span></div>
-      <div class="stat"><span class="n">9</span><span class="l">repositories</span></div>
+      <div class="stat"><span class="n">9</span><span class="l">projects, one monorepo</span></div>
       <div class="stat"><span class="n">320+</span><span class="l">tests</span></div>
       <div class="stat"><span class="n">4</span><span class="l">hardening rounds</span></div>
     </div>
@@ -1122,17 +1124,18 @@
   </div>
 
   <div class="section">
-    <h2 lang="pt" data-i18n>Repositórios</h2><h2 lang="en" data-i18n hidden>Repositories</h2>
+    <h2 lang="pt" data-i18n>Repositório</h2><h2 lang="en" data-i18n hidden>Repository</h2>
     <div class="repos">
-      <a class="repo" href="https://github.com/rafaeldossanto/Cadastro" target="_blank" rel="noopener"><code>Cadastro</code> <span class="what" lang="pt" data-i18n>identidade e autenticação</span><span class="what" lang="en" data-i18n hidden>identity and authentication</span><span class="ext">↗</span></a>
-      <a class="repo" href="https://github.com/rafaeldossanto/APP" target="_blank" rel="noopener"><code>APP</code> <span class="what" lang="pt" data-i18n>domínio social</span><span class="what" lang="en" data-i18n hidden>social domain</span><span class="ext">↗</span></a>
-      <a class="repo" href="https://github.com/rafaeldossanto/loc" target="_blank" rel="noopener"><code>loc</code> <span class="what" lang="pt" data-i18n>localização e GPS</span><span class="what" lang="en" data-i18n hidden>location and GPS</span><span class="ext">↗</span></a>
-      <a class="repo" href="https://github.com/rafaeldossanto/midia" target="_blank" rel="noopener"><code>midia</code> <span class="what" lang="pt" data-i18n>upload de mídia</span><span class="what" lang="en" data-i18n hidden>media uploads</span><span class="ext">↗</span></a>
-      <a class="repo" href="https://github.com/rafaeldossanto/TrishaBff" target="_blank" rel="noopener"><code>TrishaBff</code> <span class="what">backend for frontend</span><span class="ext">↗</span></a>
-      <a class="repo" href="https://github.com/rafaeldossanto/frontMobile" target="_blank" rel="noopener"><code>frontMobile</code> <span class="what" lang="pt" data-i18n>app Flutter</span><span class="what" lang="en" data-i18n hidden>Flutter app</span><span class="ext">↗</span></a>
-      <a class="repo" href="https://github.com/rafaeldossanto/TrishaWeb" target="_blank" rel="noopener"><code>TrishaWeb</code> <span class="what" lang="pt" data-i18n>cliente web</span><span class="what" lang="en" data-i18n hidden>web client</span><span class="ext">↗</span></a>
-      <a class="repo" href="https://github.com/rafaeldossanto/TrishaInfra" target="_blank" rel="noopener"><code>TrishaInfra</code> <span class="what" lang="pt" data-i18n>infraestrutura e deploy</span><span class="what" lang="en" data-i18n hidden>infrastructure and deployment</span><span class="ext">↗</span></a>
-      <a class="repo" href="https://github.com/rafaeldossanto/TrishaDocs" target="_blank" rel="noopener"><code>TrishaDocs</code> <span class="what" lang="pt" data-i18n>documentação do projeto</span><span class="what" lang="en" data-i18n hidden>project documentation</span><span class="ext">↗</span></a>
+      <a class="repo" href="https://github.com/rafaeldossanto/Trisha" target="_blank" rel="noopener"><code>Trisha</code> <span class="what" lang="pt" data-i18n>monorepo com as nove pastas abaixo</span><span class="what" lang="en" data-i18n hidden>monorepo holding the nine folders below</span><span class="ext">↗</span></a>
+      <a class="repo" href="https://github.com/rafaeldossanto/Trisha/tree/main/Cadastro" target="_blank" rel="noopener"><code>Cadastro/</code> <span class="what" lang="pt" data-i18n>identidade e autenticação</span><span class="what" lang="en" data-i18n hidden>identity and authentication</span><span class="ext">↗</span></a>
+      <a class="repo" href="https://github.com/rafaeldossanto/Trisha/tree/main/APP" target="_blank" rel="noopener"><code>APP/</code> <span class="what" lang="pt" data-i18n>domínio social</span><span class="what" lang="en" data-i18n hidden>social domain</span><span class="ext">↗</span></a>
+      <a class="repo" href="https://github.com/rafaeldossanto/Trisha/tree/main/loc" target="_blank" rel="noopener"><code>loc/</code> <span class="what" lang="pt" data-i18n>localização e GPS</span><span class="what" lang="en" data-i18n hidden>location and GPS</span><span class="ext">↗</span></a>
+      <a class="repo" href="https://github.com/rafaeldossanto/Trisha/tree/main/midia" target="_blank" rel="noopener"><code>midia/</code> <span class="what" lang="pt" data-i18n>upload de mídia</span><span class="what" lang="en" data-i18n hidden>media uploads</span><span class="ext">↗</span></a>
+      <a class="repo" href="https://github.com/rafaeldossanto/Trisha/tree/main/bff" target="_blank" rel="noopener"><code>bff/</code> <span class="what">backend for frontend</span><span class="ext">↗</span></a>
+      <a class="repo" href="https://github.com/rafaeldossanto/Trisha/tree/main/trilha_app" target="_blank" rel="noopener"><code>trilha_app/</code> <span class="what" lang="pt" data-i18n>app Flutter</span><span class="what" lang="en" data-i18n hidden>Flutter app</span><span class="ext">↗</span></a>
+      <a class="repo" href="https://github.com/rafaeldossanto/Trisha/tree/main/trilha_web" target="_blank" rel="noopener"><code>trilha_web/</code> <span class="what" lang="pt" data-i18n>cliente web</span><span class="what" lang="en" data-i18n hidden>web client</span><span class="ext">↗</span></a>
+      <a class="repo" href="https://github.com/rafaeldossanto/Trisha/tree/main/trilha-infra" target="_blank" rel="noopener"><code>trilha-infra/</code> <span class="what" lang="pt" data-i18n>infraestrutura e deploy</span><span class="what" lang="en" data-i18n hidden>infrastructure and deployment</span><span class="ext">↗</span></a>
+      <a class="repo" href="https://github.com/rafaeldossanto/Trisha/tree/main/Docs" target="_blank" rel="noopener"><code>Docs/</code> <span class="what" lang="pt" data-i18n>documentação do projeto</span><span class="what" lang="en" data-i18n hidden>project documentation</span><span class="ext">↗</span></a>
     </div>
   </div>
 
