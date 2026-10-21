@@ -1,3 +1,7 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rafael Santos — Desenvolvedor Back-end Java</title>
 
 <style>
@@ -1332,8 +1336,8 @@
       </div>
       <div class="box">
         <div class="box-name">core <span class="meta">:8081</span></div>
-        <p lang="pt" data-i18n>Spring Modulith com oito módulos — identidade, conexões, contas, investimentos, sincronização, provedor, análises e o compartilhado. Só o BFF chama.</p>
-        <p lang="en" data-i18n hidden>Spring Modulith with eight modules — identity, connections, banking, investments, sync, provider, insights and shared. Only the BFF calls it.</p>
+        <p lang="pt" data-i18n>Spring Modulith com nove módulos — identidade, conexões, contas, investimentos, sincronização, provedor, análises, planejamento e o compartilhado. Só o BFF chama.</p>
+        <p lang="en" data-i18n hidden>Spring Modulith with nine modules — identity, connections, banking, investments, sync, provider, insights, planning and shared. Only the BFF calls it.</p>
       </div>
       <div class="box">
         <div class="box-name">provider <span class="meta">Pluggy</span></div>
@@ -1401,19 +1405,19 @@
   <div class="section" lang="pt" data-i18n>
     <h2>Números</h2>
     <div class="stats">
-      <div class="stat"><span class="n">248</span><span class="l">testes</span></div>
-      <div class="stat"><span class="n">8</span><span class="l">módulos no core</span></div>
+      <div class="stat"><span class="n">511</span><span class="l">testes</span></div>
+      <div class="stat"><span class="n">9</span><span class="l">módulos no core</span></div>
       <div class="stat"><span class="n">3</span><span class="l">plataformas</span></div>
-      <div class="stat"><span class="n">3</span><span class="l">versões publicadas</span></div>
+      <div class="stat"><span class="n">5</span><span class="l">versões publicadas</span></div>
     </div>
   </div>
   <div class="section" lang="en" data-i18n hidden>
     <h2>Numbers</h2>
     <div class="stats">
-      <div class="stat"><span class="n">248</span><span class="l">tests</span></div>
-      <div class="stat"><span class="n">8</span><span class="l">core modules</span></div>
+      <div class="stat"><span class="n">511</span><span class="l">tests</span></div>
+      <div class="stat"><span class="n">9</span><span class="l">core modules</span></div>
       <div class="stat"><span class="n">3</span><span class="l">platforms</span></div>
-      <div class="stat"><span class="n">3</span><span class="l">published releases</span></div>
+      <div class="stat"><span class="n">5</span><span class="l">published releases</span></div>
     </div>
   </div>
 
@@ -1441,6 +1445,7 @@
         <div><dt>sync</dt><dd>agendamento, execução e o registro de cada rodada</dd></div>
         <div><dt>provider</dt><dd>a porta <code>FinancialDataProvider</code> e o adaptador <code>pluggy</code></dd></div>
         <div><dt>insight</dt><dd>visão geral, gastos por categoria e por dia, patrimônio</dd></div>
+        <div><dt>planning</dt><dd>plano do mês, gastos fixos, salário esperado e os fixos que o extrato sugere</dd></div>
         <div><dt>shared</dt><dd><code>crypto</code>, <code>money</code>, <code>time</code>, <code>security</code> — o que todos usam</dd></div>
       </dl>
     </div>
@@ -1459,10 +1464,11 @@
     <div class="pkg">
       <div class="pkg-root">app/lib <span class="meta">· Flutter</span></div>
       <dl class="pkg-list">
-        <div><dt>features</dt><dd>uma pasta por tela — visão geral, extrato, cartões, investimentos, calendário, conexões — cada uma com <code>data</code> e <code>presentation</code></dd></div>
+        <div><dt>features</dt><dd>uma pasta por tela — visão geral, extrato, cartões, investimentos, calendário, planejamento, conexões — cada uma com <code>data</code> e <code>presentation</code></dd></div>
         <div><dt>core/session</dt><dd>renovação numa fila só; cookie no navegador, armazenamento seguro no celular</dd></div>
         <div><dt>core/security</dt><dd>bloqueio por biometria e tempo de inatividade</dd></div>
-        <div><dt>core/desktop</dt><dd>atualizador, bandeja e janela do aplicativo de Windows</dd></div>
+        <div><dt>core/desktop</dt><dd>bandeja e janela do aplicativo de Windows</dd></div>
+        <div><dt>core/updates</dt><dd>atualização pelo manifesto da release, no Windows e no Android, com o SHA-256 conferido</dd></div>
         <div><dt>core/router</dt><dd>go_router com abas que preservam o estado de cada tela</dd></div>
       </dl>
     </div>
@@ -1484,6 +1490,7 @@
         <div><dt>sync</dt><dd>scheduling, execution and a record of every run</dd></div>
         <div><dt>provider</dt><dd>the <code>FinancialDataProvider</code> port and the <code>pluggy</code> adapter</dd></div>
         <div><dt>insight</dt><dd>overview, spending by category and by day, net worth</dd></div>
+        <div><dt>planning</dt><dd>the month plan, fixed expenses, expected salary and the fixed costs the statement suggests</dd></div>
         <div><dt>shared</dt><dd><code>crypto</code>, <code>money</code>, <code>time</code>, <code>security</code> — what everyone uses</dd></div>
       </dl>
     </div>
@@ -1502,10 +1509,11 @@
     <div class="pkg">
       <div class="pkg-root">app/lib <span class="meta">· Flutter</span></div>
       <dl class="pkg-list">
-        <div><dt>features</dt><dd>one folder per screen — overview, statement, cards, investments, calendar, connections — each with <code>data</code> and <code>presentation</code></dd></div>
+        <div><dt>features</dt><dd>one folder per screen — overview, statement, cards, investments, calendar, planning, connections — each with <code>data</code> and <code>presentation</code></dd></div>
         <div><dt>core/session</dt><dd>renewal in a single queue; a cookie in the browser, secure storage on phones</dd></div>
         <div><dt>core/security</dt><dd>biometric lock and inactivity timeout</dd></div>
-        <div><dt>core/desktop</dt><dd>updater, tray and window of the Windows app</dd></div>
+        <div><dt>core/desktop</dt><dd>tray and window of the Windows app</dd></div>
+        <div><dt>core/updates</dt><dd>updates from the release manifest, on Windows and Android, with the SHA-256 checked</dd></div>
         <div><dt>core/router</dt><dd>go_router with tabs that keep each screen's state</dd></div>
       </dl>
     </div>
@@ -1513,9 +1521,11 @@
 
   <footer>
     <p class="colophon" lang="pt" data-i18n>Wallet tem nome provisório e está em desenvolvimento: roda de ponta a ponta com uma
-    Pluggy de demonstração, e a conexão com contas reais é o próximo passo. <a href="#/projetos">← voltar aos projetos</a></p>
+    Pluggy de demonstração e já fala com a Pluggy real — no Android, o Pluggy Connect leva direto ao app do banco. Falta
+    conferir as regras com dados reais antes de abrir para outras pessoas. <a href="#/projetos">← voltar aos projetos</a></p>
     <p class="colophon" lang="en" data-i18n hidden>Wallet has a working title and is under development: it runs end to end against
-    a demo Pluggy, and connecting real accounts is the next step. <a href="#/projetos">← back to projects</a></p>
+    a demo Pluggy and already talks to the real Pluggy — on Android, Pluggy Connect goes straight to the bank's app. What's
+    left is checking the rules against real data before opening it to other people. <a href="#/projetos">← back to projects</a></p>
   </footer>
 </div>
 
