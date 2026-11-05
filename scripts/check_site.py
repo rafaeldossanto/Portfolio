@@ -17,6 +17,9 @@ class SiteParser(HTMLParser):
         self.ids = []
         self.panels = set()
         self.hrefs = []
+        self.assets = []
+        self.external_scripts = []
+        self.project_routes = set()
         self.scripts = []
         self.current_script = None
         self.images = []
@@ -30,10 +33,21 @@ class SiteParser(HTMLParser):
             self.ids.append(attrs['id'])
         if attrs.get('data-panel'):
             self.panels.add(attrs['data-panel'])
+        if attrs.get('data-view-panel'):
+            self.panels.add(attrs['data-view-panel'])
+        for attribute in ('data-full-project', 'data-project'):
+            if attrs.get(attribute):
+                self.project_routes.add(attrs[attribute])
         if tag == 'a' and 'href' in attrs:
             self.hrefs.append(attrs['href'])
         if tag == 'img':
             self.images.append(attrs)
+        if tag in ('img', 'script') and attrs.get('src'):
+            self.assets.append(attrs['src'])
+        if tag == 'link' and attrs.get('href'):
+            self.assets.append(attrs['href'])
+        if tag == 'script' and attrs.get('src'):
+            self.external_scripts.append(attrs['src'])
         if tag == 'meta' and attrs.get('name') == 'viewport':
             self.has_viewport = 'width=device-width' in attrs.get('content', '')
         if tag == 'title':
@@ -64,8 +78,8 @@ def main():
     if not ''.join(parser.title).strip() or not parser.has_viewport:
         raise SystemExit('O site precisa de título e viewport responsivo.')
     routes = {key.removeprefix('view-') for key in parser.ids if key.startswith('view-')}
-    routes |= parser.panels | {'', 'trilha'}
-    for href in parser.hrefs:
+    routes |= parser.panels | parser.project_routes | {'', 'trilha', 'neuronsai', 'projetos', 'experiencia', 'exp', 'perfil'}
+    for href in parser.hrefs + parser.assets:
         if href.startswith('#/'):
             if href[2:] not in routes:
                 raise SystemExit(f'Rota sem destino: {href}')
@@ -86,7 +100,13 @@ def main():
         result = subprocess.run(['node', '--check'], input=script, text=True, capture_output=True)
         if result.returncode:
             raise SystemExit(f'JavaScript inválido no bloco {index}:\n{result.stderr}')
-    print(f'Site validado: {len(routes)} rotas, {len(parser.images)} imagem(ns), {len(parser.scripts)} script(s).')
+    for source in parser.external_scripts:
+        if urlsplit(source).scheme:
+            continue
+        result = subprocess.run(['node', '--check', str(ROOT / source)], text=True, capture_output=True)
+        if result.returncode:
+            raise SystemExit(f'JavaScript inválido em {source}:\n{result.stderr}')
+    print(f'Site validado: {len(routes)} rotas, {len(parser.images)} imagem(ns), {len(parser.scripts) + len(parser.external_scripts)} script(s).')
 
 
 if __name__ == '__main__':
