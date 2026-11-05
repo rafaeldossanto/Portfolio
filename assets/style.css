@@ -83,7 +83,7 @@ body { margin:0; font-family:Manrope,sans-serif; -webkit-font-smoothing:antialia
   #rafael-portfolio .rs-cover { width:100%; position:relative; overflow:hidden; }
   #rafael-portfolio .rs-neurons-cover { min-height:288px; padding:32px; display:flex; flex-direction:column; justify-content:space-between; background:#181818; color:#f4f5ef; }
   #rafael-portfolio .rs-cover-label { display:flex; align-items:center; gap:8px; }
-  #rafael-portfolio .rs-cover-label::before { content:""; width:8px; height:8px; border-radius:9999px; background:#d99b55; }
+  #rafael-portfolio .rs-cover-label::before { content:""; width:8px; height:8px; border-radius:9999px; background:#facc15; }
   #rafael-portfolio .rs-flow { display:flex; align-items:center; gap:8px; padding-block:32px; }
   #rafael-portfolio .rs-flow-node { background:#272727; border:1px solid #313131; padding:12px; border-radius:8px; color:#b0b2a8; flex:1; }
   #rafael-portfolio .rs-flow-node b { display:block; margin-top:4px; font-weight:500; color:#f4f5ef; }

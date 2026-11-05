@@ -208,8 +208,8 @@
   const text = {
     pt: {
       experience:'Experiência', projects:'Projetos', profile:'Perfil', contact:'Contato', contactNav:'Contato ↗',
-      personalPortfolio:'Portfólio pessoal', role:'Desenvolvedor backend Java', viewProjects:'Ver projetos ↘',
-      location:'Nova Odessa/SP · Presencial, híbrido ou remoto', expertise:'Java · Spring Boot · Sistemas distribuídos',
+      personalPortfolio:'Portfólio pessoal', role:'Desenvolvedor backend', viewProjects:'Ver projetos ↘',
+      location:'Engenheiro de IA', expertise:'Java · Spring Boot · Sistemas distribuídos',
       projectsTitle:'Projetos', projectsSubtitle:'O que construí e o que estou desenvolvendo.',
       projectsHint:'Abra um projeto para ver arquitetura, decisões técnicas e código.', profileTitle:'Como trabalho',
       back:'← Todos os projetos', inside:'Por dentro do projeto',
@@ -224,8 +224,8 @@
     },
     en: {
       experience:'Experience', projects:'Projects', profile:'Profile', contact:'Contact', contactNav:'Contact ↗',
-      personalPortfolio:'Personal portfolio', role:'Java backend developer', viewProjects:'View projects ↘',
-      location:'Nova Odessa, Brazil · On site, hybrid or remote', expertise:'Java · Spring Boot · Distributed systems',
+      personalPortfolio:'Personal portfolio', role:'Backend developer', viewProjects:'View projects ↘',
+      location:'AI Engineer', expertise:'Java · Spring Boot · Distributed systems',
       projectsTitle:'Projects', projectsSubtitle:'What I have built and what I am working on.',
       projectsHint:'Open a project for its architecture, technical decisions and code.', profileTitle:'How I work',
       back:'← All projects', inside:'Inside the project',
