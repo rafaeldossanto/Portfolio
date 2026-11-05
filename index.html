@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Rafael Santos | Desenvolvedor backend Java</title>
+  <title>Rafael Santos | Desenvolvedor backend e Engenheiro de IA</title>
   <meta name="description" content="Portfólio de Rafael Santos: desenvolvimento backend Java, sistemas distribuídos, aplicativos e agentes de IA. Conheça os projetos, a experiência e as decisões técnicas.">
   <meta name="theme-color" content="#181818">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Rafael Santos | Desenvolvedor backend Java">
+  <meta property="og:title" content="Rafael Santos | Desenvolvedor backend e Engenheiro de IA">
   <meta property="og:description" content="Projetos, experiência e decisões de arquitetura. Java, sistemas distribuídos e agentes de IA.">
   <meta property="og:image" content="https://rafaelsantos.app/assets/rafael-santos.jpg">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -27,7 +27,7 @@
           <a class="rs-monogram title-2" href="#/" data-home aria-label="Rafael Santos, início">rs.</a>
           <div class="rs-nav-links" id="rs-navigation">
             <button class="button-sm" data-view="experience" data-copy="experience">Experiência</button>
-            <button class="button-sm" data-view="projects" data-copy="projects" aria-current="page">Projetos</button>
+            <button class="button-sm" data-view="projects" data-copy="projects">Projetos</button>
             <button class="button-sm" data-view="profile" data-copy="profile">Perfil</button>
             <button class="button-sm" data-view="stack">Stack</button>
             <button class="button-sm" data-scroll="contact">Contato ↗</button>
@@ -38,11 +38,12 @@
         </nav>
       </header>
       <main class="rs-container" id="main-content" tabindex="-1">
+        <div data-view-panel="home">
         <section class="rs-hero" data-section="top" aria-label="Apresentação">
           <div>
             <div class="rs-eyebrow caption-4" data-copy="personalPortfolio">Portfólio pessoal</div>
             <h1 class="heading-3">Rafael Santos</h1>
-            <p class="rs-role title-2" data-copy="role">Desenvolvedor backend</p>
+            <p class="rs-role title-2" data-copy="homeRole">Desenvolvedor backend · Engenheiro de IA</p>
             <div class="rs-hero-copy body-3 rs-full-bio"><div class="old-bio" lang="pt" data-i18n>
     <p>Sou o Rafael, desenvolvedor back-end. Programo sistemas e APIs viabilizando melhor
     performance, escalabilidade e segurança, para que o produto cresça sem perder clareza e para que
@@ -53,18 +54,40 @@
     code after me understands every decision that was made.</p>
   </div></div>
             <div class="rs-actions">
-              <button class="rs-primary button-sm" data-view="projects" data-copy="viewProjects">Ver projetos ↘</button>
-              <a class="rs-link body-6" href="https://github.com/rafaeldossanto" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-              <a class="rs-link body-6" href="https://www.linkedin.com/in/rafaeisantoss" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+              <button class="rs-primary button-sm" data-view="projects" data-copy="exploreProjects">Explorar projetos ↗</button>
+              <button class="rs-secondary button-sm" data-view="profile" data-copy="aboutMe">Sobre mim</button>
             </div>
           </div>
           <figure class="rs-portrait">
-            <img src="assets/rafael-santos.jpg" alt="Rafael Santos" width="160" height="192">
+            <img src="assets/rafael-santos.jpg" alt="Rafael Santos" width="400" height="400">
           </figure>
 
         </section>
-        <div class="rs-proof body-6"><span data-copy="location">Engenheiro de IA</span><span class="rs-proof-stack caption-4">Java · Spring Boot · Sistemas distribuídos</span></div>
-        <section class="rs-work" data-section="projects" data-view-panel="projects" aria-label="Projetos">
+        <div class="rs-proof body-6"><span class="rs-proof-stack body-6" data-copy="homeExpertise">Java · Spring Boot · Sistemas distribuídos · Agentes de IA</span></div>
+        <section class="rs-home-work" aria-labelledby="home-work-title">
+          <div class="rs-section-head"><h2 id="home-work-title" class="heading-5" data-copy="workingOn">No que estou trabalhando</h2><button class="rs-home-link button-sm" data-view="projects" data-copy="allProjects">Ver todos os projetos ↗</button></div>
+          <div class="rs-home-grid">
+            <button class="rs-home-card" data-project="neurons">
+              <h3 class="heading-5">NeuronsAI</h3>
+              <p class="rs-home-status body-6" data-copy="inDevelopment">Em desenvolvimento</p>
+              <p class="body-6" data-copy="homeNeurons">Orquestração visual de agentes de IA.</p>
+              <svg class="rs-home-graph" viewBox="0 0 440 120" aria-hidden="true"><path d="M24 66H110L188 22L330 48L408 92L188 110L110 66M188 110L330 48"/><g><circle cx="24" cy="66" r="5"/><circle cx="110" cy="66" r="5"/><circle cx="188" cy="22" r="5"/><circle cx="188" cy="110" r="5"/><circle cx="330" cy="48" r="5"/><circle cx="408" cy="92" r="5"/></g></svg>
+            </button>
+            <button class="rs-home-card" data-project="miniinfos">
+              <h3 class="heading-5">MiniInfos</h3>
+              <p class="rs-home-status body-6" data-copy="inDevelopment">Em desenvolvimento</p>
+              <p class="body-6" data-copy="homeMiniinfos">Suas ferramentas de IA em um painel desktop.</p>
+              <svg class="rs-home-dashboard" viewBox="0 0 440 120" aria-hidden="true"><rect x="1" y="1" width="438" height="118" rx="8"/><path d="M72 1V119M88 85H420M245 15V70H420V15Z"/><g class="rs-home-bars"><rect x="16" y="20" width="34" height="6" rx="3"/><rect x="16" y="40" width="24" height="5" rx="2"/><rect x="16" y="60" width="30" height="5" rx="2"/><rect x="16" y="80" width="20" height="5" rx="2"/><rect x="90" y="22" width="44" height="5" rx="2"/><rect x="90" y="40" width="72" height="5" rx="2"/><rect x="90" y="58" width="54" height="5" rx="2"/><rect x="90" y="100" width="100" height="5" rx="2"/><rect x="270" y="100" width="70" height="5" rx="2"/></g><path class="rs-home-chart" d="M252 63C275 62 270 32 292 36S315 66 339 48S366 22 380 33S398 26 414 21"/></svg>
+            </button>
+          </div>
+        </section>
+        <div class="rs-home-shortcuts">
+          <button data-view="projects"><span class="title-3" data-copy="shortcutProjects">01 Projetos ↗</span><span class="body-6" data-copy="shortcutProjectsCopy">Arquitetura, decisões e código</span></button>
+          <button data-view="experience"><span class="title-3" data-copy="shortcutExperience">02 Experiência ↗</span><span class="body-6" data-copy="shortcutExperienceCopy">Minha trajetória profissional</span></button>
+          <button data-view="profile"><span class="title-3" data-copy="shortcutProfile">03 Perfil ↗</span><span class="body-6" data-copy="shortcutProfileCopy">Como trabalho e o que estudo</span></button>
+        </div>
+        </div>
+        <section class="rs-work" data-section="projects" data-view-panel="projects" aria-label="Projetos" hidden>
           <div class="rs-section-head">
             <div><h2 class="heading-5" data-copy="projectsTitle">Projetos</h2><p class="rs-kicker body-6" data-copy="projectsSubtitle">O que construí e o que estou desenvolvendo.</p></div>
             <p class="body-6" data-copy="projectsHint">Abra um projeto para ver arquitetura, decisões técnicas e código.</p>
