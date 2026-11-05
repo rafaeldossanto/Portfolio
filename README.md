@@ -1,31 +1,45 @@
-# Portfolio
+# Portfólio de Rafael Santos
 
-Fonte do meu portfólio pessoal — Rafael Santos, desenvolvedor back-end Java.
+Portfólio pessoal com projetos, experiência profissional, perfil e stack. Site estático em HTML, CSS e JavaScript, com navegação por hash, português e inglês e temas claro e escuro.
 
-Publicado em: https://claude.ai/code/artifact/c52002cf-76d0-4ef4-951d-8053f3d714bd
+## Estrutura
 
-## O que é
+- `index.html`: apresentação, seções e conteúdo completo dos projetos existentes.
+- `assets/style.css`: sistema visual editorial e layout responsivo.
+- `assets/portfolio.js`: navegação, preferências e estudos de caso do MiniInfos e do NeuronsAI.
+- `assets/rafael-santos.jpg`: retrato usado na apresentação.
+- `404.html`: página para endereços não encontrados.
+- `scripts/`: validação e exportação dos arquivos públicos.
+- `tests/`: testes de navegação, conteúdo e responsividade no Chromium.
 
-Uma página só, sem dependência externa nenhuma: HTML, CSS e um pouco de JavaScript, tudo dentro de
-`index.html`. A foto do topo está embutida como data URI, então o arquivo não depende de nenhum host
-para renderizar — basta abrir no navegador.
+## Navegação
 
-- Navegação por hash: `#/` (experiência), `#/projetos`, `#/perfil`, `#/stack`
-- Vistas de projeto: `#/trisha`, `#/newstech`, `#/faturamento`
-- `#/trilha` continua funcionando como apelido de `#/trisha` (nome antigo do projeto)
-- Tema claro e escuro por `prefers-color-scheme`, com override via `data-theme`
+| Rota | Conteúdo |
+| --- | --- |
+| `#/` ou `#/projetos` | Apresentação e projetos |
+| `#/experiencia` | Trajetória profissional |
+| `#/perfil` | Como trabalho |
+| `#/stack` | Tecnologias agrupadas por área |
+| `#/neuronsai`, `#/miniinfos` | Estudos de caso dos projetos novos |
+| `#/trisha`, `#/wallet`, `#/storage`, `#/tlt`, `#/newstech`, `#/faturamento` | Projetos e decisões técnicas |
 
-## Estrutura da página
+Os links antigos `#/trilha` e `#/exp` continuam funcionando. O navegador permite voltar e avançar entre as páginas. Preferências de idioma e tema ficam salvas localmente; nenhum serviço do chat é necessário para o site funcionar.
 
-| rota | conteúdo |
-|---|---|
-| `#/` | trajetória: Agibank, projetos próprios, transição de carreira |
-| `#/projetos` | cards clicáveis, cada um abre a vista detalhada do projeto |
-| `#/perfil` | como trabalho, descrito por quem revisa meu código comigo |
-| `#/stack` | ferramentas agrupadas por tema |
+## Executar e validar
 
-## Publicando uma atualização
+Requer Node.js 24 e Python 3.10 ou posterior.
 
-O arquivo é o fonte do artifact: não tem `<!doctype>`, `<html>` nem `<head>`, porque a plataforma
-envolve o conteúdo nesse esqueleto na hora de publicar. Abrir direto no navegador funciona mesmo
-assim — o browser cria os elementos implícitos.
+```sh
+npm ci
+npm run check
+npx playwright install chromium
+npm test
+npm run build
+python -m http.server 4173 --bind 127.0.0.1
+```
+
+A exportação fica em `dist/`, com HTML, CSS, JavaScript e imagens. O único recurso visual externo é a fonte Manrope, carregada pelo Google Fonts, com alternativa local do navegador.
+
+## Entrega
+
+O fluxo é `dev → hom → main`. A `hom` exige o check `ci` aprovado, sem revisão obrigatória. A configuração de hospedagem privada na AWS e do domínio no Cloudflare é manual. Consulte [o fluxo de entrega](docs/fluxo-de-entrega.md).
