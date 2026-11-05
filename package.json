@@ -1,0 +1,13 @@
+{
+  "name": "rafael-santos-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "python scripts/check_site.py",
+    "build": "python scripts/build_site.py",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.0"
+  }
+}
