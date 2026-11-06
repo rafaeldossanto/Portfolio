@@ -71,13 +71,33 @@
               <h3 class="heading-5">NeuronsAI</h3>
               <p class="rs-home-status body-6" data-copy="inDevelopment">Em desenvolvimento</p>
               <p class="body-6" data-copy="homeNeurons">Orquestração visual de agentes de IA.</p>
-              <svg class="rs-home-graph" viewBox="0 0 440 120" aria-hidden="true"><path d="M24 66H110L188 22L330 48L408 92L188 110L110 66M188 110L330 48"/><g><circle cx="24" cy="66" r="5"/><circle cx="110" cy="66" r="5"/><circle cx="188" cy="22" r="5"/><circle cx="188" cy="110" r="5"/><circle cx="330" cy="48" r="5"/><circle cx="408" cy="92" r="5"/></g></svg>
+              <div class="rs-product-preview rs-neurons-preview" aria-hidden="true">
+                <div class="rs-preview-toolbar"><span class="rs-preview-brand">N<span class="rs-preview-yellow">.</span> <span>workspace</span></span><span data-copy="previewGraph">Grafo de exemplo</span></div>
+                <svg class="rs-agent-canvas" viewBox="0 0 480 250">
+                  <defs><pattern id="agent-grid" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="currentColor" opacity=".18"/></pattern></defs>
+                  <rect width="480" height="250" fill="url(#agent-grid)"/>
+                  <g class="rs-agent-edges"><path d="M100 126H132"/><path d="M286 126C310 126 306 58 330 58"/><path d="M286 126C310 126 306 202 330 202"/><path class="rs-agent-memory-edge" d="M399 98V168"/></g>
+                  <g class="rs-agent-trigger"><rect x="12" y="109" width="88" height="34" rx="17"/><path d="M29 118L24 127H30L27 135L37 124H30L33 118"/><text x="45" y="130">Manual</text></g>
+                  <g class="rs-agent-block rs-agent-selected"><rect x="132" y="83" width="154" height="86" rx="8"/><rect class="rs-agent-icon-bg" x="144" y="95" width="28" height="28" rx="6"/><path class="rs-agent-icon" d="M151 113H164C170 113 169 104 163 105C161 98 152 101 153 106C147 105 146 113 151 113Z"/><text class="rs-agent-kind" x="180" y="104" data-copy="previewApi">AGENTE · API</text><text class="rs-agent-title" x="180" y="119" data-copy="previewPlanner">Planejador</text><text class="rs-agent-detail" x="144" y="151" data-copy="previewContext">Contexto compartilhado</text></g>
+                  <g class="rs-agent-block"><rect x="330" y="18" width="138" height="80" rx="8"/><rect class="rs-agent-icon-bg" x="342" y="30" width="26" height="26" rx="6"/><path class="rs-agent-icon" d="M349 38L354 43L349 48M357 48H362"/><text class="rs-agent-kind" x="376" y="39" data-copy="previewTerminal">TERMINAL</text><text class="rs-agent-title" x="376" y="54" data-copy="previewExecutor">Executor</text><text class="rs-agent-detail" x="342" y="80">Codex CLI</text></g>
+                  <g class="rs-agent-block"><rect x="330" y="168" width="138" height="68" rx="8"/><rect class="rs-tool-icon-bg" x="342" y="180" width="26" height="26" rx="6"/><path class="rs-agent-icon" d="M349 186H356V201H349ZM357 186H362V201H357Z"/><text class="rs-agent-kind" x="376" y="189" data-copy="previewTool">FERRAMENTA</text><text class="rs-agent-title" x="376" y="204" data-copy="previewMemory">Memória</text><text class="rs-agent-detail" x="342" y="223">Obsidian</text></g>
+                  <g class="rs-agent-ports"><circle cx="100" cy="126" r="3"/><circle cx="132" cy="126" r="3"/><circle cx="286" cy="126" r="3"/><circle cx="330" cy="58" r="3"/><circle cx="399" cy="98" r="3"/><circle cx="399" cy="168" r="3"/><circle cx="330" cy="202" r="3"/></g>
+                </svg>
+              </div>
             </button>
             <button class="rs-home-card" data-project="miniinfos">
               <h3 class="heading-5">MiniInfos</h3>
               <p class="rs-home-status body-6" data-copy="inDevelopment">Em desenvolvimento</p>
               <p class="body-6" data-copy="homeMiniinfos">Suas ferramentas de IA em um painel desktop.</p>
-              <svg class="rs-home-dashboard" viewBox="0 0 440 120" aria-hidden="true"><rect x="1" y="1" width="438" height="118" rx="8"/><path d="M72 1V119M88 85H420M245 15V70H420V15Z"/><g class="rs-home-bars"><rect x="16" y="20" width="34" height="6" rx="3"/><rect x="16" y="40" width="24" height="5" rx="2"/><rect x="16" y="60" width="30" height="5" rx="2"/><rect x="16" y="80" width="20" height="5" rx="2"/><rect x="90" y="22" width="44" height="5" rx="2"/><rect x="90" y="40" width="72" height="5" rx="2"/><rect x="90" y="58" width="54" height="5" rx="2"/><rect x="90" y="100" width="100" height="5" rx="2"/><rect x="270" y="100" width="70" height="5" rx="2"/></g><path class="rs-home-chart" d="M252 63C275 62 270 32 292 36S315 66 339 48S366 22 380 33S398 26 414 21"/></svg>
+              <div class="rs-product-preview rs-mini-preview" aria-hidden="true">
+                <div class="rs-preview-toolbar"><span class="rs-preview-brand">MiniInfos</span><span>↻ &nbsp; ×</span></div>
+                <img class="rs-mini-art" src="assets/miniinfos-widget-header.webp" alt="" width="1200" height="400" loading="lazy">
+                <div class="rs-mini-providers">
+                  <div class="rs-mini-provider"><div class="rs-mini-provider-name"><span class="rs-provider-icon">✳</span> Claude</div><div class="rs-mini-meter"><span data-copy="previewWindow">Janela 5h</span><b>51%</b></div><div class="rs-mini-track"><span style="--meter-fill:51%"></span></div><div class="rs-mini-meter"><span data-copy="previewWeek">Semanal</span><b>9%</b></div><div class="rs-mini-track"><span style="--meter-fill:9%"></span></div><div class="rs-mini-total"><span data-copy="previewToday">Tokens hoje</span><strong>128 M</strong></div></div>
+                  <div class="rs-mini-provider"><div class="rs-mini-provider-name"><span class="rs-provider-icon">✳</span> Codex</div><div class="rs-mini-meter"><span data-copy="previewWindow">Janela 5h</span><b>27%</b></div><div class="rs-mini-track"><span style="--meter-fill:27%"></span></div><div class="rs-mini-meter"><span data-copy="previewWeek">Semanal</span><b>19%</b></div><div class="rs-mini-track"><span style="--meter-fill:19%"></span></div><div class="rs-mini-total"><span data-copy="previewToday">Tokens hoje</span><strong>46,5 M</strong></div></div>
+                </div>
+                <div class="rs-mini-bottom"><span data-copy="previewDemo">Demonstração</span><span>◫ &nbsp; ◧</span></div>
+              </div>
             </button>
           </div>
         </section>
