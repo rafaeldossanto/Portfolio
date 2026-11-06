@@ -1,4 +1,4 @@
-import { createProjectDemo, createWebsiteLink, attachCursorLight } from './project-demos.js';
+import { createProjectDemo, createWebsiteLink } from './project-demos.js';
 (() => {
   const root = document.getElementById('rafael-portfolio');
   const stage = root.querySelector('.rs-stage');
@@ -275,7 +275,6 @@ import { createProjectDemo, createWebsiteLink, attachCursorLight } from './proje
   detail.querySelector('h3').dataset.copy = 'inside';
   const extra = document.createElement('div'); extra.className = 'rs-new-project-sections'; detail.append(extra);
   let projectDemo;
-  attachCursorLight(detail);
   const biography = root.querySelector('.rs-full-bio');
   const profileBiography = document.createElement('div'); profileBiography.className = 'rs-profile-biography';
   profileBiography.append(...biography.children);

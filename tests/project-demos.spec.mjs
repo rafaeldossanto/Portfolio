@@ -59,7 +59,7 @@ test('MiniInfos alterna as ferramentas e preserva a seleção ao mudar o idioma'
   await expect(page.getByRole('heading',{name:'Architecture',exact:true})).toBeVisible();
 });
 
-test('a luz fica nas páginas internas e respeita movimento reduzido', async ({ page }) => {
+test('a luz respeita movimento reduzido e continua na Home após navegar', async ({ page }) => {
   await page.emulateMedia({ reducedMotion:'no-preference' });
   await page.goto('/#/neuronsai');
   const demo = page.locator('[data-project-demo="neurons"]');
@@ -74,6 +74,10 @@ test('a luz fica nas páginas internas e respeita movimento reduzido', async ({ 
   await expect(page.locator('[data-view-panel="home"]')).toBeVisible();
   await expect(light).toBeHidden();
   await expect(page.locator('[data-project-demo]')).toHaveCount(0);
+  await page.emulateMedia({ reducedMotion:'no-preference' });
+  await page.locator('.rs-nav').hover();
+  await expect(light).toHaveClass(/is-visible/);
+  await expect(light).toBeVisible();
 });
 
 test('sair de uma execução e reabrir o projeto inicia uma demonstração limpa', async ({ page }) => {

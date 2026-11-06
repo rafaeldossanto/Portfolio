@@ -9,6 +9,15 @@ html.rs-theme-changing::view-transition-new(root) {
 }
 html.rs-theme-changing * { transition:none !important; }
 body { margin:0; font-family:Manrope,sans-serif; -webkit-font-smoothing:antialiased; }
+#rafael-portfolio .rs-cursor-light {
+  position:fixed; inset:0; z-index:10; pointer-events:none; opacity:0;
+  background:radial-gradient(circle 160px at var(--cursor-x,-500px) var(--cursor-y,-500px),rgb(255 255 255 / .03),transparent 75%);
+  transition:opacity .3s var(--rs-curve);
+}
+#rafael-portfolio .rs-cursor-light.is-visible { opacity:1; }
+@media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce) {
+  #rafael-portfolio .rs-cursor-light { display:none; }
+}
 .rs-skip { position:absolute; top:8px; left:8px; z-index:20; padding:8px 12px; background:light-dark(#181818,#ffffff); color:light-dark(#ffffff,#181818); border-radius:8px; transform:translateY(-96px); }
 .rs-skip:focus { transform:translateY(0); }
 #rafael-portfolio :is(button,a) { cursor:pointer; }
