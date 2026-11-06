@@ -16,7 +16,8 @@ Portfólio pessoal com projetos, experiência profissional, perfil e stack. Site
 
 | Rota | Conteúdo |
 | --- | --- |
-| `#/` ou `#/projetos` | Apresentação e projetos |
+| `#/` | Página inicial com apresentação, destaques e atalhos, acessível pela marca `rs.` |
+| `#/projetos` | Listagem completa dos projetos |
 | `#/experiencia` | Trajetória profissional |
 | `#/perfil` | Como trabalho |
 | `#/stack` | Tecnologias agrupadas por área |

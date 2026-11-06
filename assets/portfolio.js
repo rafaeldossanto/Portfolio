@@ -11,7 +11,7 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const settings = {theme:'Automático',corners:'16 px',language:'pt'};
   let activeProject = null;
-  let currentView = 'projects';
+  let currentView = 'home';
   const data = {
     neurons: {
       title:'NeuronsAI',
@@ -31,6 +31,7 @@
   const caseStudies = {
     miniinfos: {
       repository:'https://github.com/rafaeldossanto/MiniInfos',
+      website:'https://miniinfos.com',
       pt:[
         {title:'O que o aplicativo resolve',kind:'paragraphs',items:[
           ['','Quem alterna entre ferramentas de IA acaba com limites, sessões e contagens espalhados em vários aplicativos. O MiniInfos reúne essas informações em um painel flutuante que acompanha o trabalho, com páginas para Claude, Codex, Gemini, Kimi e Antigravity.'],
@@ -208,8 +209,16 @@
   const text = {
     pt: {
       experience:'Experiência', projects:'Projetos', profile:'Perfil', contact:'Contato', contactNav:'Contato ↗',
-      personalPortfolio:'Portfólio pessoal', role:'Desenvolvedor backend Java', viewProjects:'Ver projetos ↘',
-      location:'Nova Odessa/SP · Presencial, híbrido ou remoto', expertise:'Java · Spring Boot · Sistemas distribuídos',
+      personalPortfolio:'Portfólio pessoal', role:'Desenvolvedor backend', viewProjects:'Ver projetos ↘',
+      homeRole:'Desenvolvedor backend · Engenheiro de IA',
+      homeIntro:'Desenvolvo sistemas, APIs e aplicações com IA. Aqui compartilho os projetos que construo, minha experiência e as decisões por trás do código.',
+      homeExpertise:'Java · Spring Boot · Sistemas distribuídos · Agentes de IA',
+      exploreProjects:'Explorar projetos ↗', aboutMe:'Sobre mim', workingOn:'No que estou trabalhando', allProjects:'Ver todos os projetos ↗',
+      homeNeurons:'Orquestração visual de agentes de IA.', homeMiniinfos:'Suas ferramentas de IA em um painel desktop.',
+      shortcutProjects:'01 Projetos ↗', shortcutProjectsCopy:'Arquitetura, decisões e código',
+      shortcutExperience:'02 Experiência ↗', shortcutExperienceCopy:'Minha trajetória profissional',
+      shortcutProfile:'03 Perfil ↗', shortcutProfileCopy:'Como trabalho e o que estudo',
+      location:'Engenheiro de IA', expertise:'Java · Spring Boot · Sistemas distribuídos',
       projectsTitle:'Projetos', projectsSubtitle:'O que construí e o que estou desenvolvendo.',
       projectsHint:'Abra um projeto para ver arquitetura, decisões técnicas e código.', profileTitle:'Como trabalho',
       back:'← Todos os projetos', inside:'Por dentro do projeto',
@@ -224,8 +233,16 @@
     },
     en: {
       experience:'Experience', projects:'Projects', profile:'Profile', contact:'Contact', contactNav:'Contact ↗',
-      personalPortfolio:'Personal portfolio', role:'Java backend developer', viewProjects:'View projects ↘',
-      location:'Nova Odessa, Brazil · On site, hybrid or remote', expertise:'Java · Spring Boot · Distributed systems',
+      personalPortfolio:'Personal portfolio', role:'Backend developer', viewProjects:'View projects ↘',
+      homeRole:'Backend developer · AI Engineer',
+      homeIntro:'I build systems, APIs and AI applications. Here I share the projects I work on, my experience and the decisions behind the code.',
+      homeExpertise:'Java · Spring Boot · Distributed systems · AI agents',
+      exploreProjects:'Explore projects ↗', aboutMe:'About me', workingOn:'What I am working on', allProjects:'View all projects ↗',
+      homeNeurons:'Visual orchestration of AI agents.', homeMiniinfos:'Your AI tools in a desktop panel.',
+      shortcutProjects:'01 Projects ↗', shortcutProjectsCopy:'Architecture, decisions and code',
+      shortcutExperience:'02 Experience ↗', shortcutExperienceCopy:'My professional background',
+      shortcutProfile:'03 Profile ↗', shortcutProfileCopy:'How I work and what I study',
+      location:'AI Engineer', expertise:'Java · Spring Boot · Distributed systems',
       projectsTitle:'Projects', projectsSubtitle:'What I have built and what I am working on.',
       projectsHint:'Open a project for its architecture, technical decisions and code.', profileTitle:'How I work',
       back:'← All projects', inside:'Inside the project',
@@ -240,7 +257,7 @@
     },
   };
   const viewRoutes = {projects:'projetos', experience:'experiencia', profile:'perfil', stack:'stack'};
-  const routeViews = {'':'projects',projetos:'projects',experiencia:'experience',exp:'experience',perfil:'profile',stack:'stack'};
+  const routeViews = {'':'home',home:'home',projetos:'projects',experiencia:'experience',exp:'experience',perfil:'profile',stack:'stack'};
   const projectRoutes = {neurons:'neuronsai',miniinfos:'miniinfos',trisha:'trisha',wallet:'wallet',storage:'storage',tlt:'tlt',newstech:'newstech',faturamento:'faturamento'};
   const routeProjects = Object.fromEntries(Object.entries(projectRoutes).map(([key,route]) => [route,key]));
   Object.assign(routeProjects,{trilha:'trisha',neurons:'neurons'});
@@ -251,7 +268,11 @@
   detail.querySelector('[data-close-detail]').dataset.copy = 'back';
   detail.querySelector('h3').dataset.copy = 'inside';
   const extra = document.createElement('div'); extra.className = 'rs-new-project-sections'; detail.append(extra);
-  root.querySelector('.rs-proof-stack').dataset.copy = 'expertise';
+  const biography = root.querySelector('.rs-full-bio');
+  const profileBiography = document.createElement('div'); profileBiography.className = 'rs-profile-biography';
+  profileBiography.append(...biography.children);
+  root.querySelector('[data-view-panel="profile"] > h2').after(profileBiography);
+  const intro = document.createElement('p'); intro.dataset.copy = 'homeIntro'; biography.append(intro);
   root.querySelector('[data-scroll="contact"]').dataset.copy = 'contactNav';
   root.querySelector('.rs-cover-caption').dataset.copy = 'neuronTagline';
   root.querySelector('.rs-mini-poster p').dataset.copy = 'miniTagline';
@@ -281,9 +302,46 @@
   function remember() {
     try { localStorage.setItem(preferenceKey,JSON.stringify({theme:settings.theme,language:settings.language})); } catch {}
   }
+  let themeTransition;
+  let themeSequence = 0;
+  async function toggleTheme(event, button) {
+    const current = ++themeSequence;
+    themeTransition?.skipTransition();
+    const scheme = getComputedStyle(root).colorScheme;
+    const dark = scheme === 'dark' || (scheme === 'light dark' && matchMedia('(prefers-color-scheme:dark)').matches);
+    settings.theme = dark ? 'Claro' : 'Escuro';
+    const apply = () => { if (current === themeSequence) { applySettings(); remember(); } };
+    const html = document.documentElement;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !document.startViewTransition) {
+      apply(); themeTransition = undefined; html.classList.remove('rs-theme-changing'); return;
+    }
+    const bounds = button.getBoundingClientRect();
+    const x = Math.max(0,Math.min(event.detail ? event.clientX : bounds.x + bounds.width / 2,innerWidth));
+    const y = Math.max(0,Math.min(event.detail ? event.clientY : bounds.y + bounds.height / 2,innerHeight));
+    const radius = Math.hypot(Math.max(x,innerWidth - x),Math.max(y,innerHeight - y)) + 32;
+    html.style.setProperty('--theme-x',x + 'px');
+    html.style.setProperty('--theme-y',y + 'px');
+    html.classList.add('rs-theme-changing');
+    try {
+      const transition = document.startViewTransition(apply);
+      themeTransition = transition;
+      await transition.ready;
+      if (current !== themeSequence) return;
+      const animation = html.animate(
+        [{'--theme-radius':'0px'},{'--theme-radius':radius + 'px'}],
+        {duration:1200,easing:'cubic-bezier(0.65, 0, 0.35, 1)',fill:'both',pseudoElement:'::view-transition-new(root)'},
+      );
+      await animation.finished;
+      await transition.finished;
+    } catch {
+      apply();
+    } finally {
+      if (current === themeSequence) { themeTransition = undefined; html.classList.remove('rs-theme-changing'); }
+    }
+  }
   function updateTitle() {
     const project = activeProject && (data[activeProject]?.title || root.querySelector('[data-full-project="' + activeProject + '"] .old-proj-title:not([hidden])')?.textContent);
-    document.title = project ? project + ' · Rafael Santos' : 'Rafael Santos | ' + text[settings.language].role;
+    document.title = project ? project + ' · Rafael Santos' : 'Rafael Santos | ' + text[settings.language].homeRole;
   }
   function applySettings() {
     const scheme = settings.theme === 'Claro' ? 'light' : settings.theme === 'Escuro' ? 'dark' : 'light dark';
@@ -320,6 +378,8 @@
     root.querySelectorAll('.rs-nav-links [data-view]').forEach(el => {
       if (el.dataset.view === view) el.setAttribute('aria-current','page'); else el.removeAttribute('aria-current');
     });
+    const home = root.querySelector('[data-home]');
+    if (view === 'home') home.setAttribute('aria-current','page'); else home.removeAttribute('aria-current');
     root.querySelectorAll('[data-project]').forEach(el => el.setAttribute('aria-expanded','false'));
     return root.querySelector('[data-view-panel="' + view + '"]');
   }
@@ -357,7 +417,9 @@
       section.append(heading,list); return section;
     });
     const links = document.createElement('div'); links.className = 'old-btns';
-    [[study.repository,settings.language === 'pt'?'Ver no GitHub ↗':'View on GitHub ↗'],[study.repository + '/blob/main/README.md',settings.language === 'pt'?'Documentação ↗':'Documentation ↗']].forEach(([href,label],index) => {
+    const destinations = [[study.repository,settings.language === 'pt'?'Ver no GitHub ↗':'View on GitHub ↗'],[study.repository + '/blob/main/README.md',settings.language === 'pt'?'Documentação ↗':'Documentation ↗']];
+    if (study.website) destinations.unshift([study.website,settings.language === 'pt'?'Visitar site ↗':'Visit website ↗']);
+    destinations.forEach(([href,label],index) => {
       const link = document.createElement('a'); link.className = 'old-btn' + (index === 0?' old-solid':''); link.href = href; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = label; links.append(link);
     });
     extra.replaceChildren(links,...sections);
@@ -374,7 +436,7 @@
     if (location.hash && !location.hash.startsWith('#/')) return;
     let route = '';
     try { route = decodeURIComponent(location.hash.replace(/^#\/?/,'')); } catch {}
-    const target = routeProjects[route] ? openProject(routeProjects[route]) : showView(routeViews[route] || 'projects');
+    const target = routeProjects[route] ? openProject(routeProjects[route]) : showView(routeViews[route] || 'home');
     updateTitle();
     if (scroll && pendingScroll === 'top') window.scrollTo({top:0,behavior:reduced?'instant':'smooth'});
     else if (scroll) scrollToContent(target);
@@ -394,11 +456,8 @@
     if (event.target.closest('[data-close-detail]')) { navigate('projetos'); return; }
     const scroll = event.target.closest('[data-scroll]');
     if (scroll) { closeMenu(); scrollToContent(root.querySelector('[data-section="' + scroll.dataset.scroll + '"]')); return; }
-    if (event.target.closest('[data-theme-toggle]')) {
-      const scheme = getComputedStyle(root).colorScheme;
-      const dark = scheme === 'dark' || (scheme === 'light dark' && matchMedia('(prefers-color-scheme:dark)').matches);
-      settings.theme = dark ? 'Claro' : 'Escuro'; applySettings(); remember(); return;
-    }
+    const themeButton = event.target.closest('[data-theme-toggle]');
+    if (themeButton) { void toggleTheme(event,themeButton); return; }
     if (event.target.closest('[data-language-toggle]')) { settings.language = settings.language === 'pt' ? 'en' : 'pt'; applySettings(); remember(); return; }
     const menu = event.target.closest('.rs-menu');
     if (menu) {
