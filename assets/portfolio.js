@@ -1,4 +1,4 @@
-
+import { createProjectDemo, createWebsiteLink } from './project-demos.js';
 (() => {
   const root = document.getElementById('rafael-portfolio');
   const stage = root.querySelector('.rs-stage');
@@ -274,6 +274,7 @@
   detail.querySelector('[data-close-detail]').dataset.copy = 'back';
   detail.querySelector('h3').dataset.copy = 'inside';
   const extra = document.createElement('div'); extra.className = 'rs-new-project-sections'; detail.append(extra);
+  let projectDemo;
   const biography = root.querySelector('.rs-full-bio');
   const profileBiography = document.createElement('div'); profileBiography.className = 'rs-profile-biography';
   profileBiography.append(...biography.children);
@@ -377,6 +378,7 @@
     requestAnimationFrame(() => target.scrollIntoView({behavior:reduced?'instant':'smooth',block:'start'}));
   }
   function showView(view) {
+    projectDemo?.dispose(); projectDemo = undefined;
     currentView = view; activeProject = null; closeMenu();
     root.querySelectorAll('[data-view-panel]').forEach(el => el.hidden = el.dataset.viewPanel !== view);
     root.querySelectorAll('[data-full-project]').forEach(el => el.hidden = true);
@@ -424,11 +426,16 @@
     });
     const links = document.createElement('div'); links.className = 'old-btns';
     const destinations = [[study.repository,settings.language === 'pt'?'Ver no GitHub ↗':'View on GitHub ↗'],[study.repository + '/blob/main/README.md',settings.language === 'pt'?'Documentação ↗':'Documentation ↗']];
-    if (study.website) destinations.unshift([study.website,settings.language === 'pt'?'Visitar site ↗':'Visit website ↗']);
     destinations.forEach(([href,label],index) => {
-      const link = document.createElement('a'); link.className = 'old-btn' + (index === 0?' old-solid':''); link.href = href; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = label; links.append(link);
+      const link = document.createElement('a'); link.className = 'old-btn' + (index === 0 && !study.website?' old-solid':''); link.href = href; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = label; links.append(link);
     });
-    extra.replaceChildren(links,...sections);
+    const actions = document.createElement('div'); actions.className = 'rs-case-actions';
+    if (study.website) actions.append(createWebsiteLink(study.website,settings.language));
+    actions.append(links);
+    if (!projectDemo || projectDemo.key !== key) {
+      projectDemo?.dispose(); projectDemo = createProjectDemo(key,settings.language);
+    } else projectDemo.setLanguage(settings.language);
+    extra.replaceChildren(actions,projectDemo.element,...sections);
   }
   function openProject(key) {
     const page = root.querySelector('[data-full-project="' + key + '"]');

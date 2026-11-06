@@ -115,11 +115,12 @@ test('a marca abre a página inicial e o menu mantém as seções existentes', a
 test('MiniInfos oferece a landing page em português e inglês', async ({ page }) => {
   await page.goto('/#/miniinfos');
   const site = page.locator('.rs-detail a[href="https://miniinfos.com"]');
-  await expect(site).toHaveText('Visitar site ↗');
+  await expect(site).toContainText('Conheça o MiniInfos');
+  await expect(site).toContainText('miniinfos.com');
   await expect(site).toHaveAttribute('target', '_blank');
   await expect(site).toHaveAttribute('rel', 'noopener noreferrer');
   await page.locator('[data-language-toggle]').click();
-  await expect(site).toHaveText('Visit website ↗');
+  await expect(site).toContainText('Explore MiniInfos');
   await page.goto('/#/neuronsai');
   await expect(page.locator('.rs-detail a[href="https://miniinfos.com"]')).toHaveCount(0);
 });
