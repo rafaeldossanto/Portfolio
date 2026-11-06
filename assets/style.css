@@ -372,11 +372,38 @@ body { margin:0; font-family:Manrope,sans-serif; -webkit-font-smoothing:antialia
 #rafael-portfolio .rs-home-card p { color:var(--rs-muted); }
 #rafael-portfolio .rs-home-status { display:flex; gap:8px; align-items:center; }
 #rafael-portfolio .rs-home-status::before { content:""; width:8px; height:8px; flex:none; border-radius:9999px; background:#facc15; }
-#rafael-portfolio .rs-home-card svg { width:100%; height:120px; margin-top:16px; color:var(--rs-muted); }
-#rafael-portfolio .rs-home-graph path,#rafael-portfolio .rs-home-dashboard { fill:none; stroke:var(--rs-line); stroke-width:1.5; }
-#rafael-portfolio .rs-home-graph circle { fill:currentColor; }
-#rafael-portfolio .rs-home-bars { fill:var(--rs-line); stroke:none; }
-#rafael-portfolio .rs-home-chart { stroke:var(--rs-muted); }
+#rafael-portfolio .rs-product-preview { display:flex; flex-direction:column; height:288px; min-width:0; width:100%; margin-top:16px; overflow:hidden; border:1px solid #3b3b38; border-radius:8px; background:#181818; color:#f4f5ef; }
+#rafael-portfolio .rs-preview-toolbar { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 12px; background:#1f1f1f; color:#aaa8a2; font-size:12px; line-height:16px; }
+#rafael-portfolio .rs-preview-brand { color:#f4f5ef; font-weight:600; }
+#rafael-portfolio .rs-preview-brand > span:last-child { margin-left:8px; color:#aaa8a2; font-weight:400; }
+#rafael-portfolio .rs-preview-yellow { color:#facc15; }
+#rafael-portfolio .rs-agent-canvas { width:100%; height:100%; min-height:0; flex:1; color:#aaa8a2; }
+#rafael-portfolio .rs-agent-edges { fill:none; stroke:#facc15; stroke-width:1.5; opacity:.65; }
+#rafael-portfolio .rs-agent-memory-edge { stroke-dasharray:4 5; opacity:.5; }
+#rafael-portfolio .rs-agent-trigger rect { fill:#272727; stroke:#55554e; }
+#rafael-portfolio .rs-agent-trigger path { fill:none; stroke:#facc15; stroke-width:1.5; stroke-linejoin:round; }
+#rafael-portfolio .rs-agent-trigger text { fill:#f4f5ef; font-size:12px; }
+#rafael-portfolio .rs-agent-block > rect:first-child { fill:#272727; stroke:#55554e; stroke-width:1; }
+#rafael-portfolio .rs-agent-selected > rect:first-child { stroke:#facc15; stroke-width:1.5; }
+#rafael-portfolio .rs-agent-icon-bg { fill:#f4f5ef; }
+#rafael-portfolio .rs-tool-icon-bg { fill:#313131; }
+#rafael-portfolio .rs-agent-icon { fill:none; stroke:#181818; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+#rafael-portfolio .rs-tool-icon-bg + .rs-agent-icon { stroke:#f4f5ef; }
+#rafael-portfolio .rs-agent-kind,#rafael-portfolio .rs-agent-detail { fill:#aaa8a2; font-size:12px; }
+#rafael-portfolio .rs-agent-title { fill:#f4f5ef; font-size:12px; font-weight:600; }
+#rafael-portfolio .rs-agent-ports circle { fill:#facc15; stroke:#181818; stroke-width:1.5; }
+#rafael-portfolio .rs-mini-art { display:block; width:calc(100% - 24px); height:56px; margin:8px 12px 0; object-fit:cover; object-position:center 46%; border-radius:4px; }
+#rafael-portfolio .rs-mini-providers { display:grid; grid-template-columns:1fr 1fr; flex:1; gap:24px; padding:12px; }
+#rafael-portfolio .rs-mini-provider { min-width:0; }
+#rafael-portfolio .rs-mini-provider-name { display:flex; align-items:center; gap:8px; font-size:14px; line-height:20px; font-weight:600; }
+#rafael-portfolio .rs-provider-icon { color:#d9cdb8; font-size:18px; }
+#rafael-portfolio .rs-mini-meter { display:flex; justify-content:space-between; gap:8px; margin-top:8px; color:#aaa8a2; font-size:12px; line-height:16px; }
+#rafael-portfolio .rs-mini-meter b { color:#f4f5ef; font-weight:500; }
+#rafael-portfolio .rs-mini-track { height:4px; margin-top:4px; background:#313131; border-radius:9999px; overflow:hidden; }
+#rafael-portfolio .rs-mini-track span { display:block; height:100%; width:var(--meter-fill); background:#d9cdb8; border-radius:inherit; }
+#rafael-portfolio .rs-mini-total { display:flex; justify-content:space-between; gap:8px; margin-top:12px; font-size:12px; line-height:16px; color:#aaa8a2; }
+#rafael-portfolio .rs-mini-total strong { color:#f4f5ef; font-weight:500; white-space:nowrap; }
+#rafael-portfolio .rs-mini-bottom { display:flex; justify-content:space-between; gap:8px; padding:8px 12px; color:#aaa8a2; background:#1f1f1f; font-size:12px; line-height:16px; }
 #rafael-portfolio .rs-home-shortcuts { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; padding-block:24px; border-block:1px solid var(--rs-line); }
 #rafael-portfolio .rs-home-shortcuts button { background:transparent; text-align:left; display:grid; gap:4px; padding:8px 0; }
 #rafael-portfolio .rs-home-shortcuts .body-6 { color:var(--rs-muted); }
