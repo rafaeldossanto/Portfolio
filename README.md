@@ -7,7 +7,8 @@ Portfólio pessoal com projetos, experiência profissional, perfil e stack. Site
 - `index.html`: apresentação, seções e conteúdo completo dos projetos existentes.
 - `assets/style.css`: sistema visual editorial e layout responsivo.
 - `assets/portfolio.js`: navegação, preferências e estudos de caso do MiniInfos e do NeuronsAI.
-- `assets/project-demos.js` e `assets/project-demos.css`: demonstrações locais dos estudos de caso, botão do site e luz do cursor.
+- `assets/project-demos.js` e `assets/project-demos.css`: demonstrações locais dos estudos de caso e botão do site.
+- `assets/cursor-light.js`: luz branca suave do cursor, compartilhada por todas as páginas.
 - `assets/rafael-santos.jpg`: retrato usado na apresentação.
 - `404.html`: página para endereços não encontrados.
 - `scripts/`: validação e exportação dos arquivos públicos.
@@ -27,7 +28,7 @@ Portfólio pessoal com projetos, experiência profissional, perfil e stack. Site
 
 Os links antigos `#/trilha` e `#/exp` continuam funcionando. O navegador permite voltar e avançar entre as páginas. Preferências de idioma e tema ficam salvas localmente; nenhum serviço do chat é necessário para o site funcionar.
 
-Os detalhes do NeuronsAI têm um grafo que permite mover os nós por arraste ou pelas setas do teclado, executar, pausar e reiniciar uma simulação. Os detalhes do MiniInfos permitem alternar Claude, Codex e visão dividida com dados de exemplo. Essas demonstrações não chamam APIs nem leem registros do visitante; respeitam movimento reduzido. A luz branca suave do cursor aparece apenas nessas páginas, em dispositivos com mouse.
+Os detalhes do NeuronsAI têm um grafo que permite mover os nós por arraste ou pelas setas do teclado, executar, pausar e reiniciar uma simulação. Os detalhes do MiniInfos permitem alternar Claude, Codex e visão dividida com dados de exemplo. Essas demonstrações não chamam APIs nem leem registros do visitante; respeitam movimento reduzido. A luz branca suave do cursor aparece em todas as páginas e no menu, inclusive na página 404, em dispositivos com mouse e sem preferência por movimento reduzido.
 
 ## Executar e validar
 
