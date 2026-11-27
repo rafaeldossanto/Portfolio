@@ -1,0 +1,345 @@
+{
+  "slug": "newstech",
+  "route": "newstech",
+  "page": "full",
+  "title": "NewsTech",
+  "kicker": {
+    "pt": "Projeto · 2026 — agora",
+    "en": "Project · 2026 — now"
+  },
+  "lead": {
+    "pt": "Portal de notícias de tecnologia em português. Ele lê feeds RSS o dia inteiro, descarta o que não interessa, agrupa a mesma história contada por fontes diferentes e publica um texto próprio — com modelos de linguagem fazendo a triagem e a redação, e um humano no controle do que vai ao ar.",
+    "en": "A technology news portal in Portuguese. It reads RSS feeds all day, throws away what doesn't matter, groups the same story told by different outlets and publishes its own piece — with language models doing the triage and the writing, and a human deciding what goes live."
+  },
+  "links": [
+    {
+      "label": {
+        "pt": "Ver no GitHub ↗",
+        "en": "View on GitHub ↗"
+      },
+      "href": "https://github.com/rafaeldossanto/NewsTech",
+      "primary": true
+    }
+  ],
+  "card": {
+    "when": {
+      "pt": "2026 — AGORA",
+      "en": "2026 — NOW"
+    },
+    "summary": {
+      "pt": "Portal de notícias de tecnologia: ingestão de feeds, triagem e redação por modelos de linguagem, renderizado no servidor.",
+      "en": "A technology news portal: feed ingestion, triage and writing by language models, rendered on the server."
+    },
+    "chips": [
+      "Spring Boot 4",
+      "MongoDB",
+      "Thymeleaf",
+      "Claude API"
+    ]
+  },
+  "sections": [
+    {
+      "title": {
+        "pt": "O pipeline",
+        "en": "The pipeline"
+      },
+      "blocks": [
+        {
+          "type": "grid",
+          "items": [
+            {
+              "name": "ingest",
+              "meta": "RSS / Atom",
+              "text": {
+                "pt": "Conectores por fonte lendo feeds com Rome; o HTML que chega é sanitizado com Jsoup antes de tocar o banco.",
+                "en": "One connector per outlet reading feeds with Rome; incoming HTML is sanitised with Jsoup before it touches the database."
+              }
+            },
+            {
+              "name": "triage",
+              "meta": "Haiku",
+              "text": {
+                "pt": "O modelo barato faz a primeira peneira em lote: o que é notícia de tecnologia relevante e o que é ruído.",
+                "en": "The cheap model does the first pass in batches: what is relevant tech news and what is noise."
+              }
+            },
+            {
+              "name": "cluster",
+              "meta": {
+                "pt": "agrupamento",
+                "en": "grouping"
+              },
+              "text": {
+                "pt": "A mesma história publicada por cinco fontes vira um assunto só, com as fontes preservadas.",
+                "en": "The same story published by five outlets becomes a single subject, with every source kept."
+              }
+            },
+            {
+              "name": "editorial",
+              "meta": "Opus",
+              "text": {
+                "pt": "O modelo forte escreve a matéria assinada a partir do cluster; o texto sai em Markdown e é renderizado no servidor.",
+                "en": "The strong model writes the bylined piece from the cluster; the text comes out in Markdown and is rendered on the server."
+              }
+            },
+            {
+              "name": "content",
+              "meta": "MongoDB",
+              "text": {
+                "pt": "Matérias, tópicos e entidades em documentos — o formato varia por fonte, então documento cabe melhor que tabela.",
+                "en": "Articles, topics and entities as documents — the shape varies per outlet, so a document fits better than a table."
+              }
+            },
+            {
+              "name": "web",
+              "meta": "Thymeleaf",
+              "text": {
+                "pt": "Renderização no servidor com layout dialect, área administrativa protegida por Spring Security e cache Caffeine nas páginas quentes.",
+                "en": "Server-side rendering with the layout dialect, an admin area protected by Spring Security and a Caffeine cache on the hot pages."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Decisões",
+        "en": "Decisions"
+      },
+      "blocks": [
+        {
+          "type": "facts",
+          "items": [
+            {
+              "title": {
+                "pt": "Monolito por escolha, não por preguiça.",
+                "en": "A monolith by choice, not by laziness."
+              },
+              "text": {
+                "pt": "É um portal de leitura mantido por uma pessoa: um processo só custa menos, opera mais fácil e ainda cabe inteiro na cabeça. Os limites entre ingestão, curadoria, autoria e publicação estão nos pacotes, não em containers.",
+                "en": "It is a reading portal maintained by one person: a single process costs less, is easier to operate and still fits in one head. The boundaries between ingestion, curation, authoring and publishing live in packages, not in containers."
+              }
+            },
+            {
+              "title": {
+                "pt": "Dois modelos, duas contas diferentes.",
+                "en": "Two models, two very different bills."
+              },
+              "text": {
+                "pt": "Haiku faz o trabalho de volume e Opus só toca no que sobrou da peneira — o custo por matéria publicada é rastreado no próprio código.",
+                "en": "Haiku does the volume work and Opus only touches what survived the sieve — the cost per published article is tracked in the code itself."
+              }
+            },
+            {
+              "title": {
+                "pt": "Sanitizar não é opcional.",
+                "en": "Sanitising is not optional."
+              },
+              "text": {
+                "pt": "O conteúdo vem de feeds de terceiros direto para o HTML do portal: sem passar por Jsoup, isso é XSS servido em casa.",
+                "en": "Content arrives from third-party feeds and goes straight into the portal's HTML: without passing through Jsoup, that is XSS served at home."
+              }
+            },
+            {
+              "title": {
+                "pt": "Build que não exige Docker.",
+                "en": "A build that doesn't require Docker."
+              },
+              "text": {
+                "pt": "Os testes de integração com Testcontainers vivem num sourceSet separado; <code>check</code> deliberadamente não depende deles.",
+                "en": "Testcontainers integration tests live in their own source set; <code>check</code> deliberately does not depend on them."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Stack",
+      "blocks": [
+        {
+          "type": "chips",
+          "items": [
+            "Java 21",
+            "Spring Boot 4.1",
+            "MongoDB",
+            "Thymeleaf",
+            "Spring Security",
+            "Claude API",
+            "Rome",
+            "Jsoup",
+            "Commonmark",
+            "Caffeine",
+            "Testcontainers",
+            "Gradle"
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Dentro do código",
+        "en": "Inside the code"
+      },
+      "blocks": [
+        {
+          "type": "muted",
+          "html": {
+            "pt": "É um monolito, mas não é uma pasta só: cada etapa do pipeline é um pacote de primeiro nível em <code>com.web.newstech</code>, com o próprio repositório e as próprias exceções. A fronteira que viraria um serviço em outro desenho aqui é a fronteira do pacote.",
+            "en": "It is a monolith, but not a single folder: every stage of the pipeline is a top-level package in <code>com.web.newstech</code>, with its own repository and its own exceptions. The boundary that would be a service in another design is the package boundary here."
+          }
+        },
+        {
+          "type": "package",
+          "root": "ingest",
+          "meta": {
+            "pt": "· entrada",
+            "en": "· the way in"
+          },
+          "items": [
+            {
+              "name": "connector",
+              "text": {
+                "pt": "um conector por fonte, lendo RSS/Atom com Rome",
+                "en": "one connector per outlet, reading RSS/Atom with Rome"
+              }
+            },
+            {
+              "name": "model",
+              "text": {
+                "pt": "o item cru como veio do feed, antes de qualquer julgamento",
+                "en": "the raw item exactly as the feed gave it, before any judgement"
+              }
+            },
+            {
+              "name": "repository",
+              "text": {
+                "pt": "deduplicação e controle do que já foi lido",
+                "en": "deduplication and tracking of what has already been read"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "curation",
+          "meta": {
+            "pt": "· o miolo",
+            "en": "· the core"
+          },
+          "items": [
+            {
+              "name": "triage",
+              "text": {
+                "pt": "peneira em lote com o modelo barato: é notícia de tecnologia ou é ruído",
+                "en": "batch sieve with the cheap model: relevant tech news, or noise"
+              }
+            },
+            {
+              "name": "cluster",
+              "text": {
+                "pt": "a mesma história em cinco fontes vira um assunto só",
+                "en": "the same story across five outlets becomes one subject"
+              }
+            },
+            {
+              "name": "editorial",
+              "text": {
+                "pt": "o modelo forte escreve a matéria a partir do cluster",
+                "en": "the strong model writes the article from the cluster"
+              }
+            },
+            {
+              "name": "exceptions",
+              "text": {
+                "pt": "falha de modelo é caso previsto, não surpresa em runtime",
+                "en": "a model failure is an expected case, not a runtime surprise"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "authoring · content",
+          "meta": {
+            "pt": "· publicação",
+            "en": "· publishing"
+          },
+          "items": [
+            {
+              "name": "authoring",
+              "text": {
+                "pt": "o texto assinado, seu estado editorial e o fluxo até publicar",
+                "en": "the bylined text, its editorial state and the path to publication"
+              }
+            },
+            {
+              "name": "content",
+              "text": {
+                "pt": "matéria, tópico e entidade — o que o leitor enxerga",
+                "en": "article, topic and entity — what the reader actually sees"
+              }
+            },
+            {
+              "name": "repository",
+              "text": {
+                "pt": "documentos MongoDB; o formato varia por fonte, tabela não caberia",
+                "en": "MongoDB documents; the shape varies per outlet, a table wouldn't fit"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "web · shared",
+          "meta": {
+            "pt": "· borda e apoio",
+            "en": "· edge and support"
+          },
+          "items": [
+            {
+              "name": "web",
+              "text": {
+                "pt": "controllers do portal, renderizados por Thymeleaf no servidor",
+                "en": "the portal's controllers, rendered by Thymeleaf on the server"
+              }
+            },
+            {
+              "name": "web.admin",
+              "text": {
+                "pt": "área de curadoria humana: o que vai ao ar passa por aqui",
+                "en": "human curation area: whatever goes live passes through here"
+              }
+            },
+            {
+              "name": "web.auth",
+              "text": {
+                "pt": "Spring Security protegendo o administrativo",
+                "en": "Spring Security guarding the admin side"
+              }
+            },
+            {
+              "name": "shared.cost",
+              "text": {
+                "pt": "custo por token contabilizado no próprio código",
+                "en": "cost per token accounted for in the code itself"
+              }
+            },
+            {
+              "name": "shared.config",
+              "text": {
+                "pt": "cache Caffeine, clientes de modelo e seeds",
+                "en": "Caffeine cache, model clients and seeds"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "colophon": {
+    "pt": "NewsTech está em desenvolvimento — o pipeline roda, o portal já renderiza.",
+    "en": "NewsTech is under development — the pipeline runs, the portal already renders."
+  }
+}

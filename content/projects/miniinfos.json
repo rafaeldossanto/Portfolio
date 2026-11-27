@@ -1,0 +1,347 @@
+{
+  "slug": "miniinfos",
+  "route": "miniinfos",
+  "page": "case-study",
+  "title": "MiniInfos",
+  "summary": {
+    "pt": "Um painel flutuante para acompanhar ferramentas de IA sem sair do trabalho. Reúne informações de Claude, Codex, Gemini, Kimi e Antigravity, conforme as fontes disponíveis.",
+    "en": "A floating panel for monitoring AI tools while you work. It brings together information from Claude, Codex, Gemini, Kimi and Antigravity, according to available sources."
+  },
+  "architecture": {
+    "pt": "Lê registros locais e apresenta consumo, limites e conversas conforme o que cada ferramenta informa. As funções disponíveis variam entre Windows, Linux e macOS.",
+    "en": "It reads local records and presents usage, limits and conversations according to the data each tool provides. Available features vary between Windows, Linux and macOS."
+  },
+  "tags": [
+    "C#",
+    ".NET 10",
+    "WPF",
+    "Avalonia",
+    "xUnit"
+  ],
+  "repository": "https://github.com/rafaeldossanto/MiniInfos",
+  "website": "https://miniinfos.com",
+  "sections": [
+    {
+      "title": {
+        "pt": "O que o aplicativo resolve",
+        "en": "The problem it solves"
+      },
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            {
+              "text": {
+                "pt": "Quem alterna entre ferramentas de IA acaba com limites, sessões e contagens espalhados em vários aplicativos. O MiniInfos reúne essas informações em um painel flutuante que acompanha o trabalho, com páginas para Claude, Codex, Gemini, Kimi e Antigravity.",
+                "en": "Switching between AI tools leaves limits, sessions and usage figures spread across several apps. MiniInfos brings them together in a floating panel with pages for Claude, Codex, Gemini, Kimi and Antigravity."
+              }
+            },
+            {
+              "text": {
+                "pt": "A interface permite uma ferramenta por vez, visualização dividida ou cartões em janelas separadas. Posição, tamanho, seleção de páginas, tema e idioma são preservados. O cartão de conversas do Windows organiza as sessões recentes por ferramenta e projeto.",
+                "en": "The interface supports one tool at a time, a split view or separate card windows. Position, size, selected pages, theme and language are saved. The Windows conversations panel groups recent sessions by tool and project."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Arquitetura",
+        "en": "Architecture"
+      },
+      "blocks": [
+        {
+          "type": "grid",
+          "items": [
+            {
+              "name": {
+                "pt": "Windows: WPF e .NET 10",
+                "en": "Windows: WPF and .NET 10"
+              },
+              "text": {
+                "pt": "O aplicativo em widget/ cuida da interface, integração com a bandeja, acompanhamento de janelas e ciclo de vida dos cartões.",
+                "en": "The widget/ application owns the interface, tray integration, window tracking and card lifecycle."
+              }
+            },
+            {
+              "name": {
+                "pt": "Linux e macOS: Avalonia",
+                "en": "Linux and macOS: Avalonia"
+              },
+              "text": {
+                "pt": "A interface nativa compila os mesmos leitores, ledgers, preferências e regras do Windows. As integrações específicas ficam separadas por sistema.",
+                "en": "The native interface compiles the same readers, ledgers, preferences and rules as Windows. Platform integrations are kept separate."
+              }
+            },
+            {
+              "name": {
+                "pt": "Provedores intercambiáveis",
+                "en": "Interchangeable providers"
+              },
+              "text": {
+                "pt": "Cada ferramenta implementa IUsageProvider e devolve uma UsagePage. O PageView apresenta o resultado sem depender do formato original de cada histórico.",
+                "en": "Each tool implements IUsageProvider and returns a UsagePage. PageView displays the result without depending on the source log format."
+              }
+            },
+            {
+              "name": {
+                "pt": "Descoberta de fontes",
+                "en": "Source discovery"
+              },
+              "text": {
+                "pt": "Sources/ mantém um catálogo de pastas. A descoberta considera instalações, variáveis de ambiente e caminhos reconhecidos, com limites de profundidade e tempo.",
+                "en": "Sources/ maintains a directory catalog. Discovery considers installations, environment variables and recognized paths, with depth and time limits."
+              }
+            },
+            {
+              "name": {
+                "pt": "Persistência incremental",
+                "en": "Incremental persistence"
+              },
+              "text": {
+                "pt": "JsonlTail lê apenas os trechos acrescentados aos registros. LedgerStore persiste o livro de contagens e ResponseLedger compartilha a deduplicação entre provedores.",
+                "en": "JsonlTail reads only newly appended records. LedgerStore persists counts and ResponseLedger shares deduplication across providers."
+              }
+            },
+            {
+              "name": {
+                "pt": "Integração com as ferramentas",
+                "en": "Tool integrations"
+              },
+              "text": {
+                "pt": "O mod do Claude publica limites e contexto disponíveis. O Codex consulta o app-server local; o Antigravity combina metadados locais com a leitura das cotas do próprio agente.",
+                "en": "The Claude mod publishes available limits and context. Codex uses its local app-server; Antigravity combines local metadata with quota readings from the agent itself."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Decisões de engenharia",
+        "en": "Engineering decisions"
+      },
+      "blocks": [
+        {
+          "type": "facts",
+          "items": [
+            {
+              "title": {
+                "pt": "Contar cada resposta uma vez.",
+                "en": "Count each response once."
+              },
+              "text": {
+                "pt": "A deduplicação evita somar cópias da mesma resposta, inclusive na leitura do Claude. Os acumulados do Codex têm um ledger próprio, adequado ao formato por sessão.",
+                "en": "Deduplication prevents copies of the same response from being added twice, including Claude records. Codex has a separate ledger for session totals."
+              }
+            },
+            {
+              "title": {
+                "pt": "Preservar o que já foi lido.",
+                "en": "Keep previously read usage."
+              },
+              "text": {
+                "pt": "O ledger mantém as contagens mesmo quando históricos antigos são removidos. Arquivos apagados antes da primeira leitura não podem ser reconstruídos.",
+                "en": "The ledger preserves counts after old histories are removed. Files deleted before their first reading cannot be reconstructed."
+              }
+            },
+            {
+              "title": {
+                "pt": "Separar tokens de limites da conta.",
+                "en": "Separate tokens from account limits."
+              },
+              "text": {
+                "pt": "Um percentual de plano não vira um custo fictício. Cada página mostra somente as medidas que a fonte realmente disponibiliza.",
+                "en": "A plan percentage does not become an invented cost. Each page shows only measurements available from its source."
+              }
+            },
+            {
+              "title": {
+                "pt": "Ler Windows e WSL sem duplicar.",
+                "en": "Read Windows and WSL without duplicates."
+              },
+              "text": {
+                "pt": "O Claude pode ser acompanhado nas distribuições WSL em execução, usando o mesmo ledger e a mesma deduplicação. Uma falha no WSL não interrompe a leitura do Windows.",
+                "en": "Claude histories from running WSL distributions use the same ledger and deduplication. A WSL failure does not interrupt Windows readings."
+              }
+            },
+            {
+              "title": {
+                "pt": "Compartilhar domínio entre interfaces.",
+                "en": "Share domain code across interfaces."
+              },
+              "text": {
+                "pt": "WPF e Avalonia usam as mesmas fontes dos domínios portáveis. A leitura de arquivos, validação de pacotes e persistência não são reimplementadas em cada interface.",
+                "en": "WPF and Avalonia compile the same portable domains. File reading, package validation and persistence are not reimplemented per interface."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Privacidade e comunidade",
+        "en": "Privacy and community"
+      },
+      "blocks": [
+        {
+          "type": "facts",
+          "items": [
+            {
+              "title": {
+                "pt": "Metadados em vez do texto dos chats.",
+                "en": "Metadata rather than chat text."
+              },
+              "text": {
+                "pt": "O app extrai contagens, horários, contexto e identificação de projeto; não armazena nem apresenta o conteúdo das conversas. Não pede um novo login para acompanhar os registros locais.",
+                "en": "The app extracts counts, timestamps, context and project identification. It does not store or display conversation content or require a new login to read local histories."
+              }
+            },
+            {
+              "title": {
+                "pt": "Consultas de conta separadas da leitura local.",
+                "en": "Account queries stay separate."
+              },
+              "text": {
+                "pt": "Limites do Codex vêm do app-server autenticado que já existe na máquina. As cotas do Antigravity são consultadas no serviço local do agente.",
+                "en": "Codex limits come from the already authenticated app-server on the machine. Antigravity quotas come from the local agent service."
+              }
+            },
+            {
+              "title": {
+                "pt": "Pacotes declarativos.",
+                "en": "Declarative packages."
+              },
+              "text": {
+                "pt": "Temas e mascotes usam contratos versionados com JSON e PNG. O aplicativo não executa scripts nem XAML fornecidos por pacotes da comunidade.",
+                "en": "Themes and pets use versioned JSON and PNG contracts. The app does not execute scripts or XAML from community packages."
+              }
+            },
+            {
+              "title": {
+                "pt": "Catálogo sem servidor próprio.",
+                "en": "A catalog without a dedicated server."
+              },
+              "text": {
+                "pt": "O índice fica em uma release específica do GitHub. Prévias são baixadas sob demanda; pacotes completos só chegam quando o usuário escolhe instalar ou atualizar, com verificação de SHA-256.",
+                "en": "Its index lives in a specific GitHub release. Previews load on demand; full packages download only after an install or update action and are checked with SHA-256."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Qualidade e distribuição",
+        "en": "Quality and distribution"
+      },
+      "blocks": [
+        {
+          "type": "facts",
+          "items": [
+            {
+              "title": {
+                "pt": "Testes por domínio.",
+                "en": "Tests by domain."
+              },
+              "text": {
+                "pt": "A lógica usa xUnit. O executor seleciona os domínios afetados e os consumidores reais; cenários visuais focados conferem a interface com dados simulados.",
+                "en": "Domain logic uses xUnit. The runner selects affected domains and their real consumers; focused visual scenarios check the interface with simulated data."
+              }
+            },
+            {
+              "title": {
+                "pt": "Interfaces nativas verificadas separadamente.",
+                "en": "Separate native verification."
+              },
+              "text": {
+                "pt": "O projeto Avalonia tem testes próprios, smoke de interface e validações de empacotamento para Linux e macOS. Compilação cruzada não é tratada como prova de execução nativa.",
+                "en": "The Avalonia project has its own tests, UI smoke checks and packaging checks for Linux and macOS. Cross compilation is not treated as proof of native execution."
+              }
+            },
+            {
+              "title": {
+                "pt": "Atualizações verificadas.",
+                "en": "Verified updates."
+              },
+              "text": {
+                "pt": "O atualizador consulta releases, baixa o instalador e confere o hash antes de executar a atualização. O catálogo da comunidade tem um ciclo de publicação separado do aplicativo.",
+                "en": "The updater checks releases, downloads the installer and verifies its hash before running an update. The community catalog has a separate publication cycle."
+              }
+            },
+            {
+              "title": {
+                "pt": "Personalização sem chamadas de IA.",
+                "en": "Customization without AI calls."
+              },
+              "text": {
+                "pt": "Temas, fontes, idioma e mascotes são configurações locais. As animações dos mascotes usam as leituras já coletadas pelo aplicativo.",
+                "en": "Themes, fonts, language and pets are local settings. Pet animations use readings the app already collects."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Dentro do código",
+        "en": "Inside the code"
+      },
+      "blocks": [
+        {
+          "type": "repos",
+          "items": [
+            {
+              "path": "widget/Providers/",
+              "text": {
+                "pt": "Contratos, modelos e implementações de cada ferramenta.",
+                "en": "Contracts, models and tool implementations."
+              }
+            },
+            {
+              "path": "widget/Infrastructure/Storage/",
+              "text": {
+                "pt": "Leitura incremental, ledgers e acesso defensivo aos arquivos.",
+                "en": "Incremental reads, ledgers and defensive file access."
+              }
+            },
+            {
+              "path": "widget/Community/",
+              "text": {
+                "pt": "Contratos, biblioteca e catálogo de temas e mascotes.",
+                "en": "Package contracts, library and community catalog."
+              }
+            },
+            {
+              "path": "widget/Mascot/",
+              "text": {
+                "pt": "Estados, anatomia, gestos, animação e coordenação dos mascotes.",
+                "en": "States, anatomy, gestures, animation and pet coordination."
+              }
+            },
+            {
+              "path": "desktop/",
+              "text": {
+                "pt": "Interface Avalonia, integração nativa e empacotamento.",
+                "en": "Avalonia interface, native integrations and packaging."
+              }
+            },
+            {
+              "path": "tests/",
+              "text": {
+                "pt": "Testes de domínio, verificações visuais e suporte compartilhado.",
+                "en": "Domain tests, visual checks and shared test support."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

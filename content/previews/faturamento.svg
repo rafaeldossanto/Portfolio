@@ -1,0 +1,23 @@
+<svg viewBox="0 0 320 132" role="img" aria-label="Quatro serviços ligados por um barramento de eventos">
+  <rect width="320" height="132" fill="currentColor" opacity="0.03"></rect>
+  <g fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.45">
+    <rect x="24" y="22" width="66" height="30" rx="6"></rect>
+    <rect x="127" y="22" width="66" height="30" rx="6"></rect>
+    <rect x="127" y="90" width="66" height="30" rx="6"></rect>
+    <rect x="230" y="90" width="66" height="30" rx="6"></rect>
+  </g>
+  <line x1="90" y1="37" x2="127" y2="37" stroke="currentColor" stroke-width="1.4" opacity="0.45"></line>
+  <line x1="36" y1="68" x2="284" y2="68" stroke="currentColor" stroke-width="1.4" opacity="0.28" stroke-dasharray="5 4"></line>
+  <g fill="currentColor" opacity="0.28">
+    <circle cx="160" cy="68" r="3"></circle><circle cx="105" cy="68" r="2"></circle><circle cx="215" cy="68" r="2"></circle>
+  </g>
+  <line x1="160" y1="52" x2="160" y2="68" stroke="currentColor" stroke-width="1.4" opacity="0.45"></line>
+  <line x1="160" y1="68" x2="160" y2="90" stroke="currentColor" stroke-width="1.4" opacity="0.45"></line>
+  <line x1="263" y1="68" x2="263" y2="90" stroke="currentColor" stroke-width="1.4" opacity="0.45"></line>
+  <g fill="currentColor" opacity="0.5" font-family="monospace" font-size="9">
+    <text x="41" y="41">bff</text>
+    <text x="136" y="41">transaction</text>
+    <text x="140" y="109">invoice</text>
+    <text x="236" y="109">notification</text>
+  </g>
+</svg>

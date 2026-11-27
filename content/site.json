@@ -1,0 +1,276 @@
+{
+  "projects": {
+    "caseStudies": [
+      "neuronsai",
+      "miniinfos"
+    ],
+    "pages": [
+      "trisha",
+      "wallet",
+      "storage",
+      "tlt",
+      "newstech",
+      "faturamento"
+    ],
+    "cards": [
+      "trisha",
+      "storage",
+      "tlt",
+      "faturamento",
+      "newstech"
+    ]
+  },
+  "text": {
+    "experience": {
+      "pt": "Experiência",
+      "en": "Experience"
+    },
+    "projects": {
+      "pt": "Projetos",
+      "en": "Projects"
+    },
+    "profile": {
+      "pt": "Perfil",
+      "en": "Profile"
+    },
+    "contact": {
+      "pt": "Contato",
+      "en": "Contact"
+    },
+    "contactNav": {
+      "pt": "Contato ↗",
+      "en": "Contact ↗"
+    },
+    "personalPortfolio": {
+      "pt": "Portfólio pessoal",
+      "en": "Personal portfolio"
+    },
+    "role": {
+      "pt": "Engenheiro de IA",
+      "en": "AI Engineer"
+    },
+    "viewProjects": {
+      "pt": "Ver projetos ↘",
+      "en": "View projects ↘"
+    },
+    "homeRole": {
+      "pt": "Engenheiro de IA · Desenvolvedor full stack",
+      "en": "AI Engineer · Full-stack developer"
+    },
+    "homeIntro": {
+      "pt": "Desenvolvo sistemas, APIs e aplicações com IA. Aqui compartilho os projetos que construo, minha experiência e as decisões por trás do código.",
+      "en": "I build systems, APIs and AI applications. Here I share the projects I work on, my experience and the decisions behind the code."
+    },
+    "homeExpertise": {
+      "pt": "Agentes de IA · Python · Node.js · React · Java",
+      "en": "AI agents · Python · Node.js · React · Java"
+    },
+    "exploreProjects": {
+      "pt": "Explorar projetos ↗",
+      "en": "Explore projects ↗"
+    },
+    "aboutMe": {
+      "pt": "Sobre mim",
+      "en": "About me"
+    },
+    "workingOn": {
+      "pt": "No que estou trabalhando",
+      "en": "What I am working on"
+    },
+    "allProjects": {
+      "pt": "Ver todos os projetos ↗",
+      "en": "View all projects ↗"
+    },
+    "homeNeurons": {
+      "pt": "Orquestração visual de agentes de IA.",
+      "en": "Visual orchestration of AI agents."
+    },
+    "homeMiniinfos": {
+      "pt": "Suas ferramentas de IA em um painel desktop.",
+      "en": "Your AI tools in a desktop panel."
+    },
+    "previewGraph": {
+      "pt": "Grafo de exemplo",
+      "en": "Example graph"
+    },
+    "previewApi": {
+      "pt": "AGENTE · API",
+      "en": "AGENT · API"
+    },
+    "previewPlanner": {
+      "pt": "Planejador",
+      "en": "Planner"
+    },
+    "previewContext": {
+      "pt": "Contexto compartilhado",
+      "en": "Shared context"
+    },
+    "previewTerminal": "TERMINAL",
+    "previewExecutor": "Executor",
+    "previewTool": {
+      "pt": "FERRAMENTA",
+      "en": "TOOL"
+    },
+    "previewMemory": {
+      "pt": "Memória",
+      "en": "Memory"
+    },
+    "previewWindow": {
+      "pt": "Janela 5h",
+      "en": "5h window"
+    },
+    "previewWeek": {
+      "pt": "Semanal",
+      "en": "Weekly"
+    },
+    "previewToday": {
+      "pt": "Tokens hoje",
+      "en": "Tokens today"
+    },
+    "previewDemo": {
+      "pt": "Demonstração",
+      "en": "Demo"
+    },
+    "shortcutProjects": {
+      "pt": "01 Projetos ↗",
+      "en": "01 Projects ↗"
+    },
+    "shortcutProjectsCopy": {
+      "pt": "Arquitetura, decisões e código",
+      "en": "Architecture, decisions and code"
+    },
+    "shortcutExperience": {
+      "pt": "02 Experiência ↗",
+      "en": "02 Experience ↗"
+    },
+    "shortcutExperienceCopy": {
+      "pt": "Minha trajetória profissional",
+      "en": "My professional background"
+    },
+    "shortcutProfile": {
+      "pt": "03 Perfil ↗",
+      "en": "03 Profile ↗"
+    },
+    "shortcutProfileCopy": {
+      "pt": "Como trabalho e o que estudo",
+      "en": "How I work and what I study"
+    },
+    "location": {
+      "pt": "Engenheiro de IA",
+      "en": "AI Engineer"
+    },
+    "expertise": {
+      "pt": "Agentes de IA · Python · Node.js · Java",
+      "en": "AI agents · Python · Node.js · Java"
+    },
+    "projectsTitle": {
+      "pt": "Projetos",
+      "en": "Projects"
+    },
+    "projectsSubtitle": {
+      "pt": "O que construí e o que estou desenvolvendo.",
+      "en": "What I have built and what I am working on."
+    },
+    "projectsHint": {
+      "pt": "Abra um projeto para ver arquitetura, decisões técnicas e código.",
+      "en": "Open a project for its architecture, technical decisions and code."
+    },
+    "profileTitle": {
+      "pt": "Como trabalho",
+      "en": "How I work"
+    },
+    "back": {
+      "pt": "← Todos os projetos",
+      "en": "← All projects"
+    },
+    "inside": {
+      "pt": "Por dentro do projeto",
+      "en": "Inside the project"
+    },
+    "neuronCopy": {
+      "pt": "Um espaço visual para conectar agentes de IA, organizar o contexto e orquestrar sua execução.",
+      "en": "A visual space to connect AI agents, organize context and orchestrate execution."
+    },
+    "miniCopy": {
+      "pt": "Consumo, limites e conversas das suas ferramentas de IA em um painel flutuante.",
+      "en": "Usage, limits and conversations from your AI tools in a floating panel."
+    },
+    "walletCopy": {
+      "pt": "Contas, cartões e investimentos de diferentes bancos reunidos no mesmo app.",
+      "en": "Accounts, cards and investments from different banks together in one app."
+    },
+    "neuronsCategory": {
+      "pt": "01 / Inteligência artificial",
+      "en": "01 / Artificial intelligence"
+    },
+    "miniCategory": {
+      "pt": "02 / Aplicativo desktop",
+      "en": "02 / Desktop application"
+    },
+    "walletCategory": "03 / Open Finance",
+    "inDevelopment": {
+      "pt": "Em desenvolvimento",
+      "en": "In development"
+    },
+    "neuronTagline": {
+      "pt": "Cada agente tem um papel. Você vê o todo.",
+      "en": "Every agent has a role. You see the whole picture."
+    },
+    "miniTagline": {
+      "pt": "Suas IAs, mais perto.",
+      "en": "Your AI tools, closer."
+    },
+    "walletTagline": {
+      "pt": "Uma visão das suas finanças.",
+      "en": "A view of your finances."
+    },
+    "aiTools": {
+      "pt": "Ferramentas de IA",
+      "en": "AI tools"
+    },
+    "input": {
+      "pt": "Entrada",
+      "en": "Input"
+    },
+    "context": {
+      "pt": "Contexto",
+      "en": "Context"
+    },
+    "orchestration": {
+      "pt": "Orquestração",
+      "en": "Orchestration"
+    },
+    "agents": {
+      "pt": "Agentes",
+      "en": "Agents"
+    },
+    "output": {
+      "pt": "Saída",
+      "en": "Output"
+    },
+    "execution": {
+      "pt": "Execução",
+      "en": "Execution"
+    },
+    "theme": {
+      "pt": "Alternar tema",
+      "en": "Change theme"
+    },
+    "language": {
+      "pt": "Switch to English",
+      "en": "Mudar para português"
+    },
+    "openMenu": {
+      "pt": "Abrir menu",
+      "en": "Open menu"
+    },
+    "closeMenu": {
+      "pt": "Fechar menu",
+      "en": "Close menu"
+    },
+    "skip": {
+      "pt": "Pular para o conteúdo",
+      "en": "Skip to content"
+    }
+  }
+}
