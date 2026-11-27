@@ -6,9 +6,12 @@ from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
 import subprocess
+import sys
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'scripts'))
+from content import ContentError, stale_files  # noqa: E402
 
 
 class SiteParser(HTMLParser):
@@ -70,6 +73,13 @@ class SiteParser(HTMLParser):
 
 
 def main():
+    try:
+        stale = stale_files()
+    except ContentError as error:
+        raise SystemExit(f'Erro no conteúdo: {error}') from None
+    if stale:
+        names = ', '.join(str(path.relative_to(ROOT)) for path in stale)
+        raise SystemExit(f'{names} não corresponde(m) a content/. Rode: python scripts/build_site.py')
     parser = SiteParser()
     parser.feed((ROOT / 'index.html').read_text(encoding='utf-8'))
     duplicates = [key for key, count in Counter(parser.ids).items() if count > 1]

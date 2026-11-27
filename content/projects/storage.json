@@ -1,0 +1,461 @@
+{
+  "slug": "storage",
+  "route": "storage",
+  "page": "full",
+  "title": "Storage",
+  "kicker": {
+    "pt": "Projeto · 2026 — agora",
+    "en": "Project · 2026 — now"
+  },
+  "lead": {
+    "pt": "Controle de estoque para mercado de bairro, pensado para ser vendido como serviço: o lojista abre no navegador, sem instalar nada, e cadastra o produto bipando o código de barras. Entrada de nota, validade, descontos, contagem com vários celulares ao mesmo tempo e uma área de vendas trancada por PIN.",
+    "en": "Inventory control for neighbourhood grocery stores, designed to be sold as a service: the owner opens it in the browser, installs nothing, and registers a product by scanning its barcode. Goods receipts, expiry dates, discounts, stock counts from several phones at once and a sales area locked behind a PIN."
+  },
+  "links": [
+    {
+      "label": {
+        "pt": "Back-end no GitHub ↗",
+        "en": "Back end on GitHub ↗"
+      },
+      "href": "https://github.com/rafaeldossanto/Storage",
+      "primary": true
+    },
+    {
+      "label": {
+        "pt": "Front-end no GitHub ↗",
+        "en": "Front end on GitHub ↗"
+      },
+      "href": "https://github.com/rafaeldossanto/StorageFront"
+    }
+  ],
+  "card": {
+    "when": {
+      "pt": "2026 — AGORA",
+      "en": "2026 — NOW"
+    },
+    "summary": {
+      "pt": "Controle de estoque para mercado de bairro, como serviço: bipa o código de barras e o produto aparece, com foto e tudo.",
+      "en": "Inventory control for neighbourhood grocery stores, as a service: scan the barcode and the product shows up, photo included."
+    },
+    "chips": [
+      "C# / .NET 10",
+      "MongoDB",
+      "React",
+      "Tailwind"
+    ]
+  },
+  "sections": [
+    {
+      "title": {
+        "pt": "O diferencial",
+        "en": "What makes it different"
+      },
+      "blocks": [
+        {
+          "type": "note",
+          "paragraphs": [
+            {
+              "pt": "<b>Estoque é um livro-razão, não um número.</b> Cada entrada, venda, perda e ajuste é um movimento que só se acrescenta — nunca se edita nem se apaga. Saldo e custo médio não ficam gravados no produto: saem dos lotes. Duas entradas simultâneas não têm um total para sobrescrever, e o relatório de perdas existe porque o lote vencido vira perda registrada em vez de sumir.",
+              "en": "<b>Stock is a ledger, not a number.</b> Every receipt, sale, loss and adjustment is a movement that is only ever appended — never edited, never deleted. Balance and average cost aren't stored on the product: they come from the batches. Two simultaneous receipts have no total to overwrite, and the losses report exists because an expired batch becomes a recorded loss instead of disappearing."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Arquitetura",
+        "en": "Architecture"
+      },
+      "blocks": [
+        {
+          "type": "grid",
+          "items": [
+            {
+              "name": "Storage.Domain",
+              "meta": {
+                "pt": "regras",
+                "en": "rules"
+              },
+              "text": {
+                "pt": "Entidades e regras puras, sem dependência nenhuma: lotes, saída pelo que vence primeiro, motor de desconto, dinheiro em centavos.",
+                "en": "Entities and pure rules with no dependencies at all: batches, first-expiring-first-out, the discount engine, money in cents."
+              }
+            },
+            {
+              "name": "Storage.Application",
+              "meta": {
+                "pt": "casos de uso",
+                "en": "use cases"
+              },
+              "text": {
+                "pt": "Entrada, venda, contagem, validade, preço e relatórios, falando só com interfaces que a infraestrutura implementa.",
+                "en": "Receiving, selling, counting, expiry, pricing and reports, talking only to interfaces the infrastructure implements."
+              }
+            },
+            {
+              "name": "Storage.Infrastructure",
+              "meta": "MongoDB",
+              "text": {
+                "pt": "Replica set, porque cada mudança de estoque grava lote, movimento e documento de origem numa transação só. Índices, paginação e busca sem acento.",
+                "en": "A replica set, because every stock change writes batch, movement and source document in a single transaction. Indexes, paging and accent-blind search."
+              }
+            },
+            {
+              "name": "Storage.Api",
+              "meta": "ASP.NET Core",
+              "text": {
+                "pt": "Minimal APIs com 64 rotas, JWT de 15 minutos, a loja resolvida pelo token em cada requisição e dois jobs em segundo plano: validade e fotos.",
+                "en": "Minimal APIs with 64 routes, a 15-minute JWT, the store resolved from the token on every request and two background jobs: expiry and photos."
+              }
+            },
+            {
+              "name": "StorageFront",
+              "meta": "React 19",
+              "text": {
+                "pt": "JavaScript com shadcn/ui e Tailwind 4: bipagem pelo leitor USB, aviso com \"Desfazer\" no lugar de diálogo de confirmação, gráfico de vendas.",
+                "en": "JavaScript with shadcn/ui and Tailwind 4: scanning with a USB reader, a toast with \"Undo\" instead of a confirmation dialog, a sales chart."
+              }
+            },
+            {
+              "name": {
+                "pt": "<span lang=\"pt\" data-i18n>fotos</span>",
+                "en": "<span lang=\"en\" data-i18n hidden>photos</span>"
+              },
+              "meta": "Open Food Facts · ONNX",
+              "text": {
+                "pt": "Cadastrou a lata, a foto vem sozinha: buscada pelo código de barras, com o fundo recortado e posta num quadrado branco.",
+                "en": "Register the can and the photo shows up on its own: looked up by barcode, background cut out and placed on a white square."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Decisões",
+        "en": "Decisions"
+      },
+      "blocks": [
+        {
+          "type": "facts",
+          "items": [
+            {
+              "title": {
+                "pt": "Uma loja nunca enxerga a outra.",
+                "en": "One store never sees another."
+              },
+              "text": {
+                "pt": "Todo documento carrega a loja, e os repositórios a leem do token — nunca de um parâmetro que o cliente possa trocar. Requisição sem loja falha. O isolamento é provado por teste contra um MongoDB de verdade, não contra um mock.",
+                "en": "Every document carries its store, and repositories read it from the token — never from a parameter the client could change. A request without a store fails. The isolation is proven by tests against a real MongoDB, not a mock."
+              }
+            },
+            {
+              "title": {
+                "pt": "Concorrência resolvida no banco, não na sorte.",
+                "en": "Concurrency settled in the database, not by luck."
+              },
+              "text": {
+                "pt": "Um lote só muda por compare-and-set, com a quantidade e a situação esperadas. Dois caixas tirando do mesmo lote não vendem a mesma unidade: quem perde a disputa recebe 409 e a venda é refeita sozinha.",
+                "en": "A batch only changes through compare-and-set, with the expected quantity and state. Two tills taking from the same batch cannot sell the same unit: the loser gets a 409 and the sale retries on its own."
+              }
+            },
+            {
+              "title": {
+                "pt": "Desfazer em vez de confirmar.",
+                "en": "Undo instead of confirm."
+              },
+              "text": {
+                "pt": "Produto, entrada e venda feitos por engano podem ser desfeitos por 10 minutos, enquanto nenhuma unidade saiu. Um \"tem certeza?\" a cada bipe travaria a fila do caixa.",
+                "en": "A product, receipt or sale entered by mistake can be undone for 10 minutes, as long as no unit has left. An \"are you sure?\" on every scan would stall the checkout queue."
+              }
+            },
+            {
+              "title": {
+                "pt": "Sessão que não se bifurca.",
+                "en": "Sessions that don't fork."
+              },
+              "text": {
+                "pt": "O token de renovação é trocado por compare-and-set, e um token já usado que reaparece encerra todas as sessões — alguém guardou uma cópia. Por isso o front renova numa fila só, inclusive entre abas (Web Locks), e tolera o aparelho que perdeu a resposta no meio.",
+                "en": "The refresh token is swapped through compare-and-set, and a used token that shows up again ends every session — someone kept a copy. That's why the front end renews in a single queue, across tabs too (Web Locks), and tolerates a device that lost the response midway."
+              }
+            },
+            {
+              "title": {
+                "pt": "Leitor USB não é teclado.",
+                "en": "A USB reader is not a keyboard."
+              },
+              "text": {
+                "pt": "Menos de 20 ms entre teclas ninguém digita: o front separa a rajada do leitor da digitação de gente, e devolve o campo ao valor anterior quando o bipe cai num campo com foco.",
+                "en": "Nobody types with less than 20 ms between keys: the front end tells the reader's burst apart from a person typing, and restores a focused field to its previous value when a scan lands in it."
+              }
+            },
+            {
+              "title": {
+                "pt": "O contrato é vigiado por teste.",
+                "en": "The contract is guarded by tests."
+              },
+              "text": {
+                "pt": "Os testes de HTTP fixam a lista de rotas abertas e a de rotas só do dono: uma rota nova que precise ser exceção quebra o teste até alguém acrescentá-la — de propósito.",
+                "en": "HTTP tests pin the list of open routes and of owner-only routes: a new route that needs to be an exception breaks the test until someone adds it — on purpose."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Números",
+        "en": "Numbers"
+      },
+      "blocks": [
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "466",
+              "label": {
+                "pt": "testes no back-end",
+                "en": "back-end tests"
+              }
+            },
+            {
+              "value": "103",
+              "label": {
+                "pt": "testes no front-end",
+                "en": "front-end tests"
+              }
+            },
+            {
+              "value": "64",
+              "label": {
+                "pt": "rotas na API",
+                "en": "API routes"
+              }
+            },
+            {
+              "value": "4",
+              "label": {
+                "pt": "camadas",
+                "en": "layers"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Repositórios",
+        "en": "Repositories"
+      },
+      "blocks": [
+        {
+          "type": "repos",
+          "items": [
+            {
+              "href": "https://github.com/rafaeldossanto/Storage",
+              "path": "Storage",
+              "text": {
+                "pt": "back-end em .NET 10",
+                "en": ".NET 10 back end"
+              }
+            },
+            {
+              "href": "https://github.com/rafaeldossanto/StorageFront",
+              "path": "StorageFront",
+              "text": {
+                "pt": "front-end em React",
+                "en": "React front end"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Dentro do código",
+        "en": "Inside the code"
+      },
+      "blocks": [
+        {
+          "type": "muted",
+          "html": {
+            "pt": "Quatro projetos em camadas, e o domínio não sabe onde os dados moram. Foi isso que permitiu trocar SQLite por MongoDB no meio do caminho tocando no domínio só para acrescentar a noção de loja.",
+            "en": "Four layered projects, and the domain doesn't know where the data lives. That is what made it possible to swap SQLite for MongoDB midway, touching the domain only to add the notion of a store."
+          }
+        },
+        {
+          "type": "package",
+          "root": "Storage.Domain",
+          "meta": {
+            "pt": "· regras",
+            "en": "· rules"
+          },
+          "items": [
+            {
+              "name": "Stock",
+              "text": {
+                "pt": "<code>Batch</code>, <code>StockMovement</code>, <code>GoodsReceipt</code>, <code>StockCount</code> — o livro-razão e os documentos que o movimentam",
+                "en": "<code>Batch</code>, <code>StockMovement</code>, <code>GoodsReceipt</code>, <code>StockCount</code> — the ledger and the documents that move it"
+              }
+            },
+            {
+              "name": "Pricing",
+              "text": {
+                "pt": "<code>DiscountEngine</code>: regra por produto ou por ramo da árvore, com prioridade e teto de cascata",
+                "en": "<code>DiscountEngine</code>: rules per product or per branch of the tree, with priority and a cascade ceiling"
+              }
+            },
+            {
+              "name": "ValueObjects",
+              "text": {
+                "pt": "<code>Money</code> em centavos e <code>Gtin</code> normalizado em 14 dígitos",
+                "en": "<code>Money</code> in cents and <code>Gtin</code> normalised to 14 digits"
+              }
+            },
+            {
+              "name": "Sales",
+              "text": {
+                "pt": "<code>Sale</code> guarda o custo dos lotes de onde a mercadoria saiu",
+                "en": "<code>Sale</code> keeps the cost of the batches the goods came from"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "Storage.Application",
+          "meta": {
+            "pt": "· casos de uso",
+            "en": "· use cases"
+          },
+          "items": [
+            {
+              "name": "Stock",
+              "text": {
+                "pt": "entrada linha a linha, contagem em vários celulares, lote vencido que vira perda",
+                "en": "line-by-line receiving, counting from several phones, expired batches turned into losses"
+              }
+            },
+            {
+              "name": "Sales",
+              "text": {
+                "pt": "baixa pelo que vence primeiro, ao preço das regras de desconto; PIN com cinco erros trava por 15 min",
+                "en": "stock taken from what expires first, at the discount rules' price; five wrong PINs lock it for 15 min"
+              }
+            },
+            {
+              "name": "Abstractions",
+              "text": {
+                "pt": "as interfaces que a infraestrutura implementa",
+                "en": "the interfaces the infrastructure implements"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "Storage.Infrastructure",
+          "meta": {
+            "pt": "· MongoDB e fotos",
+            "en": "· MongoDB and photos"
+          },
+          "items": [
+            {
+              "name": "Persistence",
+              "text": {
+                "pt": "mapeamento BSON fora das entidades, índices, paginação e <code>AccentInsensitive</code>: \"acucar\" acha \"Açúcar\"",
+                "en": "BSON mapping kept out of the entities, indexes, paging and <code>AccentInsensitive</code>: \"acucar\" finds \"Açúcar\""
+              }
+            },
+            {
+              "name": "Photos",
+              "text": {
+                "pt": "busca no Open Food Facts e recorte de fundo — com o modelo ISNet via ONNX, ou pelas bordas da foto",
+                "en": "lookup on Open Food Facts and background removal — with the ISNet model through ONNX, or from the photo's edges"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "Storage.Api",
+          "meta": "· HTTP",
+          "items": [
+            {
+              "name": "Endpoints",
+              "text": {
+                "pt": "um arquivo por área, em minimal APIs",
+                "en": "one file per area, as minimal APIs"
+              }
+            },
+            {
+              "name": "Auth",
+              "text": {
+                "pt": "token de acesso, cookie de renovação e o passe de 15 min da área de vendas",
+                "en": "access token, renewal cookie and the 15-minute pass to the sales area"
+              }
+            },
+            {
+              "name": "Jobs",
+              "text": {
+                "pt": "varredura de validade a cada 6 h, no fuso de cada loja, e busca de fotos",
+                "en": "expiry sweep every 6 h, in each store's time zone, and photo lookup"
+              }
+            },
+            {
+              "name": "Tenancy",
+              "text": {
+                "pt": "a loja vem do token, nunca da requisição",
+                "en": "the store comes from the token, never from the request"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "StorageFront/src",
+          "meta": "· React",
+          "items": [
+            {
+              "name": "api",
+              "text": {
+                "pt": "<code>http.js</code> → <code>session.js</code> → <code>client.js</code>: token só em memória, renovação numa fila só",
+                "en": "<code>http.js</code> → <code>session.js</code> → <code>client.js</code>: token in memory only, renewal in a single queue"
+              }
+            },
+            {
+              "name": "features",
+              "text": {
+                "pt": "produtos, entrada, vender, vendas — uma pasta por tela",
+                "en": "products, receiving, sell, sales — one folder per screen"
+              }
+            },
+            {
+              "name": "lib",
+              "text": {
+                "pt": "<code>scanner.js</code> separa leitor de gente; <code>money.js</code> formata centavos",
+                "en": "<code>scanner.js</code> tells a reader from a person; <code>money.js</code> formats cents"
+              }
+            },
+            {
+              "name": "components/ui",
+              "text": {
+                "pt": "componentes shadcn/ui sobre Radix",
+                "en": "shadcn/ui components on top of Radix"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "colophon": {
+    "pt": "Storage está em desenvolvimento: o back-end do MVP está pronto e, das telas, já rodam Produtos, Entrada, Vender e Vendas.",
+    "en": "Storage is under development: the MVP back end is done and, of the screens, Products, Receiving, Sell and Sales already run."
+  }
+}
