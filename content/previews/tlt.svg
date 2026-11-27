@@ -1,0 +1,18 @@
+<svg viewBox="0 0 320 132" role="img" aria-label="Legenda sobreposta a uma janela de chamada">
+  <rect width="320" height="132" fill="currentColor" opacity="0.03"></rect>
+
+  <rect x="24" y="14" width="272" height="104" rx="6" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.22"></rect>
+  <circle cx="118" cy="52" r="15" fill="currentColor" opacity="0.13"></circle>
+  <path d="M103 76a15 15 0 0 1 30 0z" fill="currentColor" opacity="0.13"></path>
+  <circle cx="196" cy="52" r="15" fill="currentColor" opacity="0.08"></circle>
+  <path d="M181 76a15 15 0 0 1 30 0z" fill="currentColor" opacity="0.08"></path>
+
+  <rect x="44" y="84" width="232" height="26" rx="5" fill="currentColor" opacity="0.14"></rect>
+  <rect x="56" y="90" width="96" height="3.5" rx="1.75" fill="currentColor" opacity="0.3"></rect>
+  <rect x="56" y="99" width="160" height="5" rx="2.5" fill="currentColor" opacity="0.62"></rect>
+
+  <g stroke="currentColor" stroke-width="1.6" opacity="0.35" stroke-linecap="round">
+    <line x1="34" y1="46" x2="34" y2="58"></line><line x1="39" y1="42" x2="39" y2="62"></line>
+    <line x1="44" y1="48" x2="44" y2="56"></line>
+  </g>
+</svg>

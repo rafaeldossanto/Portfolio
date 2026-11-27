@@ -1,0 +1,18 @@
+<svg viewBox="0 0 320 132" role="img" aria-label="Layout de portal de notícias">
+  <rect width="320" height="132" fill="currentColor" opacity="0.03"></rect>
+  <rect x="24" y="18" width="60" height="5" rx="2.5" fill="currentColor" opacity="0.55"></rect>
+  <line x1="24" y1="32" x2="296" y2="32" stroke="currentColor" opacity="0.18"></line>
+  <rect x="24" y="46" width="150" height="66" rx="4" fill="currentColor" opacity="0.09"></rect>
+  <rect x="34" y="58" width="96" height="6" rx="3" fill="currentColor" opacity="0.5"></rect>
+  <rect x="34" y="72" width="126" height="4" rx="2" fill="currentColor" opacity="0.22"></rect>
+  <rect x="34" y="82" width="112" height="4" rx="2" fill="currentColor" opacity="0.22"></rect>
+  <rect x="34" y="92" width="70" height="4" rx="2" fill="currentColor" opacity="0.22"></rect>
+  <g fill="currentColor">
+    <rect x="188" y="46" width="108" height="4" rx="2" opacity="0.4"></rect>
+    <rect x="188" y="56" width="84" height="4" rx="2" opacity="0.18"></rect>
+    <rect x="188" y="72" width="108" height="4" rx="2" opacity="0.4"></rect>
+    <rect x="188" y="82" width="92" height="4" rx="2" opacity="0.18"></rect>
+    <rect x="188" y="98" width="108" height="4" rx="2" opacity="0.4"></rect>
+    <rect x="188" y="108" width="72" height="4" rx="2" opacity="0.18"></rect>
+  </g>
+</svg>

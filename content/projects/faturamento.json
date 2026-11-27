@@ -1,0 +1,370 @@
+{
+  "slug": "faturamento",
+  "route": "faturamento",
+  "page": "full",
+  "title": {
+    "pt": "Faturamento distribuído",
+    "en": "Distributed billing"
+  },
+  "kicker": {
+    "pt": "Projeto · Agibank · estudo dirigido",
+    "en": "Project · Agibank · guided study"
+  },
+  "lead": {
+    "pt": "Quatro serviços Spring Boot exercitando os dois estilos de integração no mesmo sistema: um BFF que conversa por REST com transação, fatura e notificação, e uma transação que publica evento em Kafka quando termina de processar. Síncrono na borda, assíncrono no núcleo.",
+    "en": "Four Spring Boot services exercising both integration styles in one system: a BFF that talks to transaction, invoice and notification over REST, and a transaction that publishes a Kafka event once it finishes processing. Synchronous at the edge, asynchronous at the core."
+  },
+  "links": [
+    {
+      "label": {
+        "pt": "Ver no GitHub ↗",
+        "en": "View on GitHub ↗"
+      },
+      "href": "https://github.com/rafaeldossanto?tab=repositories",
+      "primary": true
+    }
+  ],
+  "card": {
+    "when": {
+      "pt": "AGIBANK · ESTUDO DIRIGIDO",
+      "en": "AGIBANK · GUIDED STUDY"
+    },
+    "summary": {
+      "pt": "Quatro serviços Spring Boot com os dois estilos de integração: BFF por REST na borda, transação publicando evento em Kafka, fatura em PDF e e-mail.",
+      "en": "Four Spring Boot services covering both integration styles: a REST BFF at the edge, a transaction publishing to Kafka, invoices as PDF and e-mail."
+    },
+    "chips": [
+      "Apache Kafka",
+      "Redis",
+      "MongoDB",
+      "Spring Retry"
+    ]
+  },
+  "sections": [
+    {
+      "title": {
+        "pt": "Os serviços",
+        "en": "The services"
+      },
+      "blocks": [
+        {
+          "type": "grid",
+          "items": [
+            {
+              "name": "bff",
+              "meta": "OpenAPI",
+              "text": {
+                "pt": "Fachada REST com um controller por serviço de trás e os modelos espelhados no contrato. É a única porta que o cliente conhece.",
+                "en": "REST facade with one controller per service behind it and the models mirrored in the contract. The only door the client knows about."
+              }
+            },
+            {
+              "name": "transaction",
+              "meta": "Kafka · Redis",
+              "text": {
+                "pt": "Pessoa, credenciais de cartão e transação. Ao concluir, publica o evento no tópico. Spring Retry com AOP para a falha que é temporária.",
+                "en": "Person, card credentials and transaction. On completion it publishes the event to the topic. Spring Retry through AOP for the failure that is temporary."
+              }
+            },
+            {
+              "name": "invoice",
+              "meta": "MongoDB · OpenPDF",
+              "text": {
+                "pt": "Persiste o evento de transação e gera o relatório em PDF por CPF e período, com totalização — recusando data futura.",
+                "en": "Persists the transaction event and builds the PDF report by taxpayer id and period, with totals — refusing a future date."
+              }
+            },
+            {
+              "name": "notification",
+              "meta": "SMTP",
+              "text": {
+                "pt": "Disparo de e-mail com JavaMailSender, atrás do próprio controller. Serviço pequeno de propósito: faz uma coisa só.",
+                "en": "E-mail delivery with JavaMailSender, behind its own controller. Deliberately small: it does one thing."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Engenharia",
+        "en": "Engineering"
+      },
+      "blocks": [
+        {
+          "type": "facts",
+          "items": [
+            {
+              "title": {
+                "pt": "Os dois estilos, lado a lado.",
+                "en": "Both styles, side by side."
+              },
+              "text": {
+                "pt": "O BFF chama os serviços por REST, porque a resposta ao cliente é síncrona por natureza; a transação publica <code>TransactionEvent</code> num tópico Kafka próprio, porque quem reage a ela não precisa segurar essa resposta.",
+                "en": "The BFF calls the services over REST, because the answer to the client is synchronous by nature; the transaction publishes <code>TransactionEvent</code> to its own Kafka topic, because whoever reacts to it doesn't need to hold that answer up."
+              }
+            },
+            {
+              "title": {
+                "pt": "Credencial não mora no código.",
+                "en": "Credentials don't live in the code."
+              },
+              "text": {
+                "pt": "Usuário e senha do SMTP vêm do ambiente (<code>MAIL_USERNAME</code>, <code>MAIL_PASSWORD</code>) e o remetente é injetado por configuração — repositório público não é lugar de segredo.",
+                "en": "SMTP user and password come from the environment (<code>MAIL_USERNAME</code>, <code>MAIL_PASSWORD</code>) and the sender is injected from configuration — a public repository is no place for a secret."
+              }
+            },
+            {
+              "title": {
+                "pt": "Retry onde a falha é transitória.",
+                "en": "Retry where the failure is transient."
+              },
+              "text": {
+                "pt": "Spring Retry aplicado por AOP no ponto de integração: a tentativa é repetida sem poluir a regra de negócio com try/catch.",
+                "en": "Spring Retry applied through AOP at the integration point: the attempt is repeated without littering business rules with try/catch."
+              }
+            },
+            {
+              "title": {
+                "pt": "Cobertura medida, não decorativa.",
+                "en": "Coverage measured, not decorative."
+              },
+              "text": {
+                "pt": "JaCoCo em todos os serviços, com exclusão explícita de configuração, DTO, entidade e mapper — o número reflete lógica de negócio testada, não getter.",
+                "en": "JaCoCo across the services, explicitly excluding configuration, DTOs, entities and mappers — the number reflects tested business logic, not getters."
+              }
+            },
+            {
+              "title": {
+                "pt": "Infra local sobe junto.",
+                "en": "Local infra comes up with it."
+              },
+              "text": {
+                "pt": "Docker Compose declarado no projeto e integrado ao Spring Boot, então <code>bootRun</code> levanta o banco antes da aplicação.",
+                "en": "Docker Compose declared in the project and wired into Spring Boot, so <code>bootRun</code> starts the database before the application."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Stack",
+      "blocks": [
+        {
+          "type": "chips",
+          "items": [
+            "Java 21",
+            "Spring Boot 3.5",
+            "Apache Kafka",
+            "Redis",
+            "MongoDB",
+            "Spring Retry · AOP",
+            "OpenPDF",
+            "SpringDoc OpenAPI",
+            "JaCoCo",
+            "Docker Compose",
+            "Gradle"
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Repositórios",
+        "en": "Repositories"
+      },
+      "blocks": [
+        {
+          "type": "repos",
+          "items": [
+            {
+              "href": "https://github.com/rafaeldossanto/BFF",
+              "path": "BFF",
+              "text": {
+                "pt": "fachada REST",
+                "en": "REST facade"
+              }
+            },
+            {
+              "href": "https://github.com/rafaeldossanto/Transaction",
+              "path": "Transaction",
+              "text": {
+                "pt": "processamento e publicação de eventos",
+                "en": "processing and event publishing"
+              }
+            },
+            {
+              "href": "https://github.com/rafaeldossanto/Invoice",
+              "path": "Invoice",
+              "text": {
+                "pt": "emissão de fatura em PDF",
+                "en": "invoice issuing as PDF"
+              }
+            },
+            {
+              "href": "https://github.com/rafaeldossanto/Notification",
+              "path": "Notification",
+              "text": {
+                "pt": "notificação por e-mail",
+                "en": "e-mail notification"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Dentro do código",
+        "en": "Inside the code"
+      },
+      "blocks": [
+        {
+          "type": "muted",
+          "html": {
+            "pt": "Quatro repositórios pequenos e propositalmente desiguais: o serviço que carrega o domínio tem camada completa, o que faz uma coisa só tem duas classes. Tamanho de serviço é consequência do que ele faz, não padrão a cumprir.",
+            "en": "Four small and deliberately uneven repositories: the service carrying the domain has the full layering, the one that does a single thing has two classes. Service size is a consequence of what it does, not a standard to comply with."
+          }
+        },
+        {
+          "type": "package",
+          "root": "com.example.BFF",
+          "meta": {
+            "pt": "· fachada",
+            "en": "· facade"
+          },
+          "items": [
+            {
+              "name": "controller",
+              "text": {
+                "pt": "<code>InvoiceBff</code>, <code>NotificationBff</code>, <code>TransactionBff</code> — um por serviço de trás",
+                "en": "<code>InvoiceBff</code>, <code>NotificationBff</code>, <code>TransactionBff</code> — one per service behind it"
+              }
+            },
+            {
+              "name": "config",
+              "text": {
+                "pt": "cliente REST e Swagger/OpenAPI",
+                "en": "REST client and Swagger/OpenAPI"
+              }
+            },
+            {
+              "name": "model",
+              "text": {
+                "pt": "contrato de entrada espelhado, sem depender do jar de ninguém",
+                "en": "mirrored input contract, without depending on anyone's jar"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "com.transaction",
+          "meta": {
+            "pt": "· o domínio",
+            "en": "· the domain"
+          },
+          "items": [
+            {
+              "name": "kafka",
+              "text": {
+                "pt": "<code>Producer</code> publicando o evento da transação concluída, com <code>@Retryable</code> e <code>@Recover</code>",
+                "en": "<code>Producer</code> publishing the completed transaction event, with <code>@Retryable</code> and <code>@Recover</code>"
+              }
+            },
+            {
+              "name": "config",
+              "text": {
+                "pt": "<code>TopicConfig</code> — o tópico declarado no código, não no console",
+                "en": "<code>TopicConfig</code> — the topic declared in code, not in a console"
+              }
+            },
+            {
+              "name": "controller",
+              "text": {
+                "pt": "transação, pessoa e credenciais de cartão",
+                "en": "transaction, person and card credentials"
+              }
+            },
+            {
+              "name": "service",
+              "text": {
+                "pt": "regra da transação, com retry aplicado por AOP",
+                "en": "transaction rules, with retry applied through AOP"
+              }
+            },
+            {
+              "name": "mapper",
+              "text": {
+                "pt": "<code>EventMapper</code> separando a entidade do evento publicado",
+                "en": "<code>EventMapper</code> keeping the entity apart from the published event"
+              }
+            },
+            {
+              "name": "model.enums",
+              "text": "<code>PaymentType</code>, <code>TransactionStatus</code>"
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "com.example.Invoice",
+          "meta": {
+            "pt": "· fatura",
+            "en": "· invoice"
+          },
+          "items": [
+            {
+              "name": "service",
+              "text": {
+                "pt": "persiste o evento e monta o PDF: cabeçalho, tabela, total e contagem",
+                "en": "persists the event and assembles the PDF: header, table, total and count"
+              }
+            },
+            {
+              "name": "entity · repository",
+              "text": {
+                "pt": "fatura em MongoDB, consultada por CPF e data",
+                "en": "invoice in MongoDB, queried by taxpayer id and date"
+              }
+            },
+            {
+              "name": "model",
+              "text": {
+                "pt": "<code>TransactionEvent</code> — o contrato compartilhado com a transação",
+                "en": "<code>TransactionEvent</code> — the contract shared with the transaction"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "com.example.Notification",
+          "meta": "· e-mail",
+          "items": [
+            {
+              "name": "EmailService",
+              "text": {
+                "pt": "monta e envia a mensagem via <code>JavaMailSender</code>",
+                "en": "builds and sends the message through <code>JavaMailSender</code>"
+              }
+            },
+            {
+              "name": "EmailController",
+              "text": {
+                "pt": "a única porta do serviço",
+                "en": "the service's only door"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "colophon": {
+    "pt": "Sistema construído durante o curso de Java Avançado do Agibank, para exercitar comunicação assíncrona entre serviços.",
+    "en": "Built during the Advanced Java course at Agibank, to exercise asynchronous communication between services."
+  }
+}

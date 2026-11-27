@@ -1,0 +1,588 @@
+{
+  "slug": "trisha",
+  "route": "trisha",
+  "page": "full",
+  "title": "Trisha",
+  "kicker": {
+    "pt": "Projeto · 2025 — agora",
+    "en": "Project · 2025 — now"
+  },
+  "lead": {
+    "pt": "Rede social de aventuras ao ar livre: o usuário grava o percurso GPS em tempo real, marca pontos de interesse com foto como evidência e compartilha tudo num mapa colaborativo. Concebido, arquitetado e construído por mim de ponta a ponta — do modelo de dados ao app.",
+    "en": "A social network for outdoor adventures: you record the GPS route in real time, mark points of interest with a photo as evidence and share it all on a collaborative map. Conceived, architected and built by me end to end — from the data model to the app."
+  },
+  "links": [
+    {
+      "label": {
+        "pt": "Ver no GitHub ↗",
+        "en": "View on GitHub ↗"
+      },
+      "href": "https://github.com/rafaeldossanto/Trisha",
+      "primary": true
+    },
+    {
+      "label": {
+        "pt": "Documentação ↗",
+        "en": "Documentation ↗"
+      },
+      "href": "https://github.com/rafaeldossanto/Trisha/blob/main/Docs/Trilha.md"
+    }
+  ],
+  "card": {
+    "when": {
+      "pt": "2025 — AGORA",
+      "en": "2025 — NOW"
+    },
+    "summary": {
+      "pt": "Rede social de aventuras ao ar livre: rastreamento GPS ao vivo e mapa colaborativo validado pela comunidade.",
+      "en": "A social network for outdoor adventures: live GPS tracking and a collaborative map validated by the community."
+    },
+    "chips": [
+      "Java 21",
+      "Spring Boot",
+      "PostGIS",
+      "Flutter"
+    ]
+  },
+  "sections": [
+    {
+      "title": {
+        "pt": "O diferencial",
+        "en": "What makes it different"
+      },
+      "blocks": [
+        {
+          "type": "note",
+          "paragraphs": [
+            {
+              "pt": "<b>Confiança calculada pela comunidade.</b> Cada ponto de interesse tem um nível de confiança dinâmico: quanto mais usuários <i>distintos</i> o validam com evidência fotografada a menos de 50 m do local, mais confiável ele fica. O mapa é validado pela comunidade — não por uma pessoa só.",
+              "en": "<b>Trust calculated by the community.</b> Every point of interest carries a dynamic trust level: the more <i>distinct</i> users validate it with a photo taken less than 50 m from the spot, the more trustworthy it gets. The map is validated by the community — not by one person."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Arquitetura",
+        "en": "Architecture"
+      },
+      "blocks": [
+        {
+          "type": "grid",
+          "items": [
+            {
+              "name": "cadastro",
+              "meta": ":8080",
+              "text": {
+                "pt": "Usuários, login social Google/Apple via JWKS, confirmação de e-mail e senha com BCrypt.",
+                "en": "Users, Google/Apple social login via JWKS, e-mail confirmation and BCrypt passwords."
+              }
+            },
+            {
+              "name": "app",
+              "meta": ":8081",
+              "text": {
+                "pt": "Domínio social: aventuras, caminhos, pontos de interesse com evidências, amizades, feed.",
+                "en": "Social domain: adventures, paths, points of interest with evidence, friendships, feed."
+              }
+            },
+            {
+              "name": "localização",
+              "meta": ":8082",
+              "text": {
+                "pt": "GPS com PostGIS e índice GiST, sessões ao vivo por MQTT + WebSocket/STOMP.",
+                "en": "GPS with PostGIS and a GiST index, live sessions over MQTT + WebSocket/STOMP."
+              }
+            },
+            {
+              "name": "mídia",
+              "meta": ":8083",
+              "text": {
+                "pt": "Upload para MinIO (Cloudflare R2 em produção) com presigned URLs — binário nunca toca o banco.",
+                "en": "Uploads to MinIO (Cloudflare R2 in production) with presigned URLs — binaries never touch the database."
+              }
+            },
+            {
+              "name": "bff",
+              "meta": ":8090",
+              "text": {
+                "pt": "Fachada única do front: agrega serviços, cache Redis por observador, circuit breaker fecha falhando.",
+                "en": "The front end's single facade: aggregates services, Redis cache keyed per viewer, circuit breaker that fails closed."
+              }
+            },
+            {
+              "name": "app flutter",
+              "meta": "mobile + web",
+              "text": {
+                "pt": "Mapa escuro em tela cheia com trilhas plotadas, feed social, rastreio e acompanhamento ao vivo.",
+                "en": "Full-screen dark map with plotted trails, social feed, tracking and live following."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Engenharia",
+        "en": "Engineering"
+      },
+      "blocks": [
+        {
+          "type": "facts",
+          "items": [
+            {
+              "title": {
+                "pt": "Autenticação ponta a ponta.",
+                "en": "Authentication end to end."
+              },
+              "text": {
+                "pt": "JWT assinado com RSA + endpoint JWKS; todos os serviços são resource servers independentes — o BFF não é a única porta, e cada serviço defende a própria visibilidade.",
+                "en": "RSA-signed JWT plus a JWKS endpoint; every service is an independent resource server — the BFF is not the only door, and each service defends its own visibility."
+              }
+            },
+            {
+              "title": {
+                "pt": "Mapa por viewport.",
+                "en": "Map by viewport."
+              },
+              "text": {
+                "pt": "Consulta por bounding box com query nativa PostGIS, decimação de pontos preservando início e fim do percurso, e teto de trilhas por consulta.",
+                "en": "Bounding-box lookups with a native PostGIS query, point decimation that preserves the start and end of the route, and a ceiling on trails per query."
+              }
+            },
+            {
+              "title": {
+                "pt": "Ao vivo de verdade.",
+                "en": "Live for real."
+              },
+              "text": {
+                "pt": "Sessões transmitidas por STOMP sobre WebSocket, com autorização social (público / seguidores / amigos / privado) checada na assinatura do tópico.",
+                "en": "Sessions streamed over STOMP on WebSocket, with social authorisation (public / followers / friends / private) checked when the topic is subscribed."
+              }
+            },
+            {
+              "title": {
+                "pt": "Vazamento de GPS eliminado.",
+                "en": "GPS leak closed."
+              },
+              "text": {
+                "pt": "A consulta por bounding box filtrava visibilidade só no BFF; hoje o serviço de localização resolve os caminhos visíveis antes de devolver uma coordenada.",
+                "en": "The bounding-box query used to filter visibility only at the BFF; today the location service resolves which paths are visible before returning a single coordinate."
+              }
+            },
+            {
+              "title": {
+                "pt": "Concorrência provada, não presumida.",
+                "en": "Concurrency proven, not assumed."
+              },
+              "text": {
+                "pt": "Corridas de contador resolvidas com lock pessimista na linha-pai e validadas com testes de 50 escritas simultâneas em Testcontainers.",
+                "en": "Counter races solved with a pessimistic lock on the parent row and validated by tests with 50 simultaneous writes in Testcontainers."
+              }
+            },
+            {
+              "title": {
+                "pt": "CI/CD por projeto, num monorepo.",
+                "en": "CI/CD per project, in a monorepo."
+              },
+              "text": {
+                "pt": "Um workflow do GitHub Actions por pasta: o commit que mexe num serviço testa e publica só ele. Docker multi-stage com usuário non-root, imagens no ghcr.io e migrations versionadas com Flyway.",
+                "en": "One GitHub Actions workflow per folder: a commit that touches one service builds and ships only that service. Multi-stage Docker with a non-root user, images on ghcr.io and versioned migrations with Flyway."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Números",
+        "en": "Numbers"
+      },
+      "blocks": [
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "5+1",
+              "label": {
+                "pt": "serviços + BFF",
+                "en": "services + BFF"
+              }
+            },
+            {
+              "value": "9",
+              "label": {
+                "pt": "projetos num monorepo",
+                "en": "projects, one monorepo"
+              }
+            },
+            {
+              "value": "320+",
+              "label": {
+                "pt": "testes",
+                "en": "tests"
+              }
+            },
+            {
+              "value": "4",
+              "label": {
+                "pt": "rodadas de hardening",
+                "en": "hardening rounds"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Sistema de pins do produto",
+        "en": "The product's pin system"
+      },
+      "blocks": [
+        {
+          "type": "pins",
+          "items": [
+            {
+              "icon": "pin-radar",
+              "label": {
+                "pt": "no radar",
+                "en": "on the radar"
+              }
+            },
+            {
+              "icon": "pin-sight",
+              "label": {
+                "pt": "na mira",
+                "en": "in sight"
+              }
+            },
+            {
+              "icon": "pin-conquered",
+              "label": {
+                "pt": "conquistado",
+                "en": "conquered"
+              }
+            },
+            {
+              "icon": "pin-objective",
+              "label": {
+                "pt": "objetivo",
+                "en": "objective"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Repositório",
+        "en": "Repository"
+      },
+      "blocks": [
+        {
+          "type": "repos",
+          "items": [
+            {
+              "href": "https://github.com/rafaeldossanto/Trisha",
+              "path": "Trisha",
+              "text": {
+                "pt": "monorepo com as nove pastas abaixo",
+                "en": "monorepo holding the nine folders below"
+              }
+            },
+            {
+              "href": "https://github.com/rafaeldossanto/Trisha/tree/main/Cadastro",
+              "path": "Cadastro/",
+              "text": {
+                "pt": "identidade e autenticação",
+                "en": "identity and authentication"
+              }
+            },
+            {
+              "href": "https://github.com/rafaeldossanto/Trisha/tree/main/APP",
+              "path": "APP/",
+              "text": {
+                "pt": "domínio social",
+                "en": "social domain"
+              }
+            },
+            {
+              "href": "https://github.com/rafaeldossanto/Trisha/tree/main/loc",
+              "path": "loc/",
+              "text": {
+                "pt": "localização e GPS",
+                "en": "location and GPS"
+              }
+            },
+            {
+              "href": "https://github.com/rafaeldossanto/Trisha/tree/main/midia",
+              "path": "midia/",
+              "text": {
+                "pt": "upload de mídia",
+                "en": "media uploads"
+              }
+            },
+            {
+              "href": "https://github.com/rafaeldossanto/Trisha/tree/main/bff",
+              "path": "bff/",
+              "text": "backend for frontend"
+            },
+            {
+              "href": "https://github.com/rafaeldossanto/Trisha/tree/main/trilha_app",
+              "path": "trilha_app/",
+              "text": {
+                "pt": "app Flutter",
+                "en": "Flutter app"
+              }
+            },
+            {
+              "href": "https://github.com/rafaeldossanto/Trisha/tree/main/trilha_web",
+              "path": "trilha_web/",
+              "text": {
+                "pt": "cliente web",
+                "en": "web client"
+              }
+            },
+            {
+              "href": "https://github.com/rafaeldossanto/Trisha/tree/main/trilha-infra",
+              "path": "trilha-infra/",
+              "text": {
+                "pt": "infraestrutura e deploy",
+                "en": "infrastructure and deployment"
+              }
+            },
+            {
+              "href": "https://github.com/rafaeldossanto/Trisha/tree/main/Docs",
+              "path": "Docs/",
+              "text": {
+                "pt": "documentação do projeto",
+                "en": "project documentation"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Dentro do código",
+        "en": "Inside the code"
+      },
+      "blocks": [
+        {
+          "type": "muted",
+          "html": {
+            "pt": "Os cinco serviços seguem o mesmo esqueleto — <code>controller</code> → <code>service</code> → <code>repository</code>, com <code>mapper</code> traduzindo entidade e DTO, e <code>auth</code> e <code>trace</code> em todos, porque cada serviço se defende sozinho e cada requisição é rastreável ponta a ponta. O que muda de um para o outro é o que está abaixo.",
+            "en": "The five services share the same skeleton — <code>controller</code> → <code>service</code> → <code>repository</code>, with <code>mapper</code> translating between entity and DTO, and <code>auth</code> and <code>trace</code> in all of them, because each service defends itself and every request stays traceable end to end. What changes from one to the next is below."
+          }
+        },
+        {
+          "type": "package",
+          "root": "com.trail.Cadastro",
+          "meta": {
+            "pt": "· identidade",
+            "en": "· identity"
+          },
+          "items": [
+            {
+              "name": "auth",
+              "text": {
+                "pt": "validação do JWT e do ID token social via JWKS",
+                "en": "validates the JWT and the social ID token through JWKS"
+              }
+            },
+            {
+              "name": "mail",
+              "text": {
+                "pt": "envio do e-mail de confirmação de cadastro",
+                "en": "sends the account confirmation e-mail"
+              }
+            },
+            {
+              "name": "job",
+              "text": {
+                "pt": "rotinas agendadas de manutenção do cadastro",
+                "en": "scheduled maintenance routines for the registry"
+              }
+            },
+            {
+              "name": "listener",
+              "text": {
+                "pt": "reação a eventos do ciclo de vida do usuário",
+                "en": "reacts to events in the user lifecycle"
+              }
+            },
+            {
+              "name": "model.event",
+              "text": {
+                "pt": "contratos dos eventos que o serviço publica",
+                "en": "contracts for the events this service publishes"
+              }
+            },
+            {
+              "name": "entity · repository",
+              "text": {
+                "pt": "usuário, conta vinculada, provedor de autenticação",
+                "en": "user, linked account, auth provider"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "com.app.APP",
+          "meta": {
+            "pt": "· domínio social",
+            "en": "· social domain"
+          },
+          "items": [
+            {
+              "name": "entity",
+              "text": {
+                "pt": "aventura, caminho, ponto de interesse, evidência, amizade",
+                "en": "adventure, path, point of interest, evidence, friendship"
+              }
+            },
+            {
+              "name": "service",
+              "text": {
+                "pt": "feed, grafo social e cálculo do nível de confiança",
+                "en": "feed, social graph and the trust-level calculation"
+              }
+            },
+            {
+              "name": "model.enums",
+              "text": {
+                "pt": "visibilidade, status do ponto, tipo de vínculo",
+                "en": "visibility, point status, kind of connection"
+              }
+            },
+            {
+              "name": "auth",
+              "text": {
+                "pt": "resolve o ator do token antes de qualquer leitura",
+                "en": "resolves who the token belongs to before any read"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "com.trisha.Loc.loc",
+          "meta": {
+            "pt": "· localização",
+            "en": "· location"
+          },
+          "items": [
+            {
+              "name": "mqtt",
+              "text": {
+                "pt": "ingestão das posições publicadas pelo app durante o rastreio",
+                "en": "ingests the positions the app publishes while tracking"
+              }
+            },
+            {
+              "name": "websocket",
+              "text": {
+                "pt": "difusão STOMP das sessões ao vivo para quem tem permissão",
+                "en": "STOMP broadcast of live sessions to whoever is allowed"
+              }
+            },
+            {
+              "name": "repository",
+              "text": {
+                "pt": "consultas nativas PostGIS por bounding box, com índice GiST",
+                "en": "native PostGIS bounding-box queries with a GiST index"
+              }
+            },
+            {
+              "name": "service",
+              "text": {
+                "pt": "Haversine, progresso da sessão e término automático",
+                "en": "Haversine, session progress and automatic termination"
+              }
+            },
+            {
+              "name": "client",
+              "text": {
+                "pt": "consulta os outros serviços para resolver visibilidade",
+                "en": "asks the other services to resolve visibility"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "com.trisha.midia",
+          "meta": {
+            "pt": "· mídia",
+            "en": "· media"
+          },
+          "items": [
+            {
+              "name": "service",
+              "text": {
+                "pt": "presigned URL de upload e download; o binário nunca passa pela API",
+                "en": "presigned upload and download URLs; the binary never goes through the API"
+              }
+            },
+            {
+              "name": "entity",
+              "text": {
+                "pt": "metadados do arquivo — o objeto vive no MinIO / R2",
+                "en": "file metadata — the object itself lives in MinIO / R2"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "com.trisha.bff",
+          "meta": {
+            "pt": "· fachada",
+            "en": "· facade"
+          },
+          "items": [
+            {
+              "name": "client",
+              "text": {
+                "pt": "chamadas aos quatro serviços, com circuit breaker que falha fechado",
+                "en": "calls to the four services, with a circuit breaker that fails closed"
+              }
+            },
+            {
+              "name": "service",
+              "text": {
+                "pt": "agregação das respostas e cache Redis com chave por observador",
+                "en": "response aggregation and Redis cache keyed per viewer"
+              }
+            },
+            {
+              "name": "ratelimit",
+              "text": {
+                "pt": "limite de requisições na borda, a defesa contra abuso",
+                "en": "request limits at the edge, the defence against abuse"
+              }
+            },
+            {
+              "name": "model.dto",
+              "text": {
+                "pt": "contrato do front — não vaza a entidade de nenhum serviço",
+                "en": "the front end's contract — no service entity leaks through"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "colophon": {
+    "pt": "Trisha é um projeto pessoal open source, em desenvolvimento ativo.",
+    "en": "Trisha is a personal open source project, under active development."
+  }
+}
