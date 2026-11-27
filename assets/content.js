@@ -11,12 +11,12 @@ export const projects = {
       "MCP"
     ],
     "pt": [
-      "Orquestrador visual de agentes de IA. O projeto organiza agentes e contexto em grafos e acompanha a execução dos fluxos.",
-      "TypeScript de ponta a ponta, com NestJS no servidor e React na interface. Pacotes compartilhados cuidam dos esquemas do grafo, provedores de modelos, protocolo dos runners e servidor MCP."
+      "Orquestrador visual de agentes de IA. O projeto organiza agentes e contexto em grafos e acompanha a execução dos fluxos, com versões públicas desde a v0.1.0.",
+      "TypeScript de ponta a ponta, com NestJS no servidor, React na interface e Electron no desktop. Pacotes compartilhados cuidam dos esquemas do grafo, provedores de modelos, runtimes de terminal, protocolo dos runners e servidor MCP."
     ],
     "en": [
-      "A visual AI agent orchestrator. The project organizes agents and context in graphs and follows workflow execution.",
-      "TypeScript end to end, with NestJS on the server and React on the web. Shared packages cover graph schemas, model providers, the runner protocol and an MCP server."
+      "A visual AI agent orchestrator. The project organizes agents and context in graphs and follows workflow execution, with public releases since v0.1.0.",
+      "TypeScript end to end, with NestJS on the server, React on the web and Electron on the desktop. Shared packages cover graph schemas, model providers, terminal runtimes, the runner protocol and an MCP server."
     ]
   },
   "miniinfos": {
@@ -53,7 +53,7 @@ export const caseStudies = {
           ],
           [
             "",
-            "A ideia central é dar visibilidade ao trabalho: mensagens, estados, ferramentas e histórico de uma execução ficam ligados ao grafo. A implementação segue em desenvolvimento, com o caminho de agentes de terminal documentado e funcionando."
+            "A ideia central é dar visibilidade ao trabalho: mensagens, estados, ferramentas e histórico de uma execução ficam ligados ao grafo. Desde novembro de 2026 o projeto tem versões públicas, da v0.1.0 à v0.1.5, com instaladores para Windows, macOS e Linux. Agentes de API e de terminal rodam no mesmo grafo, e o texto de cada um aparece token por token na execução ao vivo."
           ]
         ]
       },
@@ -70,20 +70,28 @@ export const caseStudies = {
             "NestJS com Fastify expõe REST e WebSocket. O Hub de mensagens, o supervisor de agentes e as guardas mantêm responsabilidades separadas."
           ],
           [
-            "Persistência e versões",
-            "Drizzle organiza schema e migrations sobre PostgreSQL ou PGlite. A definição do grafo é versionada e cada execução fica vinculada à sua versão."
+            "Agentes de API",
+            "O runtime de API usa os SDKs oficiais da OpenAI (Responses) e da Anthropic, além de serviços compatíveis com a OpenAI. Comunicação, ferramentas e tokens passam pela mesma abstração de sessões, com estimativa de custo para os modelos do catálogo."
           ],
           [
-            "Runners",
-            "Os agentes rodam em um runner embutido no modo local ou em um processo separado no modo híbrido. O servidor usa a mesma interface para os dois caminhos."
+            "Agentes de terminal",
+            "Claude Code e Codex CLI rodam em PTY ou em stream-json, num runner embutido no modo local ou num processo separado no modo híbrido. O servidor usa a mesma interface para os dois caminhos."
+          ],
+          [
+            "Persistência e versões",
+            "Drizzle organiza schema e migrations sobre PostgreSQL ou PGlite. A definição do grafo é versionada e cada execução fica vinculada à sua versão."
           ],
           [
             "Comunicação por MCP",
             "As ferramentas send_message, ask, reply, list_peers e finish conectam a sessão do agente ao Hub. A integração não depende de interpretar visualmente o texto do terminal."
           ],
           [
+            "Contas e organizações",
+            "Login com Google (OIDC), sessões, organizações, convites e isolamento de dados por organização, com runners e cotas próprios."
+          ],
+          [
             "Aplicativo Electron",
-            "Servidor e banco PGlite rodam no aplicativo local. O renderer é isolado, sem acesso direto ao Node, e recebe uma ponte de IPC restrita."
+            "Servidor e banco PGlite rodam no aplicativo local. O renderer é isolado, sem acesso direto ao Node, e recebe uma ponte de IPC restrita. O app também conecta a um servidor remoto."
           ]
         ]
       },
@@ -100,6 +108,10 @@ export const caseStudies = {
             "Uma mensagem recebida durante um turno fica na caixa de entrada. O modelo é de sessões com comunicação, em vez de uma sequência em que cada bloco termina para o próximo começar."
           ],
           [
+            "Texto ao vivo sem inflar o histórico.",
+            "Os provedores transmitem a resposta por SSE e o stream-json envia mensagens parciais. Os trechos viram um evento passageiro, agrupado a cada cerca de 50 ms e fora do log, e o runner ganhou o frame agent.delta na revisão 6 do protocolo, compatível com as anteriores."
+          ],
+          [
             "Reconectar sem repetir efeitos.",
             "Pedidos e mensagens têm identificadores. O protocolo reenvia o que não foi confirmado e trata repetições de forma idempotente, sem executar a mesma ação duas vezes."
           ],
@@ -109,11 +121,33 @@ export const caseStudies = {
           ],
           [
             "Limitar conversas que não terminam.",
-            "As guardas cobrem quantidade de mensagens, repetição entre agentes, orçamento e tempo de execução. Também existe parada explícita."
+            "As guardas cobrem quantidade de mensagens, repetição entre agentes, orçamento e tempo de execução. Também existe parada explícita. Consumo fora do catálogo de preços aparece como desconhecido, nunca como zero."
           ],
           [
-            "Login do agente fica no runner.",
-            "O servidor não guarda a autenticação de assinatura da CLI. Runners separados usam tokens próprios, revogáveis, armazenados como hash no servidor."
+            "Login do agente fica com a CLI oficial.",
+            "O servidor não guarda a autenticação de assinatura. A conta do ChatGPT entra pelo login oficial do Codex CLI: o NeuronsAI só executa o binário, consulta o status e roda o agente com sandbox somente leitura, sem ler os tokens. Runners separados usam tokens próprios, revogáveis, guardados como hash."
+          ]
+        ]
+      },
+      {
+        "title": "Gatilhos, ferramentas e templates",
+        "kind": "list",
+        "items": [
+          [
+            "Execução por evento.",
+            "Um projeto publicado pode ser disparado por webhook assinado, por agenda cron ou por mensagem no WhatsApp, que também ganha uma ferramenta de resposta. Cada integração depende de configuração própria."
+          ],
+          [
+            "Ferramentas com permissão por ligação.",
+            "MCP, HTTP e memórias em Obsidian ficam disponíveis por list_tools e use_tool, com leitura e escrita autorizadas no grafo e o evento ToolCalled registrado na execução."
+          ],
+          [
+            "Templates prontos.",
+            "Três modelos com prévia criam rascunhos editáveis, como uma pesquisa com revisor. A publicação continua sendo um passo explícito."
+          ],
+          [
+            "Permissões por papel.",
+            "Com contas, só dono e administrador excluem projetos; os demais membros pedem a exclusão, que pode ser aprovada ou recusada. No uso local, sem conta, nada muda."
           ]
         ]
       },
@@ -123,7 +157,7 @@ export const caseStudies = {
         "items": [
           [
             "Banco embutido sem uma segunda instalação.",
-            "PGlite permite usar o mesmo modelo PostgreSQL no aplicativo. O modo com PostgreSQL externo continua disponível para desenvolvimento e integração."
+            "PGlite permite usar o mesmo modelo PostgreSQL no aplicativo. O modo com PostgreSQL externo continua disponível para servidor, desenvolvimento e integração."
           ],
           [
             "Isolamento da janela.",
@@ -131,11 +165,11 @@ export const caseStudies = {
           ],
           [
             "Segredos protegidos pelo sistema.",
-            "O aplicativo usa safeStorage para proteger a chave mestra local e desabilita esse armazenamento quando o sistema não oferece a proteção esperada."
+            "O aplicativo usa safeStorage para proteger a chave mestra local e desabilita esse armazenamento quando o sistema não oferece a proteção esperada. Chaves de API ficam só no cofre de segredos do servidor."
           ],
           [
-            "Estado do projeto explícito.",
-            "O runtime de agentes por API, contas multiusuário e a infraestrutura na AWS aparecem como etapas do plano. Não são apresentados aqui como funcionalidades já entregues."
+            "O que ainda falta, dito com clareza.",
+            "Assinatura de código, notarização e a infraestrutura na AWS seguem como etapas finais do plano, por envolverem custo. A aceitação com serviços reais, como Google, Meta e Codex, também está separada dos testes automatizados."
           ]
         ]
       },
@@ -148,16 +182,24 @@ export const caseStudies = {
             "O monorepo compartilha esquemas em Zod. O cliente da API é gerado a partir do OpenAPI, reduzindo divergências entre servidor e interface."
           ],
           [
+            "CI em cada mudança.",
+            "Formatação, lint, tipos, testes e build pelo Turborepo, checagem do OpenAPI, testes de integração com PostgreSQL, empacotamento nos três sistemas e gitleaks."
+          ],
+          [
             "Teste de aceitação do aplicativo.",
             "O smoke abre o app real com dados isolados, verifica a ponte da janela, publica um projeto com agentes, grava uma nota pela integração e confere a liberação da trava ao encerrar."
           ],
           [
-            "Builds para os três sistemas.",
-            "O pipeline gera instaladores Windows, macOS e Linux, com checksums e release em rascunho. Assinatura e notarização têm uma etapa própria no plano."
+            "Releases públicas.",
+            "Seis versões entre 14 e 22 de novembro de 2026, cada uma com instaladores Windows, macOS e Linux, checksums SHA-256 e metadados de atualização. Os instaladores ainda não são assinados."
           ],
           [
-            "Atualização com diferenças por plataforma.",
-            "Windows e AppImage têm o caminho de atualização automática documentado. macOS sem assinatura e pacotes deb direcionam para baixar a nova versão."
+            "Desempenho medido.",
+            "Na v0.1.1, a entrada da web caiu de cerca de 1.239 kB para 428 kB e o JavaScript inicial da landing, de 144 kB para 20 kB. O servidor ganhou índices, replay em lotes e custo calculado só da página exibida."
+          ],
+          [
+            "Landing e downloads.",
+            "A landing do projeto oferece downloads por sistema e instruções de instalação, e consulta a última versão no GitHub."
           ]
         ]
       },
@@ -167,15 +209,27 @@ export const caseStudies = {
         "items": [
           [
             "apps/server/",
-            "API, Hub, supervisor, persistência e integração com runners."
+            "API, Hub, supervisor, contas, gatilhos, persistência e runtime de API."
           ],
           [
             "apps/web/",
-            "Modelador, conversas e terminais."
+            "Modelador, execução ao vivo, histórico e painéis."
           ],
           [
             "apps/desktop/",
-            "Aplicativo Electron, isolamento, build e atualização."
+            "Aplicativo Electron, servidor local, PGlite, build e atualização."
+          ],
+          [
+            "apps/site/",
+            "Landing, downloads e instruções de instalação."
+          ],
+          [
+            "packages/providers/",
+            "Provedores de modelos, streaming e estimativa de custo."
+          ],
+          [
+            "packages/agent-runtimes/",
+            "Runtimes do Claude Code e do Codex CLI."
           ],
           [
             "packages/runner-protocol/",
@@ -203,7 +257,7 @@ export const caseStudies = {
           ],
           [
             "",
-            "The central goal is visibility: messages, states, tools and execution history stay connected to the graph. Development is ongoing, with the terminal agent path documented and working."
+            "The central goal is visibility: messages, states, tools and execution history stay connected to the graph. Since November 2026 the project has public releases, from v0.1.0 to v0.1.5, with installers for Windows, macOS and Linux. API and terminal agents run in the same graph, and each one's text appears token by token in the live run."
           ]
         ]
       },
@@ -220,20 +274,28 @@ export const caseStudies = {
             "NestJS with Fastify exposes REST and WebSocket. The message Hub, agent supervisor and execution guards have separate responsibilities."
           ],
           [
-            "Persistence and versions",
-            "Drizzle manages schemas and migrations on PostgreSQL or PGlite. Graph definitions are versioned and each execution stays tied to its version."
+            "API agents",
+            "The API runtime uses the official OpenAI (Responses) and Anthropic SDKs, plus OpenAI compatible services. Communication, tools and tokens share one session abstraction, with cost estimates for catalog models."
           ],
           [
-            "Runners",
-            "Agents run inside an embedded local runner or a separate hybrid process. The server uses the same interface for both paths."
+            "Terminal agents",
+            "Claude Code and Codex CLI run in a PTY or in stream-json mode, inside an embedded local runner or a separate hybrid process. The server uses the same interface for both paths."
+          ],
+          [
+            "Persistence and versions",
+            "Drizzle manages schemas and migrations on PostgreSQL or PGlite. Graph definitions are versioned and each execution stays tied to its version."
           ],
           [
             "MCP communication",
             "The send_message, ask, reply, list_peers and finish tools connect an agent session to the Hub without visually scraping terminal text."
           ],
           [
+            "Accounts and organizations",
+            "Google sign-in (OIDC), sessions, organizations, invitations and per-organization data isolation, with their own runners and quotas."
+          ],
+          [
             "Electron application",
-            "The local application hosts the server and PGlite database. Its renderer is isolated, without direct Node access, and receives a restricted IPC bridge."
+            "The local application hosts the server and PGlite database. Its renderer is isolated, without direct Node access, and receives a restricted IPC bridge. The app can also connect to a remote server."
           ]
         ]
       },
@@ -250,6 +312,10 @@ export const caseStudies = {
             "Messages arriving during a turn wait in an inbox. This is a session communication model rather than a sequence in which each block exits before the next starts."
           ],
           [
+            "Live text without bloating history.",
+            "Providers stream responses over SSE and stream-json sends partial messages. Chunks become a transient event, batched about every 50 ms and kept out of the log, and the runner gained the agent.delta frame in protocol revision 6, compatible with earlier ones."
+          ],
+          [
             "Reconnect without repeating effects.",
             "Requests and messages have identifiers. The protocol resends unconfirmed work and handles repeats idempotently."
           ],
@@ -259,11 +325,33 @@ export const caseStudies = {
           ],
           [
             "Bound conversations.",
-            "Guards cover message counts, repeated exchanges, budget and execution time. Explicit stop is also available."
+            "Guards cover message counts, repeated exchanges, budget and execution time. Explicit stop is also available. Usage outside the pricing catalog shows as unknown, never as zero."
           ],
           [
-            "Agent login stays on the runner.",
-            "The server does not store CLI subscription credentials. Separate runners use revocable tokens stored as hashes on the server."
+            "Agent login stays with the official CLI.",
+            "The server does not store subscription credentials. The ChatGPT account comes in through the official Codex CLI login: NeuronsAI only runs the binary, checks its status and runs the agent in a read-only sandbox, without reading tokens. Separate runners use revocable tokens stored as hashes."
+          ]
+        ]
+      },
+      {
+        "title": "Triggers, tools and templates",
+        "kind": "list",
+        "items": [
+          [
+            "Event driven runs.",
+            "A published project can be started by a signed webhook, a cron schedule or a WhatsApp message, which also gets a reply tool. Each integration needs its own configuration."
+          ],
+          [
+            "Tools with per-edge permissions.",
+            "MCP, HTTP and Obsidian memories are available through list_tools and use_tool, with authorized reads and writes in the graph and a ToolCalled event recorded in the run."
+          ],
+          [
+            "Ready-made templates.",
+            "Three templates with previews create editable drafts, such as research with a reviewer. Publishing stays an explicit step."
+          ],
+          [
+            "Role based permissions.",
+            "With accounts, only owners and administrators delete projects; other members request deletion, which can be approved or declined. Local use without an account is unchanged."
           ]
         ]
       },
@@ -273,7 +361,7 @@ export const caseStudies = {
         "items": [
           [
             "Embedded storage without another installation.",
-            "PGlite supports the PostgreSQL model inside the app. External PostgreSQL remains available for development and integration."
+            "PGlite supports the PostgreSQL model inside the app. External PostgreSQL remains available for servers, development and integration."
           ],
           [
             "Window isolation.",
@@ -281,11 +369,11 @@ export const caseStudies = {
           ],
           [
             "System protected secrets.",
-            "The app uses safeStorage to protect its local master key and disables this storage when the system cannot provide the expected protection."
+            "The app uses safeStorage to protect its local master key and disables this storage when the system cannot provide the expected protection. API keys live only in the server secret vault."
           ],
           [
-            "An explicit project stage.",
-            "API agent runtimes, multiuser accounts and AWS infrastructure appear as planned stages, rather than being presented here as completed features."
+            "What is still missing, stated plainly.",
+            "Code signing, notarization and AWS infrastructure remain final plan stages because they involve cost. Acceptance with real services such as Google, Meta and Codex is also kept separate from automated tests."
           ]
         ]
       },
@@ -298,16 +386,24 @@ export const caseStudies = {
             "The monorepo shares Zod schemas. The API client is generated from OpenAPI to reduce interface and server drift."
           ],
           [
+            "CI on every change.",
+            "Formatting, lint, types, tests and build through Turborepo, an OpenAPI check, PostgreSQL integration tests, packaging on three operating systems and gitleaks."
+          ],
+          [
             "Application acceptance test.",
             "The smoke test opens the real app with isolated data, checks the window bridge, publishes an agent project, writes a note through the integration and checks lock release on exit."
           ],
           [
-            "Builds for three operating systems.",
-            "The pipeline generates Windows, macOS and Linux installers with checksums and a draft release. Signing and notarization have a dedicated planned stage."
+            "Public releases.",
+            "Six versions between November 14 and 22, 2026, each with Windows, macOS and Linux installers, SHA-256 checksums and update metadata. Installers are not signed yet."
           ],
           [
-            "Platform aware updates.",
-            "Windows and AppImage have documented automatic updates. Unsigned macOS builds and deb packages direct users to download the next version."
+            "Measured performance.",
+            "In v0.1.1 the web entry bundle dropped from about 1,239 kB to 428 kB and the landing initial JavaScript from 144 kB to 20 kB. The server gained indexes, batched replay and cost computed only for the visible page."
+          ],
+          [
+            "Landing and downloads.",
+            "The project landing offers per-system downloads and installation instructions, and checks the latest version on GitHub."
           ]
         ]
       },
@@ -317,15 +413,27 @@ export const caseStudies = {
         "items": [
           [
             "apps/server/",
-            "API, Hub, supervisor, persistence and runner integration."
+            "API, Hub, supervisor, accounts, triggers, persistence and API runtime."
           ],
           [
             "apps/web/",
-            "Modeler, conversations and terminals."
+            "Modeler, live runs, history and panels."
           ],
           [
             "apps/desktop/",
-            "Electron app, isolation, builds and updates."
+            "Electron app, local server, PGlite, builds and updates."
+          ],
+          [
+            "apps/site/",
+            "Landing, downloads and installation instructions."
+          ],
+          [
+            "packages/providers/",
+            "Model providers, streaming and cost estimates."
+          ],
+          [
+            "packages/agent-runtimes/",
+            "Claude Code and Codex CLI runtimes."
           ],
           [
             "packages/runner-protocol/",
@@ -660,11 +768,11 @@ export const text = {
     "contact": "Contato",
     "contactNav": "Contato ↗",
     "personalPortfolio": "Portfólio pessoal",
-    "role": "Desenvolvedor backend",
+    "role": "Engenheiro de IA",
     "viewProjects": "Ver projetos ↘",
-    "homeRole": "Desenvolvedor backend · Engenheiro de IA",
+    "homeRole": "Engenheiro de IA · Desenvolvedor full stack",
     "homeIntro": "Desenvolvo sistemas, APIs e aplicações com IA. Aqui compartilho os projetos que construo, minha experiência e as decisões por trás do código.",
-    "homeExpertise": "Java · Spring Boot · Sistemas distribuídos · Agentes de IA",
+    "homeExpertise": "Agentes de IA · Python · Node.js · React · Java",
     "exploreProjects": "Explorar projetos ↗",
     "aboutMe": "Sobre mim",
     "workingOn": "No que estou trabalhando",
@@ -690,7 +798,7 @@ export const text = {
     "shortcutProfile": "03 Perfil ↗",
     "shortcutProfileCopy": "Como trabalho e o que estudo",
     "location": "Engenheiro de IA",
-    "expertise": "Java · Spring Boot · Sistemas distribuídos",
+    "expertise": "Agentes de IA · Python · Node.js · Java",
     "projectsTitle": "Projetos",
     "projectsSubtitle": "O que construí e o que estou desenvolvendo.",
     "projectsHint": "Abra um projeto para ver arquitetura, decisões técnicas e código.",
@@ -727,11 +835,11 @@ export const text = {
     "contact": "Contact",
     "contactNav": "Contact ↗",
     "personalPortfolio": "Personal portfolio",
-    "role": "Backend developer",
+    "role": "AI Engineer",
     "viewProjects": "View projects ↘",
-    "homeRole": "Backend developer · AI Engineer",
+    "homeRole": "AI Engineer · Full-stack developer",
     "homeIntro": "I build systems, APIs and AI applications. Here I share the projects I work on, my experience and the decisions behind the code.",
-    "homeExpertise": "Java · Spring Boot · Distributed systems · AI agents",
+    "homeExpertise": "AI agents · Python · Node.js · React · Java",
     "exploreProjects": "Explore projects ↗",
     "aboutMe": "About me",
     "workingOn": "What I am working on",
@@ -757,7 +865,7 @@ export const text = {
     "shortcutProfile": "03 Profile ↗",
     "shortcutProfileCopy": "How I work and what I study",
     "location": "AI Engineer",
-    "expertise": "Java · Spring Boot · Distributed systems",
+    "expertise": "AI agents · Python · Node.js · Java",
     "projectsTitle": "Projects",
     "projectsSubtitle": "What I have built and what I am working on.",
     "projectsHint": "Open a project for its architecture, technical decisions and code.",

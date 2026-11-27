@@ -68,8 +68,8 @@
               "name": "core",
               "meta": ":8081",
               "text": {
-                "pt": "Spring Modulith com nove módulos — identidade, conexões, contas, investimentos, sincronização, provedor, análises, planejamento e o compartilhado. Só o BFF chama.",
-                "en": "Spring Modulith with nine modules — identity, connections, banking, investments, sync, provider, insights, planning and shared. Only the BFF calls it."
+                "pt": "Spring Modulith com doze módulos — identidade, conexões, contas, investimentos, sincronização, provedor, análises, planejamento, e-mail, privacidade, lista de espera e o compartilhado. Só o BFF chama.",
+                "en": "Spring Modulith with twelve modules — identity, connections, banking, investments, sync, provider, insights, planning, mail, privacy, waitlist and shared. Only the BFF calls it."
               }
             },
             {
@@ -97,6 +97,25 @@
               "text": {
                 "pt": "Instalador gerado no CI, ícone na bandeja, abrir com o Windows, atualização automática e Windows Hello para destravar.",
                 "en": "An installer built in CI, a tray icon, start with Windows, automatic updates and Windows Hello to unlock."
+              }
+            },
+            {
+              "name": "site",
+              "meta": {
+                "pt": "lista de espera",
+                "en": "waitlist"
+              },
+              "text": {
+                "pt": "Página pública em HTML, CSS e JS puros, sem build nem nada externo: formulário da lista de espera com confirmação por e-mail, Termos de Uso e Política de Privacidade.",
+                "en": "A public page in plain HTML, CSS and JS, with no build and nothing external: a waitlist form confirmed by email, Terms of Use and a Privacy Policy."
+              }
+            },
+            {
+              "name": "deploy",
+              "meta": "Caddy",
+              "text": {
+                "pt": "Compose com HTTPS automático, redes separadas e backup. Só o Caddy publica portas, e um teste quebra se uma página pública do BFF ficar fora do Caddyfile.",
+                "en": "Compose with automatic HTTPS, separate networks and backups. Only Caddy publishes ports, and a test breaks if a public BFF page is missing from the Caddyfile."
               }
             }
           ]
@@ -171,6 +190,26 @@
                 "pt": "O CI gera o instalador do Windows a cada versão; o app lê o manifesto da release, confere o SHA-256 do arquivo e se atualiza sem a pessoa abrir o GitHub.",
                 "en": "CI builds the Windows installer for every version; the app reads the release manifest, checks the file's SHA-256 and updates itself without the person ever opening GitHub."
               }
+            },
+            {
+              "title": {
+                "pt": "LGPD desde antes do primeiro usuário.",
+                "en": "Privacy law before the first user."
+              },
+              "text": {
+                "pt": "Tela de finalidade antes de conectar um banco, registro de cada consentimento e revogação, aceite versionado dos termos, \"Baixar meus dados\" em JSON, limpeza noturna do que venceu e registros de acesso de 6 meses com o IP cifrado.",
+                "en": "A purpose screen before linking a bank, a record of every consent and revocation, versioned acceptance of the terms, \"Download my data\" as JSON, a nightly cleanup of whatever expired and 6-month access records with the IP encrypted."
+              }
+            },
+            {
+              "title": {
+                "pt": "Webhook é dica, não fonte.",
+                "en": "A webhook is a hint, not a source."
+              },
+              "text": {
+                "pt": "Os avisos da Pluggy chegam por uma rota pública protegida por segredo e só antecipam a próxima sincronização: o dado continua vindo da leitura normal.",
+                "en": "Pluggy's notices arrive on a public route guarded by a secret and only bring the next sync forward: the data still comes from the regular read."
+              }
             }
           ]
         }
@@ -186,14 +225,14 @@
           "type": "stats",
           "items": [
             {
-              "value": "511",
+              "value": "900+",
               "label": {
                 "pt": "testes",
                 "en": "tests"
               }
             },
             {
-              "value": "9",
+              "value": "12",
               "label": {
                 "pt": "módulos no core",
                 "en": "core modules"
@@ -230,8 +269,8 @@
               "href": "https://github.com/rafaeldossanto/Wallet",
               "path": "Wallet",
               "text": {
-                "pt": "monorepo: core, BFF, app e documentação",
-                "en": "monorepo: core, BFF, app and docs"
+                "pt": "monorepo: core, BFF, app, site, deploy e documentação",
+                "en": "monorepo: core, BFF, app, site, deploy and docs"
               }
             }
           ]
@@ -247,8 +286,8 @@
         {
           "type": "muted",
           "html": {
-            "pt": "Dois serviços e um app, no mesmo repositório. No core, cada módulo do Spring Modulith só conversa com os outros pela fachada pública deles — e um teste quebra se alguém atravessar a fronteira.",
-            "en": "Two services and an app, in one repository. In the core, each Spring Modulith module only talks to the others through their public facade — and a test breaks if anyone crosses that boundary."
+            "pt": "Dois serviços, um app e um site, no mesmo repositório. No core, cada módulo do Spring Modulith só conversa com os outros pela fachada pública deles — e um teste quebra se alguém atravessar a fronteira.",
+            "en": "Two services, an app and a site, in one repository. In the core, each Spring Modulith module only talks to the others through their public facade — and a test breaks if anyone crosses that boundary."
           }
         },
         {
@@ -310,6 +349,27 @@
               "text": {
                 "pt": "plano do mês, gastos fixos, salário esperado e os fixos que o extrato sugere",
                 "en": "the month plan, fixed expenses, expected salary and the fixed costs the statement suggests"
+              }
+            },
+            {
+              "name": "mail",
+              "text": {
+                "pt": "fila de e-mails: confirmação, senha esquecida e avisos, por SMTP",
+                "en": "the email queue: confirmation, forgotten password and notices, over SMTP"
+              }
+            },
+            {
+              "name": "privacy",
+              "text": {
+                "pt": "\"Baixar meus dados\": a exportação completa da conta em JSON",
+                "en": "\"Download my data\": the account's full export as JSON"
+              }
+            },
+            {
+              "name": "waitlist",
+              "text": {
+                "pt": "a lista de espera do site, com confirmação por e-mail",
+                "en": "the site's waitlist, confirmed by email"
               }
             },
             {
@@ -419,7 +479,7 @@
     }
   ],
   "colophon": {
-    "pt": "Wallet tem nome provisório e está em desenvolvimento: roda de ponta a ponta com uma Pluggy de demonstração e já fala com a Pluggy real — no Android, o Pluggy Connect leva direto ao app do banco. Falta conferir as regras com dados reais antes de abrir para outras pessoas.",
-    "en": "Wallet has a working title and is under development: it runs end to end against a demo Pluggy and already talks to the real Pluggy — on Android, Pluggy Connect goes straight to the bank's app. What's left is checking the rules against real data before opening it to other people."
+    "pt": "Wallet tem nome provisório e está em desenvolvimento: roda de ponta a ponta com uma Pluggy de demonstração e já fala com a Pluggy real — no Android, o Pluggy Connect leva direto ao app do banco. A v0.1.5 trouxe lista de espera, senha esquecida, LGPD e o deploy preparado; os textos legais ainda são rascunhos para revisão jurídica. Falta conferir as regras com dados reais e colocar o servidor no ar antes de abrir para outras pessoas.",
+    "en": "Wallet has a working title and is under development: it runs end to end against a demo Pluggy and already talks to the real Pluggy — on Android, Pluggy Connect goes straight to the bank's app. v0.1.5 brought the waitlist, password reset, privacy-law compliance and a ready deploy; the legal texts are still drafts awaiting legal review. What's left is checking the rules against real data and putting the server online before opening it to other people."
   }
 }

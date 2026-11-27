@@ -46,24 +46,24 @@
       "en": "Personal portfolio"
     },
     "role": {
-      "pt": "Desenvolvedor backend",
-      "en": "Backend developer"
+      "pt": "Engenheiro de IA",
+      "en": "AI Engineer"
     },
     "viewProjects": {
       "pt": "Ver projetos ↘",
       "en": "View projects ↘"
     },
     "homeRole": {
-      "pt": "Desenvolvedor backend · Engenheiro de IA",
-      "en": "Backend developer · AI Engineer"
+      "pt": "Engenheiro de IA · Desenvolvedor full stack",
+      "en": "AI Engineer · Full-stack developer"
     },
     "homeIntro": {
       "pt": "Desenvolvo sistemas, APIs e aplicações com IA. Aqui compartilho os projetos que construo, minha experiência e as decisões por trás do código.",
       "en": "I build systems, APIs and AI applications. Here I share the projects I work on, my experience and the decisions behind the code."
     },
     "homeExpertise": {
-      "pt": "Java · Spring Boot · Sistemas distribuídos · Agentes de IA",
-      "en": "Java · Spring Boot · Distributed systems · AI agents"
+      "pt": "Agentes de IA · Python · Node.js · React · Java",
+      "en": "AI agents · Python · Node.js · React · Java"
     },
     "exploreProjects": {
       "pt": "Explorar projetos ↗",
@@ -160,8 +160,8 @@
       "en": "AI Engineer"
     },
     "expertise": {
-      "pt": "Java · Spring Boot · Sistemas distribuídos",
-      "en": "Java · Spring Boot · Distributed systems"
+      "pt": "Agentes de IA · Python · Node.js · Java",
+      "en": "AI agents · Python · Node.js · Java"
     },
     "projectsTitle": {
       "pt": "Projetos",

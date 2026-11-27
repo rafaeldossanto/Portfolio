@@ -4,12 +4,12 @@
   "page": "case-study",
   "title": "NeuronsAI",
   "summary": {
-    "pt": "Orquestrador visual de agentes de IA. O projeto organiza agentes e contexto em grafos e acompanha a execução dos fluxos.",
-    "en": "A visual AI agent orchestrator. The project organizes agents and context in graphs and follows workflow execution."
+    "pt": "Orquestrador visual de agentes de IA. O projeto organiza agentes e contexto em grafos e acompanha a execução dos fluxos, com versões públicas desde a v0.1.0.",
+    "en": "A visual AI agent orchestrator. The project organizes agents and context in graphs and follows workflow execution, with public releases since v0.1.0."
   },
   "architecture": {
-    "pt": "TypeScript de ponta a ponta, com NestJS no servidor e React na interface. Pacotes compartilhados cuidam dos esquemas do grafo, provedores de modelos, protocolo dos runners e servidor MCP.",
-    "en": "TypeScript end to end, with NestJS on the server and React on the web. Shared packages cover graph schemas, model providers, the runner protocol and an MCP server."
+    "pt": "TypeScript de ponta a ponta, com NestJS no servidor, React na interface e Electron no desktop. Pacotes compartilhados cuidam dos esquemas do grafo, provedores de modelos, runtimes de terminal, protocolo dos runners e servidor MCP.",
+    "en": "TypeScript end to end, with NestJS on the server, React on the web and Electron on the desktop. Shared packages cover graph schemas, model providers, terminal runtimes, the runner protocol and an MCP server."
   },
   "tags": [
     "TypeScript",
@@ -38,8 +38,8 @@
             },
             {
               "text": {
-                "pt": "A ideia central é dar visibilidade ao trabalho: mensagens, estados, ferramentas e histórico de uma execução ficam ligados ao grafo. A implementação segue em desenvolvimento, com o caminho de agentes de terminal documentado e funcionando.",
-                "en": "The central goal is visibility: messages, states, tools and execution history stay connected to the graph. Development is ongoing, with the terminal agent path documented and working."
+                "pt": "A ideia central é dar visibilidade ao trabalho: mensagens, estados, ferramentas e histórico de uma execução ficam ligados ao grafo. Desde novembro de 2026 o projeto tem versões públicas, da v0.1.0 à v0.1.5, com instaladores para Windows, macOS e Linux. Agentes de API e de terminal rodam no mesmo grafo, e o texto de cada um aparece token por token na execução ao vivo.",
+                "en": "The central goal is visibility: messages, states, tools and execution history stay connected to the graph. Since November 2026 the project has public releases, from v0.1.0 to v0.1.5, with installers for Windows, macOS and Linux. API and terminal agents run in the same graph, and each one's text appears token by token in the live run."
               }
             }
           ]
@@ -77,19 +77,32 @@
             },
             {
               "name": {
+                "pt": "Agentes de API",
+                "en": "API agents"
+              },
+              "text": {
+                "pt": "O runtime de API usa os SDKs oficiais da OpenAI (Responses) e da Anthropic, além de serviços compatíveis com a OpenAI. Comunicação, ferramentas e tokens passam pela mesma abstração de sessões, com estimativa de custo para os modelos do catálogo.",
+                "en": "The API runtime uses the official OpenAI (Responses) and Anthropic SDKs, plus OpenAI compatible services. Communication, tools and tokens share one session abstraction, with cost estimates for catalog models."
+              }
+            },
+            {
+              "name": {
+                "pt": "Agentes de terminal",
+                "en": "Terminal agents"
+              },
+              "text": {
+                "pt": "Claude Code e Codex CLI rodam em PTY ou em stream-json, num runner embutido no modo local ou num processo separado no modo híbrido. O servidor usa a mesma interface para os dois caminhos.",
+                "en": "Claude Code and Codex CLI run in a PTY or in stream-json mode, inside an embedded local runner or a separate hybrid process. The server uses the same interface for both paths."
+              }
+            },
+            {
+              "name": {
                 "pt": "Persistência e versões",
                 "en": "Persistence and versions"
               },
               "text": {
                 "pt": "Drizzle organiza schema e migrations sobre PostgreSQL ou PGlite. A definição do grafo é versionada e cada execução fica vinculada à sua versão.",
                 "en": "Drizzle manages schemas and migrations on PostgreSQL or PGlite. Graph definitions are versioned and each execution stays tied to its version."
-              }
-            },
-            {
-              "name": "Runners",
-              "text": {
-                "pt": "Os agentes rodam em um runner embutido no modo local ou em um processo separado no modo híbrido. O servidor usa a mesma interface para os dois caminhos.",
-                "en": "Agents run inside an embedded local runner or a separate hybrid process. The server uses the same interface for both paths."
               }
             },
             {
@@ -104,12 +117,22 @@
             },
             {
               "name": {
+                "pt": "Contas e organizações",
+                "en": "Accounts and organizations"
+              },
+              "text": {
+                "pt": "Login com Google (OIDC), sessões, organizações, convites e isolamento de dados por organização, com runners e cotas próprios.",
+                "en": "Google sign-in (OIDC), sessions, organizations, invitations and per-organization data isolation, with their own runners and quotas."
+              }
+            },
+            {
+              "name": {
                 "pt": "Aplicativo Electron",
                 "en": "Electron application"
               },
               "text": {
-                "pt": "Servidor e banco PGlite rodam no aplicativo local. O renderer é isolado, sem acesso direto ao Node, e recebe uma ponte de IPC restrita.",
-                "en": "The local application hosts the server and PGlite database. Its renderer is isolated, without direct Node access, and receives a restricted IPC bridge."
+                "pt": "Servidor e banco PGlite rodam no aplicativo local. O renderer é isolado, sem acesso direto ao Node, e recebe uma ponte de IPC restrita. O app também conecta a um servidor remoto.",
+                "en": "The local application hosts the server and PGlite database. Its renderer is isolated, without direct Node access, and receives a restricted IPC bridge. The app can also connect to a remote server."
               }
             }
           ]
@@ -147,6 +170,16 @@
             },
             {
               "title": {
+                "pt": "Texto ao vivo sem inflar o histórico.",
+                "en": "Live text without bloating history."
+              },
+              "text": {
+                "pt": "Os provedores transmitem a resposta por SSE e o stream-json envia mensagens parciais. Os trechos viram um evento passageiro, agrupado a cada cerca de 50 ms e fora do log, e o runner ganhou o frame agent.delta na revisão 6 do protocolo, compatível com as anteriores.",
+                "en": "Providers stream responses over SSE and stream-json sends partial messages. Chunks become a transient event, batched about every 50 ms and kept out of the log, and the runner gained the agent.delta frame in protocol revision 6, compatible with earlier ones."
+              }
+            },
+            {
+              "title": {
                 "pt": "Reconectar sem repetir efeitos.",
                 "en": "Reconnect without repeating effects."
               },
@@ -171,18 +204,71 @@
                 "en": "Bound conversations."
               },
               "text": {
-                "pt": "As guardas cobrem quantidade de mensagens, repetição entre agentes, orçamento e tempo de execução. Também existe parada explícita.",
-                "en": "Guards cover message counts, repeated exchanges, budget and execution time. Explicit stop is also available."
+                "pt": "As guardas cobrem quantidade de mensagens, repetição entre agentes, orçamento e tempo de execução. Também existe parada explícita. Consumo fora do catálogo de preços aparece como desconhecido, nunca como zero.",
+                "en": "Guards cover message counts, repeated exchanges, budget and execution time. Explicit stop is also available. Usage outside the pricing catalog shows as unknown, never as zero."
               }
             },
             {
               "title": {
-                "pt": "Login do agente fica no runner.",
-                "en": "Agent login stays on the runner."
+                "pt": "Login do agente fica com a CLI oficial.",
+                "en": "Agent login stays with the official CLI."
               },
               "text": {
-                "pt": "O servidor não guarda a autenticação de assinatura da CLI. Runners separados usam tokens próprios, revogáveis, armazenados como hash no servidor.",
-                "en": "The server does not store CLI subscription credentials. Separate runners use revocable tokens stored as hashes on the server."
+                "pt": "O servidor não guarda a autenticação de assinatura. A conta do ChatGPT entra pelo login oficial do Codex CLI: o NeuronsAI só executa o binário, consulta o status e roda o agente com sandbox somente leitura, sem ler os tokens. Runners separados usam tokens próprios, revogáveis, guardados como hash.",
+                "en": "The server does not store subscription credentials. The ChatGPT account comes in through the official Codex CLI login: NeuronsAI only runs the binary, checks its status and runs the agent in a read-only sandbox, without reading tokens. Separate runners use revocable tokens stored as hashes."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Gatilhos, ferramentas e templates",
+        "en": "Triggers, tools and templates"
+      },
+      "blocks": [
+        {
+          "type": "facts",
+          "items": [
+            {
+              "title": {
+                "pt": "Execução por evento.",
+                "en": "Event driven runs."
+              },
+              "text": {
+                "pt": "Um projeto publicado pode ser disparado por webhook assinado, por agenda cron ou por mensagem no WhatsApp, que também ganha uma ferramenta de resposta. Cada integração depende de configuração própria.",
+                "en": "A published project can be started by a signed webhook, a cron schedule or a WhatsApp message, which also gets a reply tool. Each integration needs its own configuration."
+              }
+            },
+            {
+              "title": {
+                "pt": "Ferramentas com permissão por ligação.",
+                "en": "Tools with per-edge permissions."
+              },
+              "text": {
+                "pt": "MCP, HTTP e memórias em Obsidian ficam disponíveis por list_tools e use_tool, com leitura e escrita autorizadas no grafo e o evento ToolCalled registrado na execução.",
+                "en": "MCP, HTTP and Obsidian memories are available through list_tools and use_tool, with authorized reads and writes in the graph and a ToolCalled event recorded in the run."
+              }
+            },
+            {
+              "title": {
+                "pt": "Templates prontos.",
+                "en": "Ready-made templates."
+              },
+              "text": {
+                "pt": "Três modelos com prévia criam rascunhos editáveis, como uma pesquisa com revisor. A publicação continua sendo um passo explícito.",
+                "en": "Three templates with previews create editable drafts, such as research with a reviewer. Publishing stays an explicit step."
+              }
+            },
+            {
+              "title": {
+                "pt": "Permissões por papel.",
+                "en": "Role based permissions."
+              },
+              "text": {
+                "pt": "Com contas, só dono e administrador excluem projetos; os demais membros pedem a exclusão, que pode ser aprovada ou recusada. No uso local, sem conta, nada muda.",
+                "en": "With accounts, only owners and administrators delete projects; other members request deletion, which can be approved or declined. Local use without an account is unchanged."
               }
             }
           ]
@@ -204,8 +290,8 @@
                 "en": "Embedded storage without another installation."
               },
               "text": {
-                "pt": "PGlite permite usar o mesmo modelo PostgreSQL no aplicativo. O modo com PostgreSQL externo continua disponível para desenvolvimento e integração.",
-                "en": "PGlite supports the PostgreSQL model inside the app. External PostgreSQL remains available for development and integration."
+                "pt": "PGlite permite usar o mesmo modelo PostgreSQL no aplicativo. O modo com PostgreSQL externo continua disponível para servidor, desenvolvimento e integração.",
+                "en": "PGlite supports the PostgreSQL model inside the app. External PostgreSQL remains available for servers, development and integration."
               }
             },
             {
@@ -224,18 +310,18 @@
                 "en": "System protected secrets."
               },
               "text": {
-                "pt": "O aplicativo usa safeStorage para proteger a chave mestra local e desabilita esse armazenamento quando o sistema não oferece a proteção esperada.",
-                "en": "The app uses safeStorage to protect its local master key and disables this storage when the system cannot provide the expected protection."
+                "pt": "O aplicativo usa safeStorage para proteger a chave mestra local e desabilita esse armazenamento quando o sistema não oferece a proteção esperada. Chaves de API ficam só no cofre de segredos do servidor.",
+                "en": "The app uses safeStorage to protect its local master key and disables this storage when the system cannot provide the expected protection. API keys live only in the server secret vault."
               }
             },
             {
               "title": {
-                "pt": "Estado do projeto explícito.",
-                "en": "An explicit project stage."
+                "pt": "O que ainda falta, dito com clareza.",
+                "en": "What is still missing, stated plainly."
               },
               "text": {
-                "pt": "O runtime de agentes por API, contas multiusuário e a infraestrutura na AWS aparecem como etapas do plano. Não são apresentados aqui como funcionalidades já entregues.",
-                "en": "API agent runtimes, multiuser accounts and AWS infrastructure appear as planned stages, rather than being presented here as completed features."
+                "pt": "Assinatura de código, notarização e a infraestrutura na AWS seguem como etapas finais do plano, por envolverem custo. A aceitação com serviços reais, como Google, Meta e Codex, também está separada dos testes automatizados.",
+                "en": "Code signing, notarization and AWS infrastructure remain final plan stages because they involve cost. Acceptance with real services such as Google, Meta and Codex is also kept separate from automated tests."
               }
             }
           ]
@@ -263,6 +349,16 @@
             },
             {
               "title": {
+                "pt": "CI em cada mudança.",
+                "en": "CI on every change."
+              },
+              "text": {
+                "pt": "Formatação, lint, tipos, testes e build pelo Turborepo, checagem do OpenAPI, testes de integração com PostgreSQL, empacotamento nos três sistemas e gitleaks.",
+                "en": "Formatting, lint, types, tests and build through Turborepo, an OpenAPI check, PostgreSQL integration tests, packaging on three operating systems and gitleaks."
+              }
+            },
+            {
+              "title": {
                 "pt": "Teste de aceitação do aplicativo.",
                 "en": "Application acceptance test."
               },
@@ -273,22 +369,32 @@
             },
             {
               "title": {
-                "pt": "Builds para os três sistemas.",
-                "en": "Builds for three operating systems."
+                "pt": "Releases públicas.",
+                "en": "Public releases."
               },
               "text": {
-                "pt": "O pipeline gera instaladores Windows, macOS e Linux, com checksums e release em rascunho. Assinatura e notarização têm uma etapa própria no plano.",
-                "en": "The pipeline generates Windows, macOS and Linux installers with checksums and a draft release. Signing and notarization have a dedicated planned stage."
+                "pt": "Seis versões entre 14 e 22 de novembro de 2026, cada uma com instaladores Windows, macOS e Linux, checksums SHA-256 e metadados de atualização. Os instaladores ainda não são assinados.",
+                "en": "Six versions between November 14 and 22, 2026, each with Windows, macOS and Linux installers, SHA-256 checksums and update metadata. Installers are not signed yet."
               }
             },
             {
               "title": {
-                "pt": "Atualização com diferenças por plataforma.",
-                "en": "Platform aware updates."
+                "pt": "Desempenho medido.",
+                "en": "Measured performance."
               },
               "text": {
-                "pt": "Windows e AppImage têm o caminho de atualização automática documentado. macOS sem assinatura e pacotes deb direcionam para baixar a nova versão.",
-                "en": "Windows and AppImage have documented automatic updates. Unsigned macOS builds and deb packages direct users to download the next version."
+                "pt": "Na v0.1.1, a entrada da web caiu de cerca de 1.239 kB para 428 kB e o JavaScript inicial da landing, de 144 kB para 20 kB. O servidor ganhou índices, replay em lotes e custo calculado só da página exibida.",
+                "en": "In v0.1.1 the web entry bundle dropped from about 1,239 kB to 428 kB and the landing initial JavaScript from 144 kB to 20 kB. The server gained indexes, batched replay and cost computed only for the visible page."
+              }
+            },
+            {
+              "title": {
+                "pt": "Landing e downloads.",
+                "en": "Landing and downloads."
+              },
+              "text": {
+                "pt": "A landing do projeto oferece downloads por sistema e instruções de instalação, e consulta a última versão no GitHub.",
+                "en": "The project landing offers per-system downloads and installation instructions, and checks the latest version on GitHub."
               }
             }
           ]
@@ -307,22 +413,43 @@
             {
               "path": "apps/server/",
               "text": {
-                "pt": "API, Hub, supervisor, persistência e integração com runners.",
-                "en": "API, Hub, supervisor, persistence and runner integration."
+                "pt": "API, Hub, supervisor, contas, gatilhos, persistência e runtime de API.",
+                "en": "API, Hub, supervisor, accounts, triggers, persistence and API runtime."
               }
             },
             {
               "path": "apps/web/",
               "text": {
-                "pt": "Modelador, conversas e terminais.",
-                "en": "Modeler, conversations and terminals."
+                "pt": "Modelador, execução ao vivo, histórico e painéis.",
+                "en": "Modeler, live runs, history and panels."
               }
             },
             {
               "path": "apps/desktop/",
               "text": {
-                "pt": "Aplicativo Electron, isolamento, build e atualização.",
-                "en": "Electron app, isolation, builds and updates."
+                "pt": "Aplicativo Electron, servidor local, PGlite, build e atualização.",
+                "en": "Electron app, local server, PGlite, builds and updates."
+              }
+            },
+            {
+              "path": "apps/site/",
+              "text": {
+                "pt": "Landing, downloads e instruções de instalação.",
+                "en": "Landing, downloads and installation instructions."
+              }
+            },
+            {
+              "path": "packages/providers/",
+              "text": {
+                "pt": "Provedores de modelos, streaming e estimativa de custo.",
+                "en": "Model providers, streaming and cost estimates."
+              }
+            },
+            {
+              "path": "packages/agent-runtimes/",
+              "text": {
+                "pt": "Runtimes do Claude Code e do Codex CLI.",
+                "en": "Claude Code and Codex CLI runtimes."
               }
             },
             {
