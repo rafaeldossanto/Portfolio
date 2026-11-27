@@ -15,8 +15,8 @@ import { createProjectDemo, createWebsiteLink } from './project-demos.js';
   const data = {
     neurons: {
       title:'NeuronsAI',
-      pt:['Orquestrador visual de agentes de IA. O projeto organiza agentes e contexto em grafos e acompanha a execução dos fluxos.','TypeScript de ponta a ponta, com NestJS no servidor e React na interface. Pacotes compartilhados cuidam dos esquemas do grafo, provedores de modelos, protocolo dos runners e servidor MCP.'],
-      en:['A visual AI agent orchestrator. The project organizes agents and context in graphs and follows workflow execution.','TypeScript end to end, with NestJS on the server and React on the web. Shared packages cover graph schemas, model providers, the runner protocol and an MCP server.'],
+      pt:['Orquestrador visual de agentes de IA. O projeto organiza agentes e contexto em grafos e acompanha a execução dos fluxos, com versões públicas desde a v0.1.0.','TypeScript de ponta a ponta, com NestJS no servidor, React na interface e Electron no desktop. Pacotes compartilhados cuidam dos esquemas do grafo, provedores de modelos, runtimes de terminal, protocolo dos runners e servidor MCP.'],
+      en:['A visual AI agent orchestrator. The project organizes agents and context in graphs and follows workflow execution, with public releases since v0.1.0.','TypeScript end to end, with NestJS on the server, React on the web and Electron on the desktop. Shared packages cover graph schemas, model providers, terminal runtimes, the runner protocol and an MCP server.'],
       tags:['TypeScript','NestJS','React','MCP','Grafos','Runners'],
       sections:{pt:[['Grafo e execução','O projeto separa os esquemas do grafo da interface e do servidor, com validação em Zod.'],['Provedores de IA','As integrações com modelos vivem em um pacote próprio de provedores.'],['Runners','Um runner hospeda agentes de terminal e se conecta ao servidor por um protocolo compartilhado.'],['Cliente e documentação','O cliente tipado da API é gerado a partir do OpenAPI do servidor. A arquitetura e o plano de implementação ficam documentados no repositório.']],en:[['Graph and execution','Graph schemas are separate from the interface and server, with Zod validation.'],['AI providers','Model integrations live in a dedicated providers package.'],['Runners','A runner hosts terminal agents and connects to the server through a shared protocol.'],['Client and documentation','The typed API client is generated from the server OpenAPI definition. Architecture and implementation plans are documented in the repository.']]}
     },
@@ -120,40 +120,54 @@ import { createProjectDemo, createWebsiteLink } from './project-demos.js';
       pt:[
         {title:'A proposta',kind:'paragraphs',items:[
           ['','O NeuronsAI permite desenhar quem pode conversar com quem em uma equipe de agentes. O grafo representa agentes vivos e suas permissões de comunicação, com contexto, papel e acompanhamento da execução.'],
-          ['','A ideia central é dar visibilidade ao trabalho: mensagens, estados, ferramentas e histórico de uma execução ficam ligados ao grafo. A implementação segue em desenvolvimento, com o caminho de agentes de terminal documentado e funcionando.']
+          ['','A ideia central é dar visibilidade ao trabalho: mensagens, estados, ferramentas e histórico de uma execução ficam ligados ao grafo. Desde novembro de 2026 o projeto tem versões públicas, da v0.1.0 à v0.1.5, com instaladores para Windows, macOS e Linux. Agentes de API e de terminal rodam no mesmo grafo, e o texto de cada um aparece token por token na execução ao vivo.']
         ]},
         {title:'Arquitetura',kind:'grid',items:[
           ['Modelador em React','A interface usa React, React Flow e xterm.js para o canvas, as conversas e os terminais. O mesmo front é aberto no aplicativo desktop.'],
           ['Servidor NestJS','NestJS com Fastify expõe REST e WebSocket. O Hub de mensagens, o supervisor de agentes e as guardas mantêm responsabilidades separadas.'],
+          ['Agentes de API','O runtime de API usa os SDKs oficiais da OpenAI (Responses) e da Anthropic, além de serviços compatíveis com a OpenAI. Comunicação, ferramentas e tokens passam pela mesma abstração de sessões, com estimativa de custo para os modelos do catálogo.'],
+          ['Agentes de terminal','Claude Code e Codex CLI rodam em PTY ou em stream-json, num runner embutido no modo local ou num processo separado no modo híbrido. O servidor usa a mesma interface para os dois caminhos.'],
           ['Persistência e versões','Drizzle organiza schema e migrations sobre PostgreSQL ou PGlite. A definição do grafo é versionada e cada execução fica vinculada à sua versão.'],
-          ['Runners','Os agentes rodam em um runner embutido no modo local ou em um processo separado no modo híbrido. O servidor usa a mesma interface para os dois caminhos.'],
           ['Comunicação por MCP','As ferramentas send_message, ask, reply, list_peers e finish conectam a sessão do agente ao Hub. A integração não depende de interpretar visualmente o texto do terminal.'],
-          ['Aplicativo Electron','Servidor e banco PGlite rodam no aplicativo local. O renderer é isolado, sem acesso direto ao Node, e recebe uma ponte de IPC restrita.']
+          ['Contas e organizações','Login com Google (OIDC), sessões, organizações, convites e isolamento de dados por organização, com runners e cotas próprios.'],
+          ['Aplicativo Electron','Servidor e banco PGlite rodam no aplicativo local. O renderer é isolado, sem acesso direto ao Node, e recebe uma ponte de IPC restrita. O app também conecta a um servidor remoto.']
         ]},
         {title:'Decisões de engenharia',kind:'list',items:[
           ['Uma seta é uma permissão.','O Hub confere se um agente pode iniciar conversa com outro. A mensagem é persistida antes da entrega e o histórico permite acompanhar o que aconteceu.'],
           ['Agentes continuam vivos.','Uma mensagem recebida durante um turno fica na caixa de entrada. O modelo é de sessões com comunicação, em vez de uma sequência em que cada bloco termina para o próximo começar.'],
+          ['Texto ao vivo sem inflar o histórico.','Os provedores transmitem a resposta por SSE e o stream-json envia mensagens parciais. Os trechos viram um evento passageiro, agrupado a cada cerca de 50 ms e fora do log, e o runner ganhou o frame agent.delta na revisão 6 do protocolo, compatível com as anteriores.'],
           ['Reconectar sem repetir efeitos.','Pedidos e mensagens têm identificadores. O protocolo reenvia o que não foi confirmado e trata repetições de forma idempotente, sem executar a mesma ação duas vezes.'],
           ['Um contrato para memória e rede.','O protocolo de runner é versionado e validado com Zod. O canal em memória e o WebSocket passam pelo mesmo codec; versões desconhecidas são recusadas explicitamente.'],
-          ['Limitar conversas que não terminam.','As guardas cobrem quantidade de mensagens, repetição entre agentes, orçamento e tempo de execução. Também existe parada explícita.'],
-          ['Login do agente fica no runner.','O servidor não guarda a autenticação de assinatura da CLI. Runners separados usam tokens próprios, revogáveis, armazenados como hash no servidor.']
+          ['Limitar conversas que não terminam.','As guardas cobrem quantidade de mensagens, repetição entre agentes, orçamento e tempo de execução. Também existe parada explícita. Consumo fora do catálogo de preços aparece como desconhecido, nunca como zero.'],
+          ['Login do agente fica com a CLI oficial.','O servidor não guarda a autenticação de assinatura. A conta do ChatGPT entra pelo login oficial do Codex CLI: o NeuronsAI só executa o binário, consulta o status e roda o agente com sandbox somente leitura, sem ler os tokens. Runners separados usam tokens próprios, revogáveis, guardados como hash.']
+        ]},
+        {title:'Gatilhos, ferramentas e templates',kind:'list',items:[
+          ['Execução por evento.','Um projeto publicado pode ser disparado por webhook assinado, por agenda cron ou por mensagem no WhatsApp, que também ganha uma ferramenta de resposta. Cada integração depende de configuração própria.'],
+          ['Ferramentas com permissão por ligação.','MCP, HTTP e memórias em Obsidian ficam disponíveis por list_tools e use_tool, com leitura e escrita autorizadas no grafo e o evento ToolCalled registrado na execução.'],
+          ['Templates prontos.','Três modelos com prévia criam rascunhos editáveis, como uma pesquisa com revisor. A publicação continua sendo um passo explícito.'],
+          ['Permissões por papel.','Com contas, só dono e administrador excluem projetos; os demais membros pedem a exclusão, que pode ser aprovada ou recusada. No uso local, sem conta, nada muda.']
         ]},
         {title:'Desktop, dados e segurança',kind:'list',items:[
-          ['Banco embutido sem uma segunda instalação.','PGlite permite usar o mesmo modelo PostgreSQL no aplicativo. O modo com PostgreSQL externo continua disponível para desenvolvimento e integração.'],
+          ['Banco embutido sem uma segunda instalação.','PGlite permite usar o mesmo modelo PostgreSQL no aplicativo. O modo com PostgreSQL externo continua disponível para servidor, desenvolvimento e integração.'],
           ['Isolamento da janela.','O Electron usa contextIsolation e sandbox, sem nodeIntegration no renderer. Navegação e pedidos fora da origem local são controlados.'],
-          ['Segredos protegidos pelo sistema.','O aplicativo usa safeStorage para proteger a chave mestra local e desabilita esse armazenamento quando o sistema não oferece a proteção esperada.'],
-          ['Estado do projeto explícito.','O runtime de agentes por API, contas multiusuário e a infraestrutura na AWS aparecem como etapas do plano. Não são apresentados aqui como funcionalidades já entregues.']
+          ['Segredos protegidos pelo sistema.','O aplicativo usa safeStorage para proteger a chave mestra local e desabilita esse armazenamento quando o sistema não oferece a proteção esperada. Chaves de API ficam só no cofre de segredos do servidor.'],
+          ['O que ainda falta, dito com clareza.','Assinatura de código, notarização e a infraestrutura na AWS seguem como etapas finais do plano, por envolverem custo. A aceitação com serviços reais, como Google, Meta e Codex, também está separada dos testes automatizados.']
         ]},
         {title:'Qualidade e distribuição',kind:'list',items:[
           ['Cliente e contratos tipados.','O monorepo compartilha esquemas em Zod. O cliente da API é gerado a partir do OpenAPI, reduzindo divergências entre servidor e interface.'],
+          ['CI em cada mudança.','Formatação, lint, tipos, testes e build pelo Turborepo, checagem do OpenAPI, testes de integração com PostgreSQL, empacotamento nos três sistemas e gitleaks.'],
           ['Teste de aceitação do aplicativo.','O smoke abre o app real com dados isolados, verifica a ponte da janela, publica um projeto com agentes, grava uma nota pela integração e confere a liberação da trava ao encerrar.'],
-          ['Builds para os três sistemas.','O pipeline gera instaladores Windows, macOS e Linux, com checksums e release em rascunho. Assinatura e notarização têm uma etapa própria no plano.'],
-          ['Atualização com diferenças por plataforma.','Windows e AppImage têm o caminho de atualização automática documentado. macOS sem assinatura e pacotes deb direcionam para baixar a nova versão.']
+          ['Releases públicas.','Seis versões entre 14 e 22 de novembro de 2026, cada uma com instaladores Windows, macOS e Linux, checksums SHA-256 e metadados de atualização. Os instaladores ainda não são assinados.'],
+          ['Desempenho medido.','Na v0.1.1, a entrada da web caiu de cerca de 1.239 kB para 428 kB e o JavaScript inicial da landing, de 144 kB para 20 kB. O servidor ganhou índices, replay em lotes e custo calculado só da página exibida.'],
+          ['Landing e downloads.','A landing do projeto oferece downloads por sistema e instruções de instalação, e consulta a última versão no GitHub.']
         ]},
         {title:'Dentro do código',kind:'paths',items:[
-          ['apps/server/','API, Hub, supervisor, persistência e integração com runners.'],
-          ['apps/web/','Modelador, conversas e terminais.'],
-          ['apps/desktop/','Aplicativo Electron, isolamento, build e atualização.'],
+          ['apps/server/','API, Hub, supervisor, contas, gatilhos, persistência e runtime de API.'],
+          ['apps/web/','Modelador, execução ao vivo, histórico e painéis.'],
+          ['apps/desktop/','Aplicativo Electron, servidor local, PGlite, build e atualização.'],
+          ['apps/site/','Landing, downloads e instruções de instalação.'],
+          ['packages/providers/','Provedores de modelos, streaming e estimativa de custo.'],
+          ['packages/agent-runtimes/','Runtimes do Claude Code e do Codex CLI.'],
           ['packages/runner-protocol/','Frames, validação, versionamento e canais de comunicação.'],
           ['packages/runner/','Hospedagem dos agentes e conexão do runner ao servidor.'],
           ['packages/mcp-neurons/','Servidor MCP de comunicação dos agentes.']
@@ -162,40 +176,54 @@ import { createProjectDemo, createWebsiteLink } from './project-demos.js';
       en:[
         {title:'The idea',kind:'paragraphs',items:[
           ['','NeuronsAI lets you draw who can talk to whom in a team of agents. The graph represents live agents and their communication permissions, with context, roles and execution tracking.'],
-          ['','The central goal is visibility: messages, states, tools and execution history stay connected to the graph. Development is ongoing, with the terminal agent path documented and working.']
+          ['','The central goal is visibility: messages, states, tools and execution history stay connected to the graph. Since November 2026 the project has public releases, from v0.1.0 to v0.1.5, with installers for Windows, macOS and Linux. API and terminal agents run in the same graph, and each one\'s text appears token by token in the live run.']
         ]},
         {title:'Architecture',kind:'grid',items:[
           ['React modeler','The interface uses React, React Flow and xterm.js for the canvas, conversations and terminals. The same front end opens inside the desktop app.'],
           ['NestJS server','NestJS with Fastify exposes REST and WebSocket. The message Hub, agent supervisor and execution guards have separate responsibilities.'],
+          ['API agents','The API runtime uses the official OpenAI (Responses) and Anthropic SDKs, plus OpenAI compatible services. Communication, tools and tokens share one session abstraction, with cost estimates for catalog models.'],
+          ['Terminal agents','Claude Code and Codex CLI run in a PTY or in stream-json mode, inside an embedded local runner or a separate hybrid process. The server uses the same interface for both paths.'],
           ['Persistence and versions','Drizzle manages schemas and migrations on PostgreSQL or PGlite. Graph definitions are versioned and each execution stays tied to its version.'],
-          ['Runners','Agents run inside an embedded local runner or a separate hybrid process. The server uses the same interface for both paths.'],
           ['MCP communication','The send_message, ask, reply, list_peers and finish tools connect an agent session to the Hub without visually scraping terminal text.'],
-          ['Electron application','The local application hosts the server and PGlite database. Its renderer is isolated, without direct Node access, and receives a restricted IPC bridge.']
+          ['Accounts and organizations','Google sign-in (OIDC), sessions, organizations, invitations and per-organization data isolation, with their own runners and quotas.'],
+          ['Electron application','The local application hosts the server and PGlite database. Its renderer is isolated, without direct Node access, and receives a restricted IPC bridge. The app can also connect to a remote server.']
         ]},
         {title:'Engineering decisions',kind:'list',items:[
           ['An edge is a permission.','The Hub checks whether an agent may initiate a conversation. Messages are persisted before delivery and remain available in execution history.'],
           ['Agents stay alive.','Messages arriving during a turn wait in an inbox. This is a session communication model rather than a sequence in which each block exits before the next starts.'],
+          ['Live text without bloating history.','Providers stream responses over SSE and stream-json sends partial messages. Chunks become a transient event, batched about every 50 ms and kept out of the log, and the runner gained the agent.delta frame in protocol revision 6, compatible with earlier ones.'],
           ['Reconnect without repeating effects.','Requests and messages have identifiers. The protocol resends unconfirmed work and handles repeats idempotently.'],
           ['One contract for memory and network.','The runner protocol is versioned and validated with Zod. In-memory and WebSocket channels share a codec; unsupported versions are explicitly rejected.'],
-          ['Bound conversations.','Guards cover message counts, repeated exchanges, budget and execution time. Explicit stop is also available.'],
-          ['Agent login stays on the runner.','The server does not store CLI subscription credentials. Separate runners use revocable tokens stored as hashes on the server.']
+          ['Bound conversations.','Guards cover message counts, repeated exchanges, budget and execution time. Explicit stop is also available. Usage outside the pricing catalog shows as unknown, never as zero.'],
+          ['Agent login stays with the official CLI.','The server does not store subscription credentials. The ChatGPT account comes in through the official Codex CLI login: NeuronsAI only runs the binary, checks its status and runs the agent in a read-only sandbox, without reading tokens. Separate runners use revocable tokens stored as hashes.']
+        ]},
+        {title:'Triggers, tools and templates',kind:'list',items:[
+          ['Event driven runs.','A published project can be started by a signed webhook, a cron schedule or a WhatsApp message, which also gets a reply tool. Each integration needs its own configuration.'],
+          ['Tools with per-edge permissions.','MCP, HTTP and Obsidian memories are available through list_tools and use_tool, with authorized reads and writes in the graph and a ToolCalled event recorded in the run.'],
+          ['Ready-made templates.','Three templates with previews create editable drafts, such as research with a reviewer. Publishing stays an explicit step.'],
+          ['Role based permissions.','With accounts, only owners and administrators delete projects; other members request deletion, which can be approved or declined. Local use without an account is unchanged.']
         ]},
         {title:'Desktop, data and security',kind:'list',items:[
-          ['Embedded storage without another installation.','PGlite supports the PostgreSQL model inside the app. External PostgreSQL remains available for development and integration.'],
+          ['Embedded storage without another installation.','PGlite supports the PostgreSQL model inside the app. External PostgreSQL remains available for servers, development and integration.'],
           ['Window isolation.','Electron uses contextIsolation and sandboxing without renderer nodeIntegration. Requests and navigation beyond the local origin are controlled.'],
-          ['System protected secrets.','The app uses safeStorage to protect its local master key and disables this storage when the system cannot provide the expected protection.'],
-          ['An explicit project stage.','API agent runtimes, multiuser accounts and AWS infrastructure appear as planned stages, rather than being presented here as completed features.']
+          ['System protected secrets.','The app uses safeStorage to protect its local master key and disables this storage when the system cannot provide the expected protection. API keys live only in the server secret vault.'],
+          ['What is still missing, stated plainly.','Code signing, notarization and AWS infrastructure remain final plan stages because they involve cost. Acceptance with real services such as Google, Meta and Codex is also kept separate from automated tests.']
         ]},
         {title:'Quality and distribution',kind:'list',items:[
           ['Typed clients and contracts.','The monorepo shares Zod schemas. The API client is generated from OpenAPI to reduce interface and server drift.'],
+          ['CI on every change.','Formatting, lint, types, tests and build through Turborepo, an OpenAPI check, PostgreSQL integration tests, packaging on three operating systems and gitleaks.'],
           ['Application acceptance test.','The smoke test opens the real app with isolated data, checks the window bridge, publishes an agent project, writes a note through the integration and checks lock release on exit.'],
-          ['Builds for three operating systems.','The pipeline generates Windows, macOS and Linux installers with checksums and a draft release. Signing and notarization have a dedicated planned stage.'],
-          ['Platform aware updates.','Windows and AppImage have documented automatic updates. Unsigned macOS builds and deb packages direct users to download the next version.']
+          ['Public releases.','Six versions between November 14 and 22, 2026, each with Windows, macOS and Linux installers, SHA-256 checksums and update metadata. Installers are not signed yet.'],
+          ['Measured performance.','In v0.1.1 the web entry bundle dropped from about 1,239 kB to 428 kB and the landing initial JavaScript from 144 kB to 20 kB. The server gained indexes, batched replay and cost computed only for the visible page.'],
+          ['Landing and downloads.','The project landing offers per-system downloads and installation instructions, and checks the latest version on GitHub.']
         ]},
         {title:'Inside the code',kind:'paths',items:[
-          ['apps/server/','API, Hub, supervisor, persistence and runner integration.'],
-          ['apps/web/','Modeler, conversations and terminals.'],
-          ['apps/desktop/','Electron app, isolation, builds and updates.'],
+          ['apps/server/','API, Hub, supervisor, accounts, triggers, persistence and API runtime.'],
+          ['apps/web/','Modeler, live runs, history and panels.'],
+          ['apps/desktop/','Electron app, local server, PGlite, builds and updates.'],
+          ['apps/site/','Landing, downloads and installation instructions.'],
+          ['packages/providers/','Model providers, streaming and cost estimates.'],
+          ['packages/agent-runtimes/','Claude Code and Codex CLI runtimes.'],
           ['packages/runner-protocol/','Frames, validation, versioning and communication channels.'],
           ['packages/runner/','Agent hosting and runner connections.'],
           ['packages/mcp-neurons/','Agent communication MCP server.']
