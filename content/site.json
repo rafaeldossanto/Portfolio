@@ -62,8 +62,8 @@
       "en": "I build systems, APIs and AI applications. Here I share the projects I work on, my experience and the decisions behind the code."
     },
     "homeExpertise": {
-      "pt": "Agentes de IA · Python · Node.js · React · Java",
-      "en": "AI agents · Python · Node.js · React · Java"
+      "pt": "Python · Node.js · React · JavaScript · Java",
+      "en": "Python · Node.js · React · JavaScript · Java"
     },
     "exploreProjects": {
       "pt": "Explorar projetos ↗",
@@ -160,8 +160,8 @@
       "en": "AI Engineer"
     },
     "expertise": {
-      "pt": "Agentes de IA · Python · Node.js · Java",
-      "en": "AI agents · Python · Node.js · Java"
+      "pt": "Python · Node.js · React · Java",
+      "en": "Python · Node.js · React · Java"
     },
     "projectsTitle": {
       "pt": "Projetos",
