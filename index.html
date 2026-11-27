@@ -981,8 +981,8 @@
       </div>
       <div class="old-box">
         <div class="old-box-name">core <span class="old-meta">:8081</span></div>
-        <p lang="pt" data-i18n>Spring Modulith com nove módulos — identidade, conexões, contas, investimentos, sincronização, provedor, análises, planejamento e o compartilhado. Só o BFF chama.</p>
-        <p lang="en" data-i18n hidden>Spring Modulith with nine modules — identity, connections, banking, investments, sync, provider, insights, planning and shared. Only the BFF calls it.</p>
+        <p lang="pt" data-i18n>Spring Modulith com doze módulos — identidade, conexões, contas, investimentos, sincronização, provedor, análises, planejamento, e-mail, privacidade, lista de espera e o compartilhado. Só o BFF chama.</p>
+        <p lang="en" data-i18n hidden>Spring Modulith with twelve modules — identity, connections, banking, investments, sync, provider, insights, planning, mail, privacy, waitlist and shared. Only the BFF calls it.</p>
       </div>
       <div class="old-box">
         <div class="old-box-name">provider <span class="old-meta">Pluggy</span></div>
@@ -998,6 +998,16 @@
         <div class="old-box-name">desktop <span class="old-meta">Windows</span></div>
         <p lang="pt" data-i18n>Instalador gerado no CI, ícone na bandeja, abrir com o Windows, atualização automática e Windows Hello para destravar.</p>
         <p lang="en" data-i18n hidden>An installer built in CI, a tray icon, start with Windows, automatic updates and Windows Hello to unlock.</p>
+      </div>
+      <div class="old-box">
+        <div class="old-box-name">site <span class="old-meta" lang="pt" data-i18n>lista de espera</span><span class="old-meta" lang="en" data-i18n hidden>waitlist</span></div>
+        <p lang="pt" data-i18n>Página pública em HTML, CSS e JS puros, sem build nem nada externo: formulário da lista de espera com confirmação por e-mail, Termos de Uso e Política de Privacidade.</p>
+        <p lang="en" data-i18n hidden>A public page in plain HTML, CSS and JS, with no build and nothing external: a waitlist form confirmed by email, Terms of Use and a Privacy Policy.</p>
+      </div>
+      <div class="old-box">
+        <div class="old-box-name">deploy <span class="old-meta">Caddy</span></div>
+        <p lang="pt" data-i18n>Compose com HTTPS automático, redes separadas e backup. Só o Caddy publica portas, e um teste quebra se uma página pública do BFF ficar fora do Caddyfile.</p>
+        <p lang="en" data-i18n hidden>Compose with automatic HTTPS, separate networks and backups. Only Caddy publishes ports, and a test breaks if a public BFF page is missing from the Caddyfile.</p>
       </div>
     </div>
   </div>
@@ -1022,6 +1032,11 @@
       Windows Hello.</li>
       <li><b>Instalável e atualizado sozinho.</b> O CI gera o instalador do Windows a cada versão; o app
       lê o manifesto da release, confere o SHA-256 do arquivo e se atualiza sem a pessoa abrir o GitHub.</li>
+      <li><b>LGPD desde antes do primeiro usuário.</b> Tela de finalidade antes de conectar um banco,
+      registro de cada consentimento e revogação, aceite versionado dos termos, "Baixar meus dados" em
+      JSON, limpeza noturna do que venceu e registros de acesso de 6 meses com o IP cifrado.</li>
+      <li><b>Webhook é dica, não fonte.</b> Os avisos da Pluggy chegam por uma rota pública protegida por
+      segredo e só antecipam a próxima sincronização: o dado continua vindo da leitura normal.</li>
     </ul>
   </div>
   <div class="old-section" lang="en" data-i18n hidden>
@@ -1044,14 +1059,19 @@
       <li><b>Installable, and updates itself.</b> CI builds the Windows installer for every version; the
       app reads the release manifest, checks the file's SHA-256 and updates itself without the person ever
       opening GitHub.</li>
+      <li><b>Privacy law before the first user.</b> A purpose screen before linking a bank, a record of
+      every consent and revocation, versioned acceptance of the terms, "Download my data" as JSON, a
+      nightly cleanup of whatever expired and 6-month access records with the IP encrypted.</li>
+      <li><b>A webhook is a hint, not a source.</b> Pluggy's notices arrive on a public route guarded by
+      a secret and only bring the next sync forward: the data still comes from the regular read.</li>
     </ul>
   </div>
 
   <div class="old-section" lang="pt" data-i18n>
     <h3>Números</h3>
     <div class="old-stats">
-      <div class="old-stat"><span class="old-n">511</span><span class="old-l">testes</span></div>
-      <div class="old-stat"><span class="old-n">9</span><span class="old-l">módulos no core</span></div>
+      <div class="old-stat"><span class="old-n">900+</span><span class="old-l">testes</span></div>
+      <div class="old-stat"><span class="old-n">12</span><span class="old-l">módulos no core</span></div>
       <div class="old-stat"><span class="old-n">3</span><span class="old-l">plataformas</span></div>
       <div class="old-stat"><span class="old-n">5</span><span class="old-l">versões publicadas</span></div>
     </div>
@@ -1059,8 +1079,8 @@
   <div class="old-section" lang="en" data-i18n hidden>
     <h3>Numbers</h3>
     <div class="old-stats">
-      <div class="old-stat"><span class="old-n">511</span><span class="old-l">tests</span></div>
-      <div class="old-stat"><span class="old-n">9</span><span class="old-l">core modules</span></div>
+      <div class="old-stat"><span class="old-n">900+</span><span class="old-l">tests</span></div>
+      <div class="old-stat"><span class="old-n">12</span><span class="old-l">core modules</span></div>
       <div class="old-stat"><span class="old-n">3</span><span class="old-l">platforms</span></div>
       <div class="old-stat"><span class="old-n">5</span><span class="old-l">published releases</span></div>
     </div>
@@ -1069,14 +1089,14 @@
   <div class="old-section">
     <h3 lang="pt" data-i18n>Repositório</h3><h3 lang="en" data-i18n hidden>Repository</h3>
     <div class="old-repos">
-      <a class="old-repo" href="https://github.com/rafaeldossanto/Wallet" target="_blank" rel="noopener noreferrer"><code>Wallet</code> <span class="old-what" lang="pt" data-i18n>monorepo: core, BFF, app e documentação</span><span class="old-what" lang="en" data-i18n hidden>monorepo: core, BFF, app and docs</span><span class="old-ext">↗</span></a>
+      <a class="old-repo" href="https://github.com/rafaeldossanto/Wallet" target="_blank" rel="noopener noreferrer"><code>Wallet</code> <span class="old-what" lang="pt" data-i18n>monorepo: core, BFF, app, site, deploy e documentação</span><span class="old-what" lang="en" data-i18n hidden>monorepo: core, BFF, app, site, deploy and docs</span><span class="old-ext">↗</span></a>
     </div>
   </div>
 
   <div class="old-section" lang="pt" data-i18n>
     <h3>Dentro do código</h3>
     <p class="old-muted">
-      Dois serviços e um app, no mesmo repositório. No core, cada módulo do Spring Modulith só conversa
+      Dois serviços, um app e um site, no mesmo repositório. No core, cada módulo do Spring Modulith só conversa
       com os outros pela fachada pública deles — e um teste quebra se alguém atravessar a fronteira.
     </p>
 
@@ -1091,6 +1111,9 @@
         <div><dt>provider</dt><dd>a porta <code>FinancialDataProvider</code> e o adaptador <code>pluggy</code></dd></div>
         <div><dt>insight</dt><dd>visão geral, gastos por categoria e por dia, patrimônio</dd></div>
         <div><dt>planning</dt><dd>plano do mês, gastos fixos, salário esperado e os fixos que o extrato sugere</dd></div>
+        <div><dt>mail</dt><dd>fila de e-mails: confirmação, senha esquecida e avisos, por SMTP</dd></div>
+        <div><dt>privacy</dt><dd>"Baixar meus dados": a exportação completa da conta em JSON</dd></div>
+        <div><dt>waitlist</dt><dd>a lista de espera do site, com confirmação por e-mail</dd></div>
         <div><dt>shared</dt><dd><code>crypto</code>, <code>money</code>, <code>time</code>, <code>security</code> — o que todos usam</dd></div>
       </dl>
     </div>
@@ -1121,7 +1144,7 @@
   <div class="old-section" lang="en" data-i18n hidden>
     <h3>Inside the code</h3>
     <p class="old-muted">
-      Two services and an app, in one repository. In the core, each Spring Modulith module only talks to
+      Two services, an app and a site, in one repository. In the core, each Spring Modulith module only talks to
       the others through their public facade — and a test breaks if anyone crosses that boundary.
     </p>
 
@@ -1136,6 +1159,9 @@
         <div><dt>provider</dt><dd>the <code>FinancialDataProvider</code> port and the <code>pluggy</code> adapter</dd></div>
         <div><dt>insight</dt><dd>overview, spending by category and by day, net worth</dd></div>
         <div><dt>planning</dt><dd>the month plan, fixed expenses, expected salary and the fixed costs the statement suggests</dd></div>
+        <div><dt>mail</dt><dd>the email queue: confirmation, forgotten password and notices, over SMTP</dd></div>
+        <div><dt>privacy</dt><dd>"Download my data": the account's full export as JSON</dd></div>
+        <div><dt>waitlist</dt><dd>the site's waitlist, confirmed by email</dd></div>
         <div><dt>shared</dt><dd><code>crypto</code>, <code>money</code>, <code>time</code>, <code>security</code> — what everyone uses</dd></div>
       </dl>
     </div>
@@ -1166,11 +1192,14 @@
 
   <footer>
     <p class="old-colophon" lang="pt" data-i18n>Wallet tem nome provisório e está em desenvolvimento: roda de ponta a ponta com uma
-    Pluggy de demonstração e já fala com a Pluggy real — no Android, o Pluggy Connect leva direto ao app do banco. Falta
-    conferir as regras com dados reais antes de abrir para outras pessoas. <a href="#/projetos" class="cursor-interaction">← voltar aos projetos</a></p>
+    Pluggy de demonstração e já fala com a Pluggy real — no Android, o Pluggy Connect leva direto ao app do banco. A v0.1.5
+    trouxe lista de espera, senha esquecida, LGPD e o deploy preparado; os textos legais ainda são rascunhos para revisão
+    jurídica. Falta conferir as regras com dados reais e colocar o servidor no ar antes de abrir para outras pessoas. <a href="#/projetos" class="cursor-interaction">← voltar aos projetos</a></p>
     <p class="old-colophon" lang="en" data-i18n hidden>Wallet has a working title and is under development: it runs end to end against
-    a demo Pluggy and already talks to the real Pluggy — on Android, Pluggy Connect goes straight to the bank's app. What's
-    left is checking the rules against real data before opening it to other people. <a href="#/projetos" class="cursor-interaction">← back to projects</a></p>
+    a demo Pluggy and already talks to the real Pluggy — on Android, Pluggy Connect goes straight to the bank's app. v0.1.5
+    brought the waitlist, password reset, privacy-law compliance and a ready deploy; the legal texts are still drafts awaiting
+    legal review. What's left is checking the rules against real data and putting the server online before opening it to
+    other people. <a href="#/projetos" class="cursor-interaction">← back to projects</a></p>
   </footer>
 </section><section class="rs-full-project" data-full-project="storage" hidden>
   <a class="old-back" href="#/projetos" lang="pt" data-i18n>← projetos</a>
