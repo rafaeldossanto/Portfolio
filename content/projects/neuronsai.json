@@ -1,0 +1,354 @@
+{
+  "slug": "neurons",
+  "route": "neuronsai",
+  "page": "case-study",
+  "title": "NeuronsAI",
+  "summary": {
+    "pt": "Orquestrador visual de agentes de IA. O projeto organiza agentes e contexto em grafos e acompanha a execução dos fluxos.",
+    "en": "A visual AI agent orchestrator. The project organizes agents and context in graphs and follows workflow execution."
+  },
+  "architecture": {
+    "pt": "TypeScript de ponta a ponta, com NestJS no servidor e React na interface. Pacotes compartilhados cuidam dos esquemas do grafo, provedores de modelos, protocolo dos runners e servidor MCP.",
+    "en": "TypeScript end to end, with NestJS on the server and React on the web. Shared packages cover graph schemas, model providers, the runner protocol and an MCP server."
+  },
+  "tags": [
+    "TypeScript",
+    "NestJS",
+    "React",
+    "Electron",
+    "PostgreSQL",
+    "MCP"
+  ],
+  "repository": "https://github.com/rafaeldossanto/NeuronsAI",
+  "sections": [
+    {
+      "title": {
+        "pt": "A proposta",
+        "en": "The idea"
+      },
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            {
+              "text": {
+                "pt": "O NeuronsAI permite desenhar quem pode conversar com quem em uma equipe de agentes. O grafo representa agentes vivos e suas permissões de comunicação, com contexto, papel e acompanhamento da execução.",
+                "en": "NeuronsAI lets you draw who can talk to whom in a team of agents. The graph represents live agents and their communication permissions, with context, roles and execution tracking."
+              }
+            },
+            {
+              "text": {
+                "pt": "A ideia central é dar visibilidade ao trabalho: mensagens, estados, ferramentas e histórico de uma execução ficam ligados ao grafo. A implementação segue em desenvolvimento, com o caminho de agentes de terminal documentado e funcionando.",
+                "en": "The central goal is visibility: messages, states, tools and execution history stay connected to the graph. Development is ongoing, with the terminal agent path documented and working."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Arquitetura",
+        "en": "Architecture"
+      },
+      "blocks": [
+        {
+          "type": "grid",
+          "items": [
+            {
+              "name": {
+                "pt": "Modelador em React",
+                "en": "React modeler"
+              },
+              "text": {
+                "pt": "A interface usa React, React Flow e xterm.js para o canvas, as conversas e os terminais. O mesmo front é aberto no aplicativo desktop.",
+                "en": "The interface uses React, React Flow and xterm.js for the canvas, conversations and terminals. The same front end opens inside the desktop app."
+              }
+            },
+            {
+              "name": {
+                "pt": "Servidor NestJS",
+                "en": "NestJS server"
+              },
+              "text": {
+                "pt": "NestJS com Fastify expõe REST e WebSocket. O Hub de mensagens, o supervisor de agentes e as guardas mantêm responsabilidades separadas.",
+                "en": "NestJS with Fastify exposes REST and WebSocket. The message Hub, agent supervisor and execution guards have separate responsibilities."
+              }
+            },
+            {
+              "name": {
+                "pt": "Persistência e versões",
+                "en": "Persistence and versions"
+              },
+              "text": {
+                "pt": "Drizzle organiza schema e migrations sobre PostgreSQL ou PGlite. A definição do grafo é versionada e cada execução fica vinculada à sua versão.",
+                "en": "Drizzle manages schemas and migrations on PostgreSQL or PGlite. Graph definitions are versioned and each execution stays tied to its version."
+              }
+            },
+            {
+              "name": "Runners",
+              "text": {
+                "pt": "Os agentes rodam em um runner embutido no modo local ou em um processo separado no modo híbrido. O servidor usa a mesma interface para os dois caminhos.",
+                "en": "Agents run inside an embedded local runner or a separate hybrid process. The server uses the same interface for both paths."
+              }
+            },
+            {
+              "name": {
+                "pt": "Comunicação por MCP",
+                "en": "MCP communication"
+              },
+              "text": {
+                "pt": "As ferramentas send_message, ask, reply, list_peers e finish conectam a sessão do agente ao Hub. A integração não depende de interpretar visualmente o texto do terminal.",
+                "en": "The send_message, ask, reply, list_peers and finish tools connect an agent session to the Hub without visually scraping terminal text."
+              }
+            },
+            {
+              "name": {
+                "pt": "Aplicativo Electron",
+                "en": "Electron application"
+              },
+              "text": {
+                "pt": "Servidor e banco PGlite rodam no aplicativo local. O renderer é isolado, sem acesso direto ao Node, e recebe uma ponte de IPC restrita.",
+                "en": "The local application hosts the server and PGlite database. Its renderer is isolated, without direct Node access, and receives a restricted IPC bridge."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Decisões de engenharia",
+        "en": "Engineering decisions"
+      },
+      "blocks": [
+        {
+          "type": "facts",
+          "items": [
+            {
+              "title": {
+                "pt": "Uma seta é uma permissão.",
+                "en": "An edge is a permission."
+              },
+              "text": {
+                "pt": "O Hub confere se um agente pode iniciar conversa com outro. A mensagem é persistida antes da entrega e o histórico permite acompanhar o que aconteceu.",
+                "en": "The Hub checks whether an agent may initiate a conversation. Messages are persisted before delivery and remain available in execution history."
+              }
+            },
+            {
+              "title": {
+                "pt": "Agentes continuam vivos.",
+                "en": "Agents stay alive."
+              },
+              "text": {
+                "pt": "Uma mensagem recebida durante um turno fica na caixa de entrada. O modelo é de sessões com comunicação, em vez de uma sequência em que cada bloco termina para o próximo começar.",
+                "en": "Messages arriving during a turn wait in an inbox. This is a session communication model rather than a sequence in which each block exits before the next starts."
+              }
+            },
+            {
+              "title": {
+                "pt": "Reconectar sem repetir efeitos.",
+                "en": "Reconnect without repeating effects."
+              },
+              "text": {
+                "pt": "Pedidos e mensagens têm identificadores. O protocolo reenvia o que não foi confirmado e trata repetições de forma idempotente, sem executar a mesma ação duas vezes.",
+                "en": "Requests and messages have identifiers. The protocol resends unconfirmed work and handles repeats idempotently."
+              }
+            },
+            {
+              "title": {
+                "pt": "Um contrato para memória e rede.",
+                "en": "One contract for memory and network."
+              },
+              "text": {
+                "pt": "O protocolo de runner é versionado e validado com Zod. O canal em memória e o WebSocket passam pelo mesmo codec; versões desconhecidas são recusadas explicitamente.",
+                "en": "The runner protocol is versioned and validated with Zod. In-memory and WebSocket channels share a codec; unsupported versions are explicitly rejected."
+              }
+            },
+            {
+              "title": {
+                "pt": "Limitar conversas que não terminam.",
+                "en": "Bound conversations."
+              },
+              "text": {
+                "pt": "As guardas cobrem quantidade de mensagens, repetição entre agentes, orçamento e tempo de execução. Também existe parada explícita.",
+                "en": "Guards cover message counts, repeated exchanges, budget and execution time. Explicit stop is also available."
+              }
+            },
+            {
+              "title": {
+                "pt": "Login do agente fica no runner.",
+                "en": "Agent login stays on the runner."
+              },
+              "text": {
+                "pt": "O servidor não guarda a autenticação de assinatura da CLI. Runners separados usam tokens próprios, revogáveis, armazenados como hash no servidor.",
+                "en": "The server does not store CLI subscription credentials. Separate runners use revocable tokens stored as hashes on the server."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Desktop, dados e segurança",
+        "en": "Desktop, data and security"
+      },
+      "blocks": [
+        {
+          "type": "facts",
+          "items": [
+            {
+              "title": {
+                "pt": "Banco embutido sem uma segunda instalação.",
+                "en": "Embedded storage without another installation."
+              },
+              "text": {
+                "pt": "PGlite permite usar o mesmo modelo PostgreSQL no aplicativo. O modo com PostgreSQL externo continua disponível para desenvolvimento e integração.",
+                "en": "PGlite supports the PostgreSQL model inside the app. External PostgreSQL remains available for development and integration."
+              }
+            },
+            {
+              "title": {
+                "pt": "Isolamento da janela.",
+                "en": "Window isolation."
+              },
+              "text": {
+                "pt": "O Electron usa contextIsolation e sandbox, sem nodeIntegration no renderer. Navegação e pedidos fora da origem local são controlados.",
+                "en": "Electron uses contextIsolation and sandboxing without renderer nodeIntegration. Requests and navigation beyond the local origin are controlled."
+              }
+            },
+            {
+              "title": {
+                "pt": "Segredos protegidos pelo sistema.",
+                "en": "System protected secrets."
+              },
+              "text": {
+                "pt": "O aplicativo usa safeStorage para proteger a chave mestra local e desabilita esse armazenamento quando o sistema não oferece a proteção esperada.",
+                "en": "The app uses safeStorage to protect its local master key and disables this storage when the system cannot provide the expected protection."
+              }
+            },
+            {
+              "title": {
+                "pt": "Estado do projeto explícito.",
+                "en": "An explicit project stage."
+              },
+              "text": {
+                "pt": "O runtime de agentes por API, contas multiusuário e a infraestrutura na AWS aparecem como etapas do plano. Não são apresentados aqui como funcionalidades já entregues.",
+                "en": "API agent runtimes, multiuser accounts and AWS infrastructure appear as planned stages, rather than being presented here as completed features."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Qualidade e distribuição",
+        "en": "Quality and distribution"
+      },
+      "blocks": [
+        {
+          "type": "facts",
+          "items": [
+            {
+              "title": {
+                "pt": "Cliente e contratos tipados.",
+                "en": "Typed clients and contracts."
+              },
+              "text": {
+                "pt": "O monorepo compartilha esquemas em Zod. O cliente da API é gerado a partir do OpenAPI, reduzindo divergências entre servidor e interface.",
+                "en": "The monorepo shares Zod schemas. The API client is generated from OpenAPI to reduce interface and server drift."
+              }
+            },
+            {
+              "title": {
+                "pt": "Teste de aceitação do aplicativo.",
+                "en": "Application acceptance test."
+              },
+              "text": {
+                "pt": "O smoke abre o app real com dados isolados, verifica a ponte da janela, publica um projeto com agentes, grava uma nota pela integração e confere a liberação da trava ao encerrar.",
+                "en": "The smoke test opens the real app with isolated data, checks the window bridge, publishes an agent project, writes a note through the integration and checks lock release on exit."
+              }
+            },
+            {
+              "title": {
+                "pt": "Builds para os três sistemas.",
+                "en": "Builds for three operating systems."
+              },
+              "text": {
+                "pt": "O pipeline gera instaladores Windows, macOS e Linux, com checksums e release em rascunho. Assinatura e notarização têm uma etapa própria no plano.",
+                "en": "The pipeline generates Windows, macOS and Linux installers with checksums and a draft release. Signing and notarization have a dedicated planned stage."
+              }
+            },
+            {
+              "title": {
+                "pt": "Atualização com diferenças por plataforma.",
+                "en": "Platform aware updates."
+              },
+              "text": {
+                "pt": "Windows e AppImage têm o caminho de atualização automática documentado. macOS sem assinatura e pacotes deb direcionam para baixar a nova versão.",
+                "en": "Windows and AppImage have documented automatic updates. Unsigned macOS builds and deb packages direct users to download the next version."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Dentro do código",
+        "en": "Inside the code"
+      },
+      "blocks": [
+        {
+          "type": "repos",
+          "items": [
+            {
+              "path": "apps/server/",
+              "text": {
+                "pt": "API, Hub, supervisor, persistência e integração com runners.",
+                "en": "API, Hub, supervisor, persistence and runner integration."
+              }
+            },
+            {
+              "path": "apps/web/",
+              "text": {
+                "pt": "Modelador, conversas e terminais.",
+                "en": "Modeler, conversations and terminals."
+              }
+            },
+            {
+              "path": "apps/desktop/",
+              "text": {
+                "pt": "Aplicativo Electron, isolamento, build e atualização.",
+                "en": "Electron app, isolation, builds and updates."
+              }
+            },
+            {
+              "path": "packages/runner-protocol/",
+              "text": {
+                "pt": "Frames, validação, versionamento e canais de comunicação.",
+                "en": "Frames, validation, versioning and communication channels."
+              }
+            },
+            {
+              "path": "packages/runner/",
+              "text": {
+                "pt": "Hospedagem dos agentes e conexão do runner ao servidor.",
+                "en": "Agent hosting and runner connections."
+              }
+            },
+            {
+              "path": "packages/mcp-neurons/",
+              "text": {
+                "pt": "Servidor MCP de comunicação dos agentes.",
+                "en": "Agent communication MCP server."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

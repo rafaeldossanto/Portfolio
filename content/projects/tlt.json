@@ -1,0 +1,166 @@
+{
+  "slug": "tlt",
+  "route": "tlt",
+  "page": "full",
+  "title": "TLT",
+  "kicker": {
+    "pt": "Projeto · 2026 — agora",
+    "en": "Project · 2026 — now"
+  },
+  "lead": {
+    "pt": "Aplicativo de desktop que escuta o áudio que o computador está reproduzindo, transcreve e traduz enquanto a pessoa ainda fala, mostrando a legenda por cima de qualquer janela. Funciona em qualquer chamada — e com a rede desligada, porque os modelos rodam na própria máquina.",
+    "en": "A desktop application that listens to the audio the computer is playing, transcribes and translates it while the person is still speaking, showing subtitles over any window. It works on any call — and with the network switched off, because the models run on the machine itself."
+  },
+  "links": [
+    {
+      "label": {
+        "pt": "Ver no GitHub ↗",
+        "en": "View on GitHub ↗"
+      },
+      "href": "https://github.com/rafaeldossanto/TLT",
+      "primary": true
+    }
+  ],
+  "card": {
+    "when": {
+      "pt": "2026 — AGORA",
+      "en": "2026 — NOW"
+    },
+    "summary": {
+      "pt": "Tradutor de fala em tempo real para desktop: legenda o áudio de qualquer chamada sem que nada saia do computador.",
+      "en": "A real-time speech translator for desktop: it subtitles the audio of any call without anything leaving the computer."
+    },
+    "chips": [
+      "C# / .NET 10",
+      "WPF",
+      "Whisper",
+      "ONNX"
+    ]
+  },
+  "sections": [
+    {
+      "title": {
+        "pt": "O pipeline",
+        "en": "The pipeline"
+      },
+      "blocks": [
+        {
+          "type": "grid",
+          "items": [
+            {
+              "name": "capture",
+              "meta": "WASAPI",
+              "text": {
+                "pt": "Captura o que sai para o fone, não o microfone. Buffers fixos de 10 ms — esse é o orçamento de tempo de cada etapa seguinte.",
+                "en": "Captures what goes out to the headphones, not the microphone. Fixed 10 ms buffers — that is the time budget for every stage after it."
+              }
+            },
+            {
+              "name": "resample",
+              "meta": "16 kHz mono",
+              "text": {
+                "pt": "Reamostragem com filtro, não decimação: cortar sem filtrar dobraria as frequências altas para dentro da banda e o reconhecedor receberia ruído como se fosse fala.",
+                "en": "Resampling with a filter, not decimation: dropping samples without filtering would fold high frequencies back into the band, and the recogniser would take noise for speech."
+              }
+            },
+            {
+              "name": "vad",
+              "meta": "Silero",
+              "text": {
+                "pt": "Separa fala de música, ruído e notificação. Cada falso positivo é uma transcrição inútil — que custa GPU no modo local e dinheiro no modo nuvem.",
+                "en": "Tells speech apart from music, noise and notifications. Every false positive is a wasted transcription — costing GPU locally and money in the cloud."
+              }
+            },
+            {
+              "name": "window",
+              "meta": "LocalAgreement-2",
+              "text": {
+                "pt": "Reprocessa o trecho em curso a cada 1,5 s e confirma o prefixo em que duas passagens concordam. O que ainda pode mudar aparece em cinza.",
+                "en": "Reprocesses the ongoing chunk every 1.5 s and confirms the prefix where two passes agree. What can still change is shown in grey."
+              }
+            },
+            {
+              "name": "speech",
+              "meta": "Whisper · Vulkan",
+              "text": {
+                "pt": "Reconhecimento na GPU do usuário, com aquecimento na inicialização para a compilação de shaders não cair sobre a primeira frase da reunião.",
+                "en": "Recognition on the user's GPU, warmed up at startup so that shader compilation doesn't land on the first sentence of the meeting."
+              }
+            },
+            {
+              "name": "translate",
+              "meta": "Opus-MT · ONNX",
+              "text": {
+                "pt": "Tradutor especializado rodando na CPU, fora do laço de transcrição: traduzir ali dentro travaria a captura por um segundo e o áudio acumulado viraria perda de fala.",
+                "en": "A specialised translator running on the CPU, outside the transcription loop: translating inside it would stall capture for a second and the queued audio would become lost speech."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Decisões",
+        "en": "Decisions"
+      },
+      "blocks": [
+        {
+          "type": "facts",
+          "items": [
+            {
+              "title": {
+                "pt": "Vulkan em vez de CUDA, por motivo de produto.",
+                "en": "Vulkan instead of CUDA, for a product reason."
+              },
+              "text": {
+                "pt": "O pacote CUDA não traz as bibliotecas de runtime da NVIDIA: sem o Toolkit instalado ele falha em silêncio e cai para CPU dez vezes mais lento. Vulkan roda com o driver comum, serve placas de qualquer fabricante com um binário só e ocupa 116 MB contra 312 MB.",
+                "en": "The CUDA package doesn't ship NVIDIA's runtime libraries: without the Toolkit installed it fails silently and falls back to a CPU path ten times slower. Vulkan runs on the ordinary driver, serves cards from any vendor with a single binary and takes 116 MB against 312 MB."
+              }
+            },
+            {
+              "title": {
+                "pt": "RTF é a métrica errada.",
+                "en": "RTF is the wrong metric."
+              },
+              "text": {
+                "pt": "O mesmo modelo na mesma máquina mede de 1,2x a 13,7x só mudando o tamanho do buffer, porque o custo é quase todo fixo — o Whisper processa em janelas de 30 s preenchidas com silêncio. O que decide a viabilidade é o custo absoluto por passada contra o intervalo de reprocessamento.",
+                "en": "The same model on the same machine measures anywhere from 1.2x to 13.7x purely by changing the buffer size, because the cost is almost entirely fixed — Whisper processes in 30-second windows padded with silence. What decides viability is the absolute cost per pass against the reprocessing interval."
+              }
+            },
+            {
+              "title": {
+                "pt": "O gargalo era CPU, não GPU.",
+                "en": "The bottleneck was CPU, not GPU."
+              },
+              "text": {
+                "pt": "Com o tradutor usando os quatro núcleos, o custo do reconhecedor mais que dobrou e passou de 187% do intervalo. Limitar a tradução a dois núcleos devolveu a folga — e, contra a intuição, deixou a própria tradução mais rápida: espalhar trabalho pequeno por muitos núcleos custa mais em coordenação do que rende.",
+                "en": "With the translator using all four cores, the recogniser's cost more than doubled and went past 187% of the interval. Capping translation at two cores gave the headroom back — and, against intuition, made translation itself faster: spreading small work across many cores costs more in coordination than it returns."
+              }
+            },
+            {
+              "title": {
+                "pt": "Senha do histórico é criptografia, não tela de bloqueio.",
+                "en": "The history password is encryption, not a lock screen."
+              },
+              "text": {
+                "pt": "Pedir senha só para abrir a janela deixaria o arquivo legível no bloco de notas. O conteúdo é cifrado com AES-256-GCM e chave derivada por PBKDF2 — e a consequência está escrita na tela: senha esquecida é histórico perdido, porque qualquer recuperação seria também uma porta de entrada.",
+                "en": "Asking for a password merely to open the window would leave the file readable in a text editor. The content is encrypted with AES-256-GCM and a PBKDF2-derived key — and the consequence is stated on screen: a forgotten password means a lost history, because any recovery path would also be a way in."
+              }
+            },
+            {
+              "title": {
+                "pt": "Medir em ritmo real, não em lote.",
+                "en": "Measure at real pace, not in batch."
+              },
+              "text": {
+                "pt": "A versão inicial da janela deslizante passava nos testes e travava as confirmações em falas longas. O defeito só apareceu alimentando áudio no ritmo de uma conversa e olhando <i>quando</i> cada trecho era confirmado, não <i>o que</i> ele continha.",
+                "en": "The first version of the sliding window passed its tests and still stalled confirmations during long speech. The defect only showed up feeding audio at conversation pace and watching <i>when</i> each chunk was confirmed, not <i>what</i> it contained."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

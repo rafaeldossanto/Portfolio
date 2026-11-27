@@ -1,0 +1,14 @@
+<svg viewBox="0 0 320 132" role="img" aria-label="Mapa com trilha e pontos de interesse">
+  <rect width="320" height="132" fill="currentColor" opacity="0.03"></rect>
+  <g fill="none" stroke="currentColor" opacity="0.16" stroke-width="1">
+    <ellipse cx="72" cy="44" rx="30" ry="20"></ellipse>
+    <ellipse cx="72" cy="44" rx="50" ry="33"></ellipse>
+    <ellipse cx="72" cy="44" rx="70" ry="46"></ellipse>
+    <ellipse cx="246" cy="104" rx="26" ry="17"></ellipse>
+    <ellipse cx="246" cy="104" rx="46" ry="29"></ellipse>
+  </g>
+  <path d="M30 112 C 78 96, 92 62, 138 58 S 208 74, 236 38" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 5" opacity="0.65" stroke-linecap="round"></path>
+  <circle cx="30" cy="112" r="4.5" fill="currentColor" opacity="0.75"></circle>
+  <circle cx="138" cy="58" r="4" fill="none" stroke="currentColor" stroke-width="2" opacity="0.6"></circle>
+  <circle cx="236" cy="38" r="6" fill="currentColor" opacity="0.9"></circle>
+</svg>

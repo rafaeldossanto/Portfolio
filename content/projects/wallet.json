@@ -1,0 +1,425 @@
+{
+  "slug": "wallet",
+  "route": "wallet",
+  "page": "full",
+  "title": "Wallet",
+  "kicker": {
+    "pt": "Projeto · 2026 — agora",
+    "en": "Project · 2026 — now"
+  },
+  "lead": {
+    "pt": "Carteira financeira que junta contas, cartões e investimentos de vários bancos num lugar só, pelo Open Finance. Um core em Java 25, um BFF na frente dele e um único código Flutter que roda no celular, no navegador e como aplicativo instalável de Windows.",
+    "en": "A personal finance wallet that brings accounts, cards and investments from several banks into one place, over Open Finance. A Java 25 core, a BFF in front of it and a single Flutter codebase that runs on phones, in the browser and as an installable Windows app."
+  },
+  "links": [
+    {
+      "label": {
+        "pt": "Ver no GitHub ↗",
+        "en": "View on GitHub ↗"
+      },
+      "href": "https://github.com/rafaeldossanto/Wallet",
+      "primary": true
+    }
+  ],
+  "sections": [
+    {
+      "title": {
+        "pt": "O ponto de partida",
+        "en": "Where it starts"
+      },
+      "blocks": [
+        {
+          "type": "note",
+          "paragraphs": [
+            {
+              "pt": "<b>A regulação veio antes do código.</b> Só instituição autorizada pelo Banco Central participa do Open Finance: um aplicativo comum não pode ler os bancos direto. A leitura passa por um provedor autorizado, a Pluggy, isolado atrás de uma porta própria (<code>FinancialDataProvider</code>) — se a regra para parcerias mudar, troca-se o adaptador, não o sistema.",
+              "en": "<b>Regulation came before code.</b> Only institutions authorised by Brazil's Central Bank take part in Open Finance: an ordinary app cannot read the banks directly. Reading goes through an authorised provider, Pluggy, isolated behind a port of its own (<code>FinancialDataProvider</code>) — if the rules for partnerships change, the adapter changes, not the system."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Arquitetura",
+        "en": "Architecture"
+      },
+      "blocks": [
+        {
+          "type": "grid",
+          "items": [
+            {
+              "name": "app",
+              "meta": "Flutter",
+              "text": {
+                "pt": "Um código só para celular, navegador e Windows: calendário de gastos, rosca por categoria, evolução dos investimentos e o logo real de cada banco.",
+                "en": "One codebase for phones, browser and Windows: a spending calendar, a donut by category, investment growth over time and each bank's real logo."
+              }
+            },
+            {
+              "name": "bff",
+              "meta": ":8080",
+              "text": {
+                "pt": "A única porta pública. Sessão por plataforma, telas montadas com várias consultas ao core em paralelo, cache, circuit breaker e limite de requisições.",
+                "en": "The only public door. Sessions per platform, screens assembled from several core calls in parallel, caching, a circuit breaker and request limits."
+              }
+            },
+            {
+              "name": "core",
+              "meta": ":8081",
+              "text": {
+                "pt": "Spring Modulith com nove módulos — identidade, conexões, contas, investimentos, sincronização, provedor, análises, planejamento e o compartilhado. Só o BFF chama.",
+                "en": "Spring Modulith with nine modules — identity, connections, banking, investments, sync, provider, insights, planning and shared. Only the BFF calls it."
+              }
+            },
+            {
+              "name": "provider",
+              "meta": "Pluggy",
+              "text": {
+                "pt": "A porta e o adaptador da Pluggy. Nos testes, uma Pluggy de demonstração sobe junto, com bancos sintéticos — dá para ver tudo rodando sem conta nenhuma.",
+                "en": "The port and the Pluggy adapter. In tests, a demo Pluggy starts alongside with synthetic banks — you can see everything running without any account."
+              }
+            },
+            {
+              "name": "sync",
+              "meta": {
+                "pt": "a cada 6 h",
+                "en": "every 6 h"
+              },
+              "text": {
+                "pt": "Busca periódica com janela de reconciliação, e o registro de cada rodada no banco: o que entrou, o que mudou e o que sumiu.",
+                "en": "Periodic fetching with a reconciliation window, and a record of every run in the database: what came in, what changed and what disappeared."
+              }
+            },
+            {
+              "name": "desktop",
+              "meta": "Windows",
+              "text": {
+                "pt": "Instalador gerado no CI, ícone na bandeja, abrir com o Windows, atualização automática e Windows Hello para destravar.",
+                "en": "An installer built in CI, a tray icon, start with Windows, automatic updates and Windows Hello to unlock."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Decisões",
+        "en": "Decisions"
+      },
+      "blocks": [
+        {
+          "type": "facts",
+          "items": [
+            {
+              "title": {
+                "pt": "A transação muda de identidade.",
+                "en": "A transaction changes identity."
+              },
+              "text": {
+                "pt": "O provedor troca o ID de uma transação quando ela muda muito. A sincronização relê uma janela de dias e marca como apagada a que sumiu dela — em vez de duplicar o lançamento ou perdê-lo de vista.",
+                "en": "The provider swaps a transaction's ID when it changes enough. Sync rereads a window of days and marks as deleted whatever vanished from it — instead of duplicating the entry or losing track of it."
+              }
+            },
+            {
+              "title": {
+                "pt": "Dado sensível cifrado no banco.",
+                "en": "Sensitive data encrypted at rest."
+              },
+              "text": {
+                "pt": "A descrição de cada transação é gravada com AES-256-GCM: um vazamento do banco de dados não conta onde a pessoa gasta dinheiro.",
+                "en": "Every transaction description is stored with AES-256-GCM: a database leak doesn't tell anyone where the person spends their money."
+              }
+            },
+            {
+              "title": {
+                "pt": "Um BFF que conhece as telas.",
+                "en": "A BFF that knows the screens."
+              },
+              "text": {
+                "pt": "A home pede cinco coisas ao core em paralelo; a parte que falha volta marcada como indisponível e o resto aparece. Só uma home completa vai para o cache — senão o cache congelaria a tela no meio da primeira sincronização.",
+                "en": "The home screen asks the core for five things in parallel; a part that fails comes back flagged as unavailable and the rest still shows. Only a complete home goes into the cache — otherwise the cache would freeze the screen halfway through the first sync."
+              }
+            },
+            {
+              "title": {
+                "pt": "O BFF não guarda segredo.",
+                "en": "The BFF holds no secret."
+              },
+              "text": {
+                "pt": "O core assina os tokens (RS256) e publica a chave pública; o BFF a busca de lá. O identificador da chave é o thumbprint dela: com um identificador fixo e a chave em cache, o BFF recusava por 5 minutos os tokens de um core recém-reiniciado.",
+                "en": "The core signs the tokens (RS256) and publishes the public key; the BFF fetches it from there. The key id is the key's thumbprint: with a fixed id and the key cached, the BFF used to reject tokens from a freshly restarted core for 5 minutes."
+              }
+            },
+            {
+              "title": {
+                "pt": "Sessão sob medida para cada plataforma.",
+                "en": "Sessions tailored to each platform."
+              },
+              "text": {
+                "pt": "No navegador, a renovação vive num cookie HttpOnly com proteção contra CSRF e a sessão cai por inatividade. No celular, o token fica no armazenamento seguro e o app pede biometria antes de mostrar saldo. No Windows, quem destrava é o Windows Hello.",
+                "en": "In the browser, renewal lives in an HttpOnly cookie with CSRF protection and the session ends on inactivity. On phones, the token sits in secure storage and the app asks for biometrics before showing any balance. On Windows, Windows Hello unlocks it."
+              }
+            },
+            {
+              "title": {
+                "pt": "Instalável e atualizado sozinho.",
+                "en": "Installable, and updates itself."
+              },
+              "text": {
+                "pt": "O CI gera o instalador do Windows a cada versão; o app lê o manifesto da release, confere o SHA-256 do arquivo e se atualiza sem a pessoa abrir o GitHub.",
+                "en": "CI builds the Windows installer for every version; the app reads the release manifest, checks the file's SHA-256 and updates itself without the person ever opening GitHub."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Números",
+        "en": "Numbers"
+      },
+      "blocks": [
+        {
+          "type": "stats",
+          "items": [
+            {
+              "value": "511",
+              "label": {
+                "pt": "testes",
+                "en": "tests"
+              }
+            },
+            {
+              "value": "9",
+              "label": {
+                "pt": "módulos no core",
+                "en": "core modules"
+              }
+            },
+            {
+              "value": "3",
+              "label": {
+                "pt": "plataformas",
+                "en": "platforms"
+              }
+            },
+            {
+              "value": "5",
+              "label": {
+                "pt": "versões publicadas",
+                "en": "published releases"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Repositório",
+        "en": "Repository"
+      },
+      "blocks": [
+        {
+          "type": "repos",
+          "items": [
+            {
+              "href": "https://github.com/rafaeldossanto/Wallet",
+              "path": "Wallet",
+              "text": {
+                "pt": "monorepo: core, BFF, app e documentação",
+                "en": "monorepo: core, BFF, app and docs"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": {
+        "pt": "Dentro do código",
+        "en": "Inside the code"
+      },
+      "blocks": [
+        {
+          "type": "muted",
+          "html": {
+            "pt": "Dois serviços e um app, no mesmo repositório. No core, cada módulo do Spring Modulith só conversa com os outros pela fachada pública deles — e um teste quebra se alguém atravessar a fronteira.",
+            "en": "Two services and an app, in one repository. In the core, each Spring Modulith module only talks to the others through their public facade — and a test breaks if anyone crosses that boundary."
+          }
+        },
+        {
+          "type": "package",
+          "root": "com.wallet.core",
+          "meta": "· Spring Modulith",
+          "items": [
+            {
+              "name": "identity",
+              "text": {
+                "pt": "contas de usuário, login, JWT RS256 e renovação rotativa",
+                "en": "user accounts, login, RS256 JWT and rotating renewal"
+              }
+            },
+            {
+              "name": "connection",
+              "text": {
+                "pt": "os bancos que cada pessoa vinculou",
+                "en": "the banks each person has linked"
+              }
+            },
+            {
+              "name": "banking",
+              "text": {
+                "pt": "contas, transações, saldos diários e faturas de cartão",
+                "en": "accounts, transactions, daily balances and card bills"
+              }
+            },
+            {
+              "name": "investment",
+              "text": {
+                "pt": "posições e a foto diária do patrimônio investido",
+                "en": "positions and the daily snapshot of invested wealth"
+              }
+            },
+            {
+              "name": "sync",
+              "text": {
+                "pt": "agendamento, execução e o registro de cada rodada",
+                "en": "scheduling, execution and a record of every run"
+              }
+            },
+            {
+              "name": "provider",
+              "text": {
+                "pt": "a porta <code>FinancialDataProvider</code> e o adaptador <code>pluggy</code>",
+                "en": "the <code>FinancialDataProvider</code> port and the <code>pluggy</code> adapter"
+              }
+            },
+            {
+              "name": "insight",
+              "text": {
+                "pt": "visão geral, gastos por categoria e por dia, patrimônio",
+                "en": "overview, spending by category and by day, net worth"
+              }
+            },
+            {
+              "name": "planning",
+              "text": {
+                "pt": "plano do mês, gastos fixos, salário esperado e os fixos que o extrato sugere",
+                "en": "the month plan, fixed expenses, expected salary and the fixed costs the statement suggests"
+              }
+            },
+            {
+              "name": "shared",
+              "text": {
+                "pt": "<code>crypto</code>, <code>money</code>, <code>time</code>, <code>security</code> — o que todos usam",
+                "en": "<code>crypto</code>, <code>money</code>, <code>time</code>, <code>security</code> — what everyone uses"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "com.wallet.bff",
+          "meta": {
+            "pt": "· fachada",
+            "en": "· facade"
+          },
+          "items": [
+            {
+              "name": "client",
+              "text": {
+                "pt": "chamadas ao core levando o token e o trace da requisição",
+                "en": "calls to the core carrying the request's token and trace"
+              }
+            },
+            {
+              "name": "service",
+              "text": {
+                "pt": "composição por tela — <code>HomeService</code> com <code>CompletableFuture</code> — e cache",
+                "en": "composition per screen — <code>HomeService</code> with <code>CompletableFuture</code> — and caching"
+              }
+            },
+            {
+              "name": "auth",
+              "text": {
+                "pt": "sessão por plataforma: cookie no navegador, corpo da resposta no celular",
+                "en": "sessions per platform: a cookie in the browser, the response body on phones"
+              }
+            },
+            {
+              "name": "ratelimit",
+              "text": {
+                "pt": "limite de requisições, inclusive de login por IP",
+                "en": "request limits, including login attempts per IP"
+              }
+            },
+            {
+              "name": "trace",
+              "text": {
+                "pt": "um id por requisição, do app ao core",
+                "en": "one id per request, from the app to the core"
+              }
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "root": "app/lib",
+          "meta": "· Flutter",
+          "items": [
+            {
+              "name": "features",
+              "text": {
+                "pt": "uma pasta por tela — visão geral, extrato, cartões, investimentos, calendário, planejamento, conexões — cada uma com <code>data</code> e <code>presentation</code>",
+                "en": "one folder per screen — overview, statement, cards, investments, calendar, planning, connections — each with <code>data</code> and <code>presentation</code>"
+              }
+            },
+            {
+              "name": "core/session",
+              "text": {
+                "pt": "renovação numa fila só; cookie no navegador, armazenamento seguro no celular",
+                "en": "renewal in a single queue; a cookie in the browser, secure storage on phones"
+              }
+            },
+            {
+              "name": "core/security",
+              "text": {
+                "pt": "bloqueio por biometria e tempo de inatividade",
+                "en": "biometric lock and inactivity timeout"
+              }
+            },
+            {
+              "name": "core/desktop",
+              "text": {
+                "pt": "bandeja e janela do aplicativo de Windows",
+                "en": "tray and window of the Windows app"
+              }
+            },
+            {
+              "name": "core/updates",
+              "text": {
+                "pt": "atualização pelo manifesto da release, no Windows e no Android, com o SHA-256 conferido",
+                "en": "updates from the release manifest, on Windows and Android, with the SHA-256 checked"
+              }
+            },
+            {
+              "name": "core/router",
+              "text": {
+                "pt": "go_router com abas que preservam o estado de cada tela",
+                "en": "go_router with tabs that keep each screen's state"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "colophon": {
+    "pt": "Wallet tem nome provisório e está em desenvolvimento: roda de ponta a ponta com uma Pluggy de demonstração e já fala com a Pluggy real — no Android, o Pluggy Connect leva direto ao app do banco. Falta conferir as regras com dados reais antes de abrir para outras pessoas.",
+    "en": "Wallet has a working title and is under development: it runs end to end against a demo Pluggy and already talks to the real Pluggy — on Android, Pluggy Connect goes straight to the bank's app. What's left is checking the rules against real data before opening it to other people."
+  }
+}
